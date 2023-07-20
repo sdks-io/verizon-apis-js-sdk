@@ -27,6 +27,34 @@ import { BaseController } from './baseController';
 
 export class SoftwareManagementCallbacksV2Controller extends BaseController {
   /**
+   * This endpoint allows user to create the HTTPS callback address.
+   *
+   * @param account      Account identifier.
+   * @param body         Callback URL registration.
+   * @return Response from the API call
+   */
+  async registerCallback(
+    account: string,
+    body: FotaV2CallbackRegistrationRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<FotaV2CallbackRegistrationResult>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      body: [body, fotaV2CallbackRegistrationRequestSchema],
+    });
+    req.header('Content-Type', '*/*');
+    req.json(mapped.body);
+    req.appendTemplatePath`/callbacks/${mapped.account}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    return req.callAsJson(
+      fotaV2CallbackRegistrationResultSchema,
+      requestOptions
+    );
+  }
+
+  /**
    * This endpoint allows user to get the registered callback information.
    *
    * @param account Account identifier.
@@ -57,34 +85,6 @@ export class SoftwareManagementCallbacksV2Controller extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<FotaV2CallbackRegistrationResult>> {
     const req = this.createRequest('PUT');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      body: [body, fotaV2CallbackRegistrationRequestSchema],
-    });
-    req.header('Content-Type', '*/*');
-    req.json(mapped.body);
-    req.appendTemplatePath`/callbacks/${mapped.account}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(
-      fotaV2CallbackRegistrationResultSchema,
-      requestOptions
-    );
-  }
-
-  /**
-   * This endpoint allows user to create the HTTPS callback address.
-   *
-   * @param account      Account identifier.
-   * @param body         Callback URL registration.
-   * @return Response from the API call
-   */
-  async registerCallback(
-    account: string,
-    body: FotaV2CallbackRegistrationRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FotaV2CallbackRegistrationResult>> {
-    const req = this.createRequest('POST');
     req.baseUrl('Software Management V2');
     const mapped = req.prepareArgs({
       account: [account, string()],

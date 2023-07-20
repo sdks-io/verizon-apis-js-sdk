@@ -31,27 +31,6 @@ import { BaseController } from './baseController';
 
 export class AnomalyTriggersController extends BaseController {
   /**
-   * Creates the trigger to identify an anomaly.
-   *
-   * @param body         Request to create an anomaly trigger.
-   * @return Response from the API call
-   */
-  async createAnomalyDetectionTrigger(
-    body: CreateTriggerRequestOptions[],
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<AnomalyDetectionTrigger>> {
-    const req = this.createRequest('POST', '/v2/triggers');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, array(createTriggerRequestOptionsSchema)],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    return req.callAsJson(anomalyDetectionTriggerSchema, requestOptions);
-  }
-
-  /**
    * Updates an existing trigger using the account name.
    *
    * @param body         Request to update existing trigger.
@@ -88,5 +67,26 @@ export class AnomalyTriggersController extends BaseController {
     req.appendTemplatePath`/v2/triggers/${mapped.triggerId}`;
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
     return req.callAsJson(anomalyTriggerResultSchema, requestOptions);
+  }
+
+  /**
+   * Creates the trigger to identify an anomaly.
+   *
+   * @param body         Request to create an anomaly trigger.
+   * @return Response from the API call
+   */
+  async createAnomalyDetectionTrigger(
+    body: CreateTriggerRequestOptions[],
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AnomalyDetectionTrigger>> {
+    const req = this.createRequest('POST', '/v2/triggers');
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({
+      body: [body, array(createTriggerRequestOptionsSchema)],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(IntelligenceResultError, 'An error occurred.');
+    return req.callAsJson(anomalyDetectionTriggerSchema, requestOptions);
   }
 }

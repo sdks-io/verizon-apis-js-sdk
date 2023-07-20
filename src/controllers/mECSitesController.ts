@@ -25,26 +25,6 @@ import { BaseController } from './baseController';
 
 export class MECSitesController extends BaseController {
   /**
-   * Supports fetching MEC locations so the user can view the city.
-   *
-   * @param accountName User account name.
-   * @return Response from the API call
-   */
-  async listMECSiteLocations(
-    accountName?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<MECSiteLocationsResult>> {
-    const req = this.createRequest('GET', '/v1/mecsite/locations');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.throwOn(400, EdgeServiceLaunchResultError, 'Error Response.');
-    return req.callAsJson(mECSiteLocationsResultSchema, requestOptions);
-  }
-
-  /**
    * Retrieve all clusters for the customer.
    *
    * @param userId
@@ -101,5 +81,25 @@ export class MECSitesController extends BaseController {
     req.throwOn(500, EdgeServiceLaunchResultError, 'Internal Server Error.');
     req.defaultToError(EdgeServiceLaunchResultError, 'Unexpected error.');
     return req.callAsJson(clustersNamespacesSchema, requestOptions);
+  }
+
+  /**
+   * Supports fetching MEC locations so the user can view the city.
+   *
+   * @param accountName User account name.
+   * @return Response from the API call
+   */
+  async listMECSiteLocations(
+    accountName?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<MECSiteLocationsResult>> {
+    const req = this.createRequest('GET', '/v1/mecsite/locations');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.throwOn(400, EdgeServiceLaunchResultError, 'Error Response.');
+    return req.callAsJson(mECSiteLocationsResultSchema, requestOptions);
   }
 }

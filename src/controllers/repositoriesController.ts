@@ -18,6 +18,40 @@ import { BaseController } from './baseController';
 
 export class RepositoriesController extends BaseController {
   /**
+   * Delete the repository.
+   *
+   * @param accountName    User account name.
+   * @param repositoryName Name of the repository which is about to be deleted.
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async deleteRepository(
+    accountName: string,
+    repositoryName: string,
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<EdgeServiceOnboardingDeleteResult>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      repositoryName: [repositoryName, string()],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('correlationId', mapped.correlationId);
+    req.appendTemplatePath`/v1/config/repository/${mapped.repositoryName}`;
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    return req.callAsJson(
+      edgeServiceOnboardingDeleteResultSchema,
+      requestOptions
+    );
+  }
+
+  /**
    * Get all repositories in the platform.
    *
    * @param accountName   User account name.
@@ -76,39 +110,5 @@ export class RepositoriesController extends BaseController {
     req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
     req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
     return req.callAsJson(repositorySchema, requestOptions);
-  }
-
-  /**
-   * Delete the repository.
-   *
-   * @param accountName    User account name.
-   * @param repositoryName Name of the repository which is about to be deleted.
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async deleteRepository(
-    accountName: string,
-    repositoryName: string,
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<EdgeServiceOnboardingDeleteResult>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      repositoryName: [repositoryName, string()],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('correlationId', mapped.correlationId);
-    req.appendTemplatePath`/v1/config/repository/${mapped.repositoryName}`;
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    return req.callAsJson(
-      edgeServiceOnboardingDeleteResultSchema,
-      requestOptions
-    );
   }
 }

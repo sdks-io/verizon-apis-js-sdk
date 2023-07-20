@@ -10,8 +10,72 @@ const m5gEdgePlatformsController = new M5gEdgePlatformsController(client);
 
 ## Methods
 
-* [List MEC Platforms](../../doc/controllers/5g-edge-platforms.md#list-mec-platforms)
 * [List Regions](../../doc/controllers/5g-edge-platforms.md#list-regions)
+* [List MEC Platforms](../../doc/controllers/5g-edge-platforms.md#list-mec-platforms)
+
+
+# List Regions
+
+List the geographical regions available, based on the user's bearer token. **Note:** Country code, Metropolitan area, Area and Zone are future functionality and will currently return a "null" value.
+
+```ts
+async listRegions(
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<ListRegionsResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Requires scope
+
+`Edgediscoveryread`, `Edgeserviceprofileread`, `Edgeserviceprofilewrite`, `Edgeserviceregistryread`, `Edgeserviceregistrywrite`, `TsApplicationRo`, `TsMecFullaccess`, `TsMecLimitaccess`
+
+## Response Type
+
+[`ListRegionsResult`](../../doc/models/list-regions-result.md)
+
+## Example Usage
+
+```ts
+try {
+  const { result, ...httpResponse } = await m5gEdgePlatformsController.listRegions();
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "regions": [
+    {
+      "regionId": "consectetur",
+      "name": "US_EAST_1",
+      "countryCode": "nr",
+      "metro": "e1D",
+      "area": "IdUESF"
+    }
+  ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | HTTP 400 Bad Request. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
+| 401 | HTTP 401 Unauthorized. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
+| Default | HTTP 500 Internal Server Error. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
 
 
 # List MEC Platforms
@@ -83,70 +147,6 @@ try {
       "zone": "e5oV52kMGjDLhnJSsLJZL",
       "region": "US_WEST_2",
       "status": "unknown"
-    }
-  ]
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | HTTP 400 Bad Request. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-| 401 | HTTP 401 Unauthorized. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-| Default | HTTP 500 Internal Server Error. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-
-
-# List Regions
-
-List the geographical regions available, based on the user's bearer token. **Note:** Country code, Metropolitan area, Area and Zone are future functionality and will currently return a "null" value.
-
-```ts
-async listRegions(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ListRegionsResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Requires scope
-
-`Edgediscoveryread`, `Edgeserviceprofileread`, `Edgeserviceprofilewrite`, `Edgeserviceregistryread`, `Edgeserviceregistrywrite`, `TsApplicationRo`, `TsMecFullaccess`, `TsMecLimitaccess`
-
-## Response Type
-
-[`ListRegionsResult`](../../doc/models/list-regions-result.md)
-
-## Example Usage
-
-```ts
-try {
-  const { result, ...httpResponse } = await m5gEdgePlatformsController.listRegions();
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "regions": [
-    {
-      "regionId": "consectetur",
-      "name": "US_EAST_1",
-      "countryCode": "nr",
-      "metro": "e1D",
-      "area": "IdUESF"
     }
   ]
 }

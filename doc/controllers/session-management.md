@@ -10,9 +10,65 @@ const sessionManagementController = new SessionManagementController(client);
 
 ## Methods
 
+* [Reset Connectivity Management Password](../../doc/controllers/session-management.md#reset-connectivity-management-password)
 * [Start Connectivity Management Session](../../doc/controllers/session-management.md#start-connectivity-management-session)
 * [End Connectivity Management Session](../../doc/controllers/session-management.md#end-connectivity-management-session)
-* [Reset Connectivity Management Password](../../doc/controllers/session-management.md#reset-connectivity-management-password)
+
+
+# Reset Connectivity Management Password
+
+The new password is effective immediately. Passwords do not expire, but Verizon recommends changing your password every 90 days.
+
+```ts
+async resetConnectivityManagementPassword(
+  body: SessionResetPasswordRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<SessionResetPasswordResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`SessionResetPasswordRequest`](../../doc/models/session-reset-password-request.md) | Body, Required | Request with current password that needs to be reset. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`SessionResetPasswordResult`](../../doc/models/session-reset-password-result.md)
+
+## Example Usage
+
+```ts
+const body: SessionResetPasswordRequest = {
+  oldPassword: 'grflbk',
+};
+
+try {
+  const { result, ...httpResponse } = await sessionManagementController.resetConnectivityManagementPassword(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "newPassword": "Wh0a1545a84d"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Error response. | [`ConnectivityManagementResultError`](../../doc/models/connectivity-management-result-error.md) |
 
 
 # Start Connectivity Management Session
@@ -114,62 +170,6 @@ try {
 ```json
 {
   "sessionToken": "bcce3ea6-fe4f-4952-bacf-eadd80718e83"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Error response. | [`ConnectivityManagementResultError`](../../doc/models/connectivity-management-result-error.md) |
-
-
-# Reset Connectivity Management Password
-
-The new password is effective immediately. Passwords do not expire, but Verizon recommends changing your password every 90 days.
-
-```ts
-async resetConnectivityManagementPassword(
-  body: SessionResetPasswordRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SessionResetPasswordResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`SessionResetPasswordRequest`](../../doc/models/session-reset-password-request.md) | Body, Required | Request with current password that needs to be reset. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`SessionResetPasswordResult`](../../doc/models/session-reset-password-result.md)
-
-## Example Usage
-
-```ts
-const body: SessionResetPasswordRequest = {
-  oldPassword: 'grflbk',
-};
-
-try {
-  const { result, ...httpResponse } = await sessionManagementController.resetConnectivityManagementPassword(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "newPassword": "Wh0a1545a84d"
 }
 ```
 

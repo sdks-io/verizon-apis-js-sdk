@@ -10,10 +10,91 @@ const serviceClaimsController = new ServiceClaimsController(client);
 
 ## Methods
 
-* [List Service Claims](../../doc/controllers/service-claims.md#list-service-claims)
 * [Associate Cloud Credential With Service Claim](../../doc/controllers/service-claims.md#associate-cloud-credential-with-service-claim)
-* [Mark Service Claim Status as Completed](../../doc/controllers/service-claims.md#mark-service-claim-status-as-completed)
+* [List Service Claims](../../doc/controllers/service-claims.md#list-service-claims)
 * [Update Service Claim Status](../../doc/controllers/service-claims.md#update-service-claim-status)
+* [Mark Service Claim Status as Completed](../../doc/controllers/service-claims.md#mark-service-claim-status-as-completed)
+
+
+# Associate Cloud Credential With Service Claim
+
+Associate an existing cloud credential with a service's claim which will be used to connect to user's cloud provider.
+
+```ts
+async associateCloudCredentialWithServiceClaim(
+  accountName: string,
+  serviceId: string,
+  claimId: string,
+  body: CSPProfileIdRequest,
+  correlationId?: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<AssociateCloudCredentialResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Header, Required | User account name.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9\-_]+$` |
+| `serviceId` | `string` | Template, Required | System generated unique identifier of the service which user is using.<br>**Constraints**: *Maximum Length*: `100`, *Pattern*: `^[A-Za-z0-9_-]+$` |
+| `claimId` | `string` | Template, Required | System generated unique identifier for the claim which user is using.<br>**Constraints**: *Maximum Length*: `100`, *Pattern*: `^[A-Za-z0-9_-]+$` |
+| `body` | [`CSPProfileIdRequest`](../../doc/models/csp-profile-id-request.md) | Body, Required | - |
+| `correlationId` | `string \| undefined` | Header, Optional | **Constraints**: *Maximum Length*: `50`, *Pattern*: `^[a-zA-Z0-9-]+$` |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`AssociateCloudCredentialResult`](../../doc/models/associate-cloud-credential-result.md)
+
+## Example Usage
+
+```ts
+const accountName = 'test_account1';
+
+const serviceId = 'b32321d2-4ee3-458b-a70b-e956525d46c9';
+
+const claimId = '58296746-57ee-44f8-8107-399b61d58356';
+
+const body: CSPProfileIdRequest = {
+  cspProfileId: '2e13f3a1-287f-4c63-9218-d026bf1bda32',
+};
+
+const correlationId = '9958f2f8-c4e3-46e0-8982-356de6515ae9';
+
+try {
+  const { result, ...httpResponse } = await serviceClaimsController.associateCloudCredentialWithServiceClaim(
+    accountName,
+    serviceId,
+    claimId,
+    body,
+    correlationId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "message": "CSP Profile got associated with current claim successfully"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad request. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 404 | Not Found. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 
 
 # List Service Claims
@@ -136,19 +217,19 @@ try {
 | 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 
 
-# Associate Cloud Credential With Service Claim
+# Update Service Claim Status
 
-Associate an existing cloud credential with a service's claim which will be used to connect to user's cloud provider.
+Using this API user can update service's claim status as complete/verified etc.
 
 ```ts
-async associateCloudCredentialWithServiceClaim(
+async updateServiceClaimStatus(
   accountName: string,
   serviceId: string,
   claimId: string,
-  body: CSPProfileIdRequest,
+  body: ClaimStatusRequest,
   correlationId?: string,
   requestOptions?: RequestOptions
-): Promise<ApiResponse<AssociateCloudCredentialResult>>
+): Promise<ApiResponse<void>>
 ```
 
 ## Parameters
@@ -157,14 +238,14 @@ async associateCloudCredentialWithServiceClaim(
 |  --- | --- | --- | --- |
 | `accountName` | `string` | Header, Required | User account name.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9\-_]+$` |
 | `serviceId` | `string` | Template, Required | System generated unique identifier of the service which user is using.<br>**Constraints**: *Maximum Length*: `100`, *Pattern*: `^[A-Za-z0-9_-]+$` |
-| `claimId` | `string` | Template, Required | System generated unique identifier for the claim which user is using.<br>**Constraints**: *Maximum Length*: `100`, *Pattern*: `^[A-Za-z0-9_-]+$` |
-| `body` | [`CSPProfileIdRequest`](../../doc/models/csp-profile-id-request.md) | Body, Required | - |
+| `claimId` | `string` | Template, Required | System generated unique identifier of the claim which user is using.<br>**Constraints**: *Maximum Length*: `100`, *Pattern*: `^[A-Za-z0-9_-]+$` |
+| `body` | [`ClaimStatusRequest`](../../doc/models/claim-status-request.md) | Body, Required | - |
 | `correlationId` | `string \| undefined` | Header, Optional | **Constraints**: *Maximum Length*: `50`, *Pattern*: `^[a-zA-Z0-9-]+$` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
 
-[`AssociateCloudCredentialResult`](../../doc/models/associate-cloud-credential-result.md)
+`void`
 
 ## Example Usage
 
@@ -175,14 +256,14 @@ const serviceId = 'b32321d2-4ee3-458b-a70b-e956525d46c9';
 
 const claimId = '58296746-57ee-44f8-8107-399b61d58356';
 
-const body: CSPProfileIdRequest = {
-  cspProfileId: '2e13f3a1-287f-4c63-9218-d026bf1bda32',
+const body: ClaimStatusRequest = {
+  claimStatus: ClaimStatusEnum.VERIFIED,
 };
 
 const correlationId = '9958f2f8-c4e3-46e0-8982-356de6515ae9';
 
 try {
-  const { result, ...httpResponse } = await serviceClaimsController.associateCloudCredentialWithServiceClaim(
+  const { result, ...httpResponse } = await serviceClaimsController.updateServiceClaimStatus(
     accountName,
     serviceId,
     claimId,
@@ -196,14 +277,6 @@ try {
     const errors = error.result;
     // const { statusCode, headers } = error;
   }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "message": "CSP Profile got associated with current claim successfully"
 }
 ```
 
@@ -261,79 +334,6 @@ try {
     accountName,
     serviceId,
     claimId,
-    correlationId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad request. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 404 | Not Found. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-
-
-# Update Service Claim Status
-
-Using this API user can update service's claim status as complete/verified etc.
-
-```ts
-async updateServiceClaimStatus(
-  accountName: string,
-  serviceId: string,
-  claimId: string,
-  body: ClaimStatusRequest,
-  correlationId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `accountName` | `string` | Header, Required | User account name.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9\-_]+$` |
-| `serviceId` | `string` | Template, Required | System generated unique identifier of the service which user is using.<br>**Constraints**: *Maximum Length*: `100`, *Pattern*: `^[A-Za-z0-9_-]+$` |
-| `claimId` | `string` | Template, Required | System generated unique identifier of the claim which user is using.<br>**Constraints**: *Maximum Length*: `100`, *Pattern*: `^[A-Za-z0-9_-]+$` |
-| `body` | [`ClaimStatusRequest`](../../doc/models/claim-status-request.md) | Body, Required | - |
-| `correlationId` | `string \| undefined` | Header, Optional | **Constraints**: *Maximum Length*: `50`, *Pattern*: `^[a-zA-Z0-9-]+$` |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```ts
-const accountName = 'test_account1';
-
-const serviceId = 'b32321d2-4ee3-458b-a70b-e956525d46c9';
-
-const claimId = '58296746-57ee-44f8-8107-399b61d58356';
-
-const body: ClaimStatusRequest = {
-  claimStatus: ClaimStatusEnum.VERIFIED,
-};
-
-const correlationId = '9958f2f8-c4e3-46e0-8982-356de6515ae9';
-
-try {
-  const { result, ...httpResponse } = await serviceClaimsController.updateServiceClaimStatus(
-    accountName,
-    serviceId,
-    claimId,
-    body,
     correlationId
   );
   // Get more response info...

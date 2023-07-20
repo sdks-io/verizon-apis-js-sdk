@@ -10,80 +10,9 @@ const cloudConnectorSubscriptionsController = new CloudConnectorSubscriptionsCon
 
 ## Methods
 
-* [Create Subscription](../../doc/controllers/cloud-connector-subscriptions.md#create-subscription)
 * [Query Subscription](../../doc/controllers/cloud-connector-subscriptions.md#query-subscription)
 * [Delete Subscription](../../doc/controllers/cloud-connector-subscriptions.md#delete-subscription)
-
-
-# Create Subscription
-
-Create a subscription to define a streaming channel that sends data from devices in the account to an endpoint defined in a target resource.
-
-```ts
-async createSubscription(
-  body: CreateSubscriptionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Subscription>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Required | The request body provides the details of the subscription that you want to create. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`Subscription`](../../doc/models/subscription.md)
-
-## Example Usage
-
-```ts
-const body: CreateSubscriptionRequest = {
-  accountidentifier: {
-    billingaccountid: '1223334444-00001',
-  },
-  email: 'me@mycompany.com',
-  billingaccountid: '1223334444-00001',
-  streamkind: 'ts.event',
-  targetid: '{target ID}',
-  name: 'Account subscription 1',
-  allowaggregation: false,
-};
-
-try {
-  const { result, ...httpResponse } = await cloudConnectorSubscriptionsController.createSubscription(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "configurationfailures": 0,
-  "createdon": "2018-12-21T05:05:02.134Z",
-  "delegateid": "00000000-0000-0000-0000-000000000000",
-  "id": "d8c145dd-6948-67ec-ed9b-6a298806bb4a",
-  "kind": "ts.subscription",
-  "laststreamingstatus": "",
-  "laststreamingtime": "0001-01-01T00:00:00Z",
-  "lastupdated": "2018-12-21T05:22:12.178Z",
-  "networkfailures": 0,
-  "streamfailures": 0,
-  "streamkind": "ts.event",
-  "targetid": "4e211a0e-e39d-6c32-e15b-d6f07f9e2ec8",
-  "version": "1.0",
-  "versionid": "5ed6063f-04e0-11e9-8279-02420a5e1b0b"
-}
-```
+* [Create Subscription](../../doc/controllers/cloud-connector-subscriptions.md#create-subscription)
 
 
 # Query Subscription
@@ -202,6 +131,77 @@ try {
     const errors = error.result;
     // const { statusCode, headers } = error;
   }
+}
+```
+
+
+# Create Subscription
+
+Create a subscription to define a streaming channel that sends data from devices in the account to an endpoint defined in a target resource.
+
+```ts
+async createSubscription(
+  body: CreateSubscriptionRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<Subscription>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CreateSubscriptionRequest`](../../doc/models/create-subscription-request.md) | Body, Required | The request body provides the details of the subscription that you want to create. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`Subscription`](../../doc/models/subscription.md)
+
+## Example Usage
+
+```ts
+const body: CreateSubscriptionRequest = {
+  accountidentifier: {
+    billingaccountid: '1223334444-00001',
+  },
+  email: 'me@mycompany.com',
+  billingaccountid: '1223334444-00001',
+  streamkind: 'ts.event',
+  targetid: '{target ID}',
+  name: 'Account subscription 1',
+  allowaggregation: false,
+};
+
+try {
+  const { result, ...httpResponse } = await cloudConnectorSubscriptionsController.createSubscription(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "configurationfailures": 0,
+  "createdon": "2018-12-21T05:05:02.134Z",
+  "delegateid": "00000000-0000-0000-0000-000000000000",
+  "id": "d8c145dd-6948-67ec-ed9b-6a298806bb4a",
+  "kind": "ts.subscription",
+  "laststreamingstatus": "",
+  "laststreamingtime": "0001-01-01T00:00:00Z",
+  "lastupdated": "2018-12-21T05:22:12.178Z",
+  "networkfailures": 0,
+  "streamfailures": 0,
+  "streamkind": "ts.event",
+  "targetid": "4e211a0e-e39d-6c32-e15b-d6f07f9e2ec8",
+  "version": "1.0",
+  "versionid": "5ed6063f-04e0-11e9-8279-02420a5e1b0b"
 }
 ```
 

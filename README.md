@@ -12,10 +12,10 @@ Verizon Terms of Service: [https://www.verizon.com/business/5g-edge-portal/legal
 Run the following command from your project directory to install the package from npm:
 
 ```ts
-npm install verizon-ap-is-sdk@1.0.0
+npm install sdksio-verizon-apis-sdk@1.0.0
 ```
 
-For additional package details, see the [Npm page for the verizon-ap-is-sdk@1.0.0  npm](https://www.npmjs.com/package/verizon-ap-is-sdk/v/1.0.0).
+For additional package details, see the [Npm page for the sdksio-verizon-apis-sdk@1.0.0  npm](https://www.npmjs.com/package/sdksio-verizon-apis-sdk/v/1.0.0).
 
 ## Initialize the API Client
 

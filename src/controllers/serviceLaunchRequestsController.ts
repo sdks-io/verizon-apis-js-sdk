@@ -25,6 +25,43 @@ import { BaseController } from './baseController';
 
 export class ServiceLaunchRequestsController extends BaseController {
   /**
+   * Create a request for launching a service.
+   *
+   * @param accountName   User account name.
+   * @param userName
+   * @param correlationId
+   * @param body          Request for launching a service.
+   * @return Response from the API call
+   */
+  async createServiceLaunchRequest(
+    accountName: string,
+    userName: string,
+    correlationId?: string,
+    body?: CreateServiceLaunchRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ServiceLaunchRequestResult>> {
+    const req = this.createRequest('POST', '/v1/service/launch/request');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      userName: [userName, string()],
+      correlationId: [correlationId, optional(string())],
+      body: [body, optional(createServiceLaunchRequestSchema)],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('userName', mapped.userName);
+    req.header('Content-Type', '*/*');
+    req.header('correlationId', mapped.correlationId);
+    req.json(mapped.body);
+    req.throwOn(400, EdgeServiceLaunchResultError, 'HTTP 400 Bad Request.');
+    req.throwOn(401, EdgeServiceLaunchResultError, 'HTTP 401 Unauthorized.');
+    req.throwOn(404, EdgeServiceLaunchResultError, 'HTTP 404 Not found.');
+    req.throwOn(500, EdgeServiceLaunchResultError, 'Internal Server Error.');
+    req.defaultToError(EdgeServiceLaunchResultError, 'HTTP 500 Internal Server Error.');
+    return req.callAsJson(serviceLaunchRequestResultSchema, requestOptions);
+  }
+
+  /**
    * Get information related to a service launch request.
    *
    * @param accountName   User account name.
@@ -73,43 +110,6 @@ export class ServiceLaunchRequestsController extends BaseController {
     req.throwOn(500, EdgeServiceLaunchResultError, 'Internal Server Error.');
     req.defaultToError(EdgeServiceLaunchResultError, 'Unexpected error.');
     return req.callAsJson(serviceLaunchRequestsResultSchema, requestOptions);
-  }
-
-  /**
-   * Create a request for launching a service.
-   *
-   * @param accountName   User account name.
-   * @param userName
-   * @param correlationId
-   * @param body          Request for launching a service.
-   * @return Response from the API call
-   */
-  async createServiceLaunchRequest(
-    accountName: string,
-    userName: string,
-    correlationId?: string,
-    body?: CreateServiceLaunchRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ServiceLaunchRequestResult>> {
-    const req = this.createRequest('POST', '/v1/service/launch/request');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      userName: [userName, string()],
-      correlationId: [correlationId, optional(string())],
-      body: [body, optional(createServiceLaunchRequestSchema)],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('userName', mapped.userName);
-    req.header('Content-Type', '*/*');
-    req.header('correlationId', mapped.correlationId);
-    req.json(mapped.body);
-    req.throwOn(400, EdgeServiceLaunchResultError, 'HTTP 400 Bad Request.');
-    req.throwOn(401, EdgeServiceLaunchResultError, 'HTTP 401 Unauthorized.');
-    req.throwOn(404, EdgeServiceLaunchResultError, 'HTTP 404 Not found.');
-    req.throwOn(500, EdgeServiceLaunchResultError, 'Internal Server Error.');
-    req.defaultToError(EdgeServiceLaunchResultError, 'HTTP 500 Internal Server Error.');
-    return req.callAsJson(serviceLaunchRequestResultSchema, requestOptions);
   }
 
   /**

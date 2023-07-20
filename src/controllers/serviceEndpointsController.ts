@@ -39,6 +39,46 @@ import { BaseController } from './baseController';
 
 export class ServiceEndpointsController extends BaseController {
   /**
+   * Returns a list of all registered service endpoints.
+   *
+   * @return Response from the API call
+   */
+  async listAllServiceEndpoints(
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ListAllServiceEndpointsResult>> {
+    const req = this.createRequest('GET', '/serviceendpointsall');
+    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
+    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
+    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    return req.callAsJson(listAllServiceEndpointsResultSchema, requestOptions);
+  }
+
+  /**
+   * Returns endpoint information for all Service Endpoints registered to a specified serviceEndpointId.
+   *
+   * @param serviceEndpointsId A system-defined string identifier representing one or more registered
+   *                                     Service Endpoints.
+   * @return Response from the API call
+   */
+  async getServiceEndpoint(
+    serviceEndpointsId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ResourcesEdgeHostedServiceWithProfileId[]>> {
+    const req = this.createRequest('GET');
+    const mapped = req.prepareArgs({
+      serviceEndpointsId: [serviceEndpointsId, string()],
+    });
+    req.appendTemplatePath`/serviceendpoints/${mapped.serviceEndpointsId}`;
+    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
+    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
+    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    return req.callAsJson(
+      array(resourcesEdgeHostedServiceWithProfileIdSchema),
+      requestOptions
+    );
+  }
+
+  /**
    * Returns a list of optimal Service Endpoints that client devices can connect to. **Note:** If a query
    * is sent with all of the parameters, it will fail with a "400" error. You can search based on the
    * following parameter combinations - Region plus Service Endpoints IDs and Subscriber density (density
@@ -87,79 +127,6 @@ export class ServiceEndpointsController extends BaseController {
     req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
     return req.callAsJson(
       listOptimalServiceEndpointsResultSchema,
-      requestOptions
-    );
-  }
-
-  /**
-   * Register Service Endpoints of a deployed application to specified MEC Platforms.
-   *
-   * @param body         An array of Service Endpoint data for a deployed
-   *                                                                  application. The request body passes all of the
-   *                                                                  needed parameters to create a service endpoint.
-   *                                                                  Parameters will be edited here rather than the
-   *                                                                  **Parameters** section above. The `ern`,
-   *                                                                  `applicationServerProviderId`, `applicationId`
-   *                                                                  and `serviceProfileID` parameters are required.
-   *                                                                  **Note:** Currently, the only valid value for
-   *                                                                  `applicationServerProviderId`is **AWS**. Also, if
-   *                                                                  you do not know one of the optional values (i.e.
-   *                                                                  URI), you can erase the line from the query by
-   *                                                                  back-spacing over it.
-   * @return Response from the API call
-   */
-  async registerServiceEndpoints(
-    body: ResourcesEdgeHostedServiceWithProfileId[],
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RegisterServiceEndpointResult>> {
-    const req = this.createRequest('POST', '/serviceendpoints');
-    const mapped = req.prepareArgs({
-      body: [body, array(resourcesEdgeHostedServiceWithProfileIdSchema)],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
-    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
-    return req.callAsJson(registerServiceEndpointResultSchema, requestOptions);
-  }
-
-  /**
-   * Returns a list of all registered service endpoints.
-   *
-   * @return Response from the API call
-   */
-  async listAllServiceEndpoints(
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ListAllServiceEndpointsResult>> {
-    const req = this.createRequest('GET', '/serviceendpointsall');
-    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
-    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
-    return req.callAsJson(listAllServiceEndpointsResultSchema, requestOptions);
-  }
-
-  /**
-   * Returns endpoint information for all Service Endpoints registered to a specified serviceEndpointId.
-   *
-   * @param serviceEndpointsId A system-defined string identifier representing one or more registered
-   *                                     Service Endpoints.
-   * @return Response from the API call
-   */
-  async getServiceEndpoint(
-    serviceEndpointsId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ResourcesEdgeHostedServiceWithProfileId[]>> {
-    const req = this.createRequest('GET');
-    const mapped = req.prepareArgs({
-      serviceEndpointsId: [serviceEndpointsId, string()],
-    });
-    req.appendTemplatePath`/serviceendpoints/${mapped.serviceEndpointsId}`;
-    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
-    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
-    return req.callAsJson(
-      array(resourcesEdgeHostedServiceWithProfileIdSchema),
       requestOptions
     );
   }
@@ -225,5 +192,38 @@ export class ServiceEndpointsController extends BaseController {
       deregisterServiceEndpointResultSchema,
       requestOptions
     );
+  }
+
+  /**
+   * Register Service Endpoints of a deployed application to specified MEC Platforms.
+   *
+   * @param body         An array of Service Endpoint data for a deployed
+   *                                                                  application. The request body passes all of the
+   *                                                                  needed parameters to create a service endpoint.
+   *                                                                  Parameters will be edited here rather than the
+   *                                                                  **Parameters** section above. The `ern`,
+   *                                                                  `applicationServerProviderId`, `applicationId`
+   *                                                                  and `serviceProfileID` parameters are required.
+   *                                                                  **Note:** Currently, the only valid value for
+   *                                                                  `applicationServerProviderId`is **AWS**. Also, if
+   *                                                                  you do not know one of the optional values (i.e.
+   *                                                                  URI), you can erase the line from the query by
+   *                                                                  back-spacing over it.
+   * @return Response from the API call
+   */
+  async registerServiceEndpoints(
+    body: ResourcesEdgeHostedServiceWithProfileId[],
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<RegisterServiceEndpointResult>> {
+    const req = this.createRequest('POST', '/serviceendpoints');
+    const mapped = req.prepareArgs({
+      body: [body, array(resourcesEdgeHostedServiceWithProfileIdSchema)],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
+    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
+    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    return req.callAsJson(registerServiceEndpointResultSchema, requestOptions);
   }
 }

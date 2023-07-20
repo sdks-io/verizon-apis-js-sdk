@@ -56,6 +56,34 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
   }
 
   /**
+   * The report endpoint allows user to get campaign history of an account for specified status.
+   *
+   * @param account            Account identifier.
+   * @param campaignStatus     Status of the campaign.
+   * @param lastSeenCampaignId Last seen campaign Id.
+   * @return Response from the API call
+   */
+  async getCampaignHistoryByStatus(
+    account: string,
+    campaignStatus: string,
+    lastSeenCampaignId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<V2CampaignHistory>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      campaignStatus: [campaignStatus, string()],
+      lastSeenCampaignId: [lastSeenCampaignId, optional(string())],
+    });
+    req.query('campaignStatus', mapped.campaignStatus);
+    req.query('lastSeenCampaignId', mapped.lastSeenCampaignId);
+    req.appendTemplatePath`/reports/${mapped.account}/campaigns`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    return req.callAsJson(v2CampaignHistorySchema, requestOptions);
+  }
+
+  /**
    * The device endpoint gets devices information of an account.
    *
    * @param account          Account identifier.
@@ -105,34 +133,6 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.appendTemplatePath`/reports/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
     return req.callAsJson(array(deviceSoftwareUpgradeSchema), requestOptions);
-  }
-
-  /**
-   * The report endpoint allows user to get campaign history of an account for specified status.
-   *
-   * @param account            Account identifier.
-   * @param campaignStatus     Status of the campaign.
-   * @param lastSeenCampaignId Last seen campaign Id.
-   * @return Response from the API call
-   */
-  async getCampaignHistoryByStatus(
-    account: string,
-    campaignStatus: string,
-    lastSeenCampaignId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<V2CampaignHistory>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      campaignStatus: [campaignStatus, string()],
-      lastSeenCampaignId: [lastSeenCampaignId, optional(string())],
-    });
-    req.query('campaignStatus', mapped.campaignStatus);
-    req.query('lastSeenCampaignId', mapped.lastSeenCampaignId);
-    req.appendTemplatePath`/reports/${mapped.account}/campaigns`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(v2CampaignHistorySchema, requestOptions);
   }
 
   /**

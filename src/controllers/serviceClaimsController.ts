@@ -30,6 +30,48 @@ import { BaseController } from './baseController';
 
 export class ServiceClaimsController extends BaseController {
   /**
+   * Associate an existing cloud credential with a service's claim which will be used to connect to
+   * user's cloud provider.
+   *
+   * @param accountName   User account name.
+   * @param serviceId     System generated unique identifier of the service which user
+   *                                                    is using.
+   * @param claimId       System generated unique identifier for the claim which user is
+   *                                                    using.
+   * @param body
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async associateCloudCredentialWithServiceClaim(
+    accountName: string,
+    serviceId: string,
+    claimId: string,
+    body: CSPProfileIdRequest,
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AssociateCloudCredentialResult>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      serviceId: [serviceId, string()],
+      claimId: [claimId, string()],
+      body: [body, cSPProfileIdRequestSchema],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('Content-Type', 'application/json');
+    req.header('correlationId', mapped.correlationId);
+    req.json(mapped.body);
+    req.appendTemplatePath`/v1/services/${mapped.serviceId}/claims/${mapped.claimId}/associateCspProfile`;
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not Found.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    return req.callAsJson(associateCloudCredentialResultSchema, requestOptions);
+  }
+
+  /**
    * Fetch all service's claim(s) associated with a service. Service claims are generated based on
    * service's compatibility with different cloud service provider.
    *
@@ -92,83 +134,6 @@ export class ServiceClaimsController extends BaseController {
   }
 
   /**
-   * Associate an existing cloud credential with a service's claim which will be used to connect to
-   * user's cloud provider.
-   *
-   * @param accountName   User account name.
-   * @param serviceId     System generated unique identifier of the service which user
-   *                                                    is using.
-   * @param claimId       System generated unique identifier for the claim which user is
-   *                                                    using.
-   * @param body
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async associateCloudCredentialWithServiceClaim(
-    accountName: string,
-    serviceId: string,
-    claimId: string,
-    body: CSPProfileIdRequest,
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<AssociateCloudCredentialResult>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceId: [serviceId, string()],
-      claimId: [claimId, string()],
-      body: [body, cSPProfileIdRequestSchema],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('Content-Type', 'application/json');
-    req.header('correlationId', mapped.correlationId);
-    req.json(mapped.body);
-    req.appendTemplatePath`/v1/services/${mapped.serviceId}/claims/${mapped.claimId}/associateCspProfile`;
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not Found.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    return req.callAsJson(associateCloudCredentialResultSchema, requestOptions);
-  }
-
-  /**
-   * Mark a service's claim status as complete post successful verification of sandbox testing in the
-   * respective sandbox environment.
-   *
-   * @param accountName   User account name.
-   * @param serviceId     System generated unique identifier of the service which user is using.
-   * @param claimId       System generated unique identifier of the claim which user is using.
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async markServiceClaimStatusAsCompleted(
-    accountName: string,
-    serviceId: string,
-    claimId: string,
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<void>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceId: [serviceId, string()],
-      claimId: [claimId, string()],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('correlationId', mapped.correlationId);
-    req.appendTemplatePath`/v1/services/${mapped.serviceId}/claims/${mapped.claimId}/claimStatusCompleted`;
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not Found.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    return req.call(requestOptions);
-  }
-
-  /**
    * Using this API user can update service's claim status as complete/verified etc.
    *
    * @param accountName   User account name.
@@ -202,6 +167,41 @@ export class ServiceClaimsController extends BaseController {
     req.header('correlationId', mapped.correlationId);
     req.json(mapped.body);
     req.appendTemplatePath`/v1/services/${mapped.serviceId}/claims/${mapped.claimId}/claimStatus`;
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not Found.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    return req.call(requestOptions);
+  }
+
+  /**
+   * Mark a service's claim status as complete post successful verification of sandbox testing in the
+   * respective sandbox environment.
+   *
+   * @param accountName   User account name.
+   * @param serviceId     System generated unique identifier of the service which user is using.
+   * @param claimId       System generated unique identifier of the claim which user is using.
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async markServiceClaimStatusAsCompleted(
+    accountName: string,
+    serviceId: string,
+    claimId: string,
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<void>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      serviceId: [serviceId, string()],
+      claimId: [claimId, string()],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('correlationId', mapped.correlationId);
+    req.appendTemplatePath`/v1/services/${mapped.serviceId}/claims/${mapped.claimId}/claimStatusCompleted`;
     req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad request.');
     req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
     req.throwOn(404, EdgeServiceOnboardingResultError, 'Not Found.');

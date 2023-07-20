@@ -44,24 +44,6 @@ export class AnomalySettingsController extends BaseController {
   }
 
   /**
-   * Retrieves the current anomaly detection settings for an account.
-   *
-   * @param accountName The name of the subscribed account.
-   * @return Response from the API call
-   */
-  async listAnomalyDetectionSettings(
-    accountName: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<AnomalyDetectionSettings>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
-    req.appendTemplatePath`/v1/intelligence/${mapped.accountName}/anomaly/settings`;
-    req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    return req.callAsJson(anomalyDetectionSettingsSchema, requestOptions);
-  }
-
-  /**
    * Resets the thresholds to zero.
    *
    * @param accountName The name of the subscribed account.
@@ -77,5 +59,23 @@ export class AnomalySettingsController extends BaseController {
     req.appendTemplatePath`/v1/intelligence/${mapped.accountName}/anomaly/settings/reset`;
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
     return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
+  }
+
+  /**
+   * Retrieves the current anomaly detection settings for an account.
+   *
+   * @param accountName The name of the subscribed account.
+   * @return Response from the API call
+   */
+  async listAnomalyDetectionSettings(
+    accountName: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AnomalyDetectionSettings>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
+    req.appendTemplatePath`/v1/intelligence/${mapped.accountName}/anomaly/settings`;
+    req.defaultToError(IntelligenceResultError, 'An error occurred.');
+    return req.callAsJson(anomalyDetectionSettingsSchema, requestOptions);
   }
 }

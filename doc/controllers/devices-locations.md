@@ -13,9 +13,9 @@ const devicesLocationsController = new DevicesLocationsController(client);
 * [List Devices Locations Synchronous](../../doc/controllers/devices-locations.md#list-devices-locations-synchronous)
 * [List Devices Locations Asynchronous](../../doc/controllers/devices-locations.md#list-devices-locations-asynchronous)
 * [Cancel Device Location Request](../../doc/controllers/devices-locations.md#cancel-device-location-request)
-* [Create Location Report](../../doc/controllers/devices-locations.md#create-location-report)
 * [Retrieve Location Report](../../doc/controllers/devices-locations.md#retrieve-location-report)
 * [Get Location Report Status](../../doc/controllers/devices-locations.md#get-location-report-status)
+* [Create Location Report](../../doc/controllers/devices-locations.md#create-location-report)
 * [Cancel Queued Location Report Generation](../../doc/controllers/devices-locations.md#cancel-queued-location-report-generation)
 
 
@@ -251,82 +251,6 @@ try {
 | Default | Unexpected error. | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
 
 
-# Create Location Report
-
-Request an asynchronous device location report.
-
-```ts
-async createLocationReport(
-  body: LocationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AsynchronousLocationRequestResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`LocationRequest`](../../doc/models/location-request.md) | Body, Required | Request for device location report. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`AsynchronousLocationRequestResult`](../../doc/models/asynchronous-location-request-result.md)
-
-## Example Usage
-
-```ts
-const body: LocationRequest = {
-  accountName: '1234567890-00001',
-  accuracyMode: 0,
-  cacheMode: CacheModeEnum.Enum1,
-  deviceList: [
-    {
-      id: '980003420535573',
-      kind: 'imei',
-      mdn: '7892345678',
-    },
-    {
-      id: '375535024300089',
-      kind: 'imei',
-      mdn: '7897654321',
-    },
-    {
-      id: 'A100003861E585',
-      kind: 'meid',
-      mdn: '7897650914',
-    }
-  ],
-};
-
-try {
-  const { result, ...httpResponse } = await devicesLocationsController.createLocationReport(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "txid": "2c90bd28-ece4-42ef-9f02-7e3bd4fbff33",
-  "status": "QUEUED"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| Default | Unexpected error. | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
-
-
 # Retrieve Location Report
 
 Download a completed asynchronous device location report.
@@ -481,6 +405,82 @@ try {
 {
   "txid": "2c90bd28-ece4-42ef-9f02-7e3bd4fbff33",
   "status": "INPROGRESS"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Unexpected error. | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
+
+
+# Create Location Report
+
+Request an asynchronous device location report.
+
+```ts
+async createLocationReport(
+  body: LocationRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<AsynchronousLocationRequestResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`LocationRequest`](../../doc/models/location-request.md) | Body, Required | Request for device location report. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`AsynchronousLocationRequestResult`](../../doc/models/asynchronous-location-request-result.md)
+
+## Example Usage
+
+```ts
+const body: LocationRequest = {
+  accountName: '1234567890-00001',
+  accuracyMode: 0,
+  cacheMode: CacheModeEnum.Enum1,
+  deviceList: [
+    {
+      id: '980003420535573',
+      kind: 'imei',
+      mdn: '7892345678',
+    },
+    {
+      id: '375535024300089',
+      kind: 'imei',
+      mdn: '7897654321',
+    },
+    {
+      id: 'A100003861E585',
+      kind: 'meid',
+      mdn: '7897650914',
+    }
+  ],
+};
+
+try {
+  const { result, ...httpResponse } = await devicesLocationsController.createLocationReport(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "txid": "2c90bd28-ece4-42ef-9f02-7e3bd4fbff33",
+  "status": "QUEUED"
 }
 ```
 

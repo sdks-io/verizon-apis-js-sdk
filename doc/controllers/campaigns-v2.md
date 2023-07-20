@@ -10,125 +10,13 @@ const campaignsV2Controller = new CampaignsV2Controller(client);
 
 ## Methods
 
-* [Schedule Campaign Firmware Upgrade](../../doc/controllers/campaigns-v2.md#schedule-campaign-firmware-upgrade)
 * [Get Campaign Information](../../doc/controllers/campaigns-v2.md#get-campaign-information)
-* [Update Campaign Firmware Devices](../../doc/controllers/campaigns-v2.md#update-campaign-firmware-devices)
-* [Cancel Campaign](../../doc/controllers/campaigns-v2.md#cancel-campaign)
 * [Update Campaign Dates](../../doc/controllers/campaigns-v2.md#update-campaign-dates)
 * [Schedule File Upgrade](../../doc/controllers/campaigns-v2.md#schedule-file-upgrade)
+* [Update Campaign Firmware Devices](../../doc/controllers/campaigns-v2.md#update-campaign-firmware-devices)
+* [Schedule Campaign Firmware Upgrade](../../doc/controllers/campaigns-v2.md#schedule-campaign-firmware-upgrade)
+* [Cancel Campaign](../../doc/controllers/campaigns-v2.md#cancel-campaign)
 * [Schedule SW Upgrade Http Devices](../../doc/controllers/campaigns-v2.md#schedule-sw-upgrade-http-devices)
-
-
-# Schedule Campaign Firmware Upgrade
-
-This endpoint allows user to schedule a software upgrade.
-
-```ts
-async scheduleCampaignFirmwareUpgrade(
-  account: string,
-  body: CampaignSoftwareUpgrade,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CampaignSoftware>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier. |
-| `body` | [`CampaignSoftwareUpgrade`](../../doc/models/campaign-software-upgrade.md) | Body, Required | Software upgrade information. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`CampaignSoftware`](../../doc/models/campaign-software.md)
-
-## Example Usage
-
-```ts
-const account = '0000123456-00001';
-
-const body: CampaignSoftwareUpgrade = {
-  softwareName: 'FOTA_Verizon_Model-A_02To03_HF',
-  softwareFrom: 'FOTA_Verizon_Model-A_00To01_HF',
-  softwareTo: 'FOTA_Verizon_Model-A_02To03_HF',
-  distributionType: 'HTTP',
-  startDate: '2020-08-21',
-  endDate: '2020-08-22',
-  deviceList: [
-    '990013907835573',
-    '990013907884259'
-  ],
-  campaignName: 'FOTA_Verizon_Upgrade',
-  downloadAfterDate: '2020-08-21',
-  downloadTimeWindowList: [
-    {
-      startTime: 20,
-      endTime: 21,
-    }
-  ],
-  installAfterDate: '2020-08-21',
-  installTimeWindowList: [
-    {
-      startTime: 22,
-      endTime: 23,
-    }
-  ],
-};
-
-try {
-  const { result, ...httpResponse } = await campaignsV2Controller.scheduleCampaignFirmwareUpgrade(
-    account,
-    body
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "id": "60b5d639-ccdc-4db8-8824-069bd94c95bf",
-  "accountName": "0402196254-00001",
-  "campaignName": "FOTA_Verizon_Upgrade",
-  "softwareName": "FOTA_Verizon_Model-A_02To03_HF",
-  "distributionType": "HTTP",
-  "make": "Verizon",
-  "model": "Model-A",
-  "softwareFrom": "FOTA_Verizon_Model-A_00To01_HF",
-  "softwareTo": "FOTA_Verizon_Model-A_02To03_HF",
-  "startDate": "2020-08-21",
-  "endDate": "2020-08-22",
-  "downloadAfterDate": "2020-08-21",
-  "downloadTimeWindowList": [
-    {
-      "startTime": 20,
-      "endTime": 21
-    }
-  ],
-  "installAfterDate": "2020-08-21",
-  "installTimeWindowList": [
-    {
-      "startTime": 22,
-      "endTime": 23
-    }
-  ],
-  "status": "CampaignRequestPending"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
 
 
 # Get Campaign Information
@@ -207,132 +95,6 @@ try {
     }
   ],
   "status": "CampaignEnded"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
-
-
-# Update Campaign Firmware Devices
-
-This endpoint allows user to Add or Remove devices to an existing software upgrade.
-
-```ts
-async updateCampaignFirmwareDevices(
-  account: string,
-  campaignId: string,
-  body: V2AddOrRemoveDeviceRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2AddOrRemoveDeviceResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier. |
-| `campaignId` | `string` | Template, Required | Software upgrade information. |
-| `body` | [`V2AddOrRemoveDeviceRequest`](../../doc/models/v2-add-or-remove-device-request.md) | Body, Required | Request to add or remove device to existing software upgrade information. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`V2AddOrRemoveDeviceResult`](../../doc/models/v2-add-or-remove-device-result.md)
-
-## Example Usage
-
-```ts
-const account = '0000123456-00001';
-
-const campaignId = '60b5d639-ccdc-4db8-8824-069bd94c95bf';
-
-const body: V2AddOrRemoveDeviceRequest = {
-  type: 'remove',
-  deviceList: [
-    '990013907884259',
-    '990013907835573',
-    '990013907833575'
-  ],
-};
-
-try {
-  const { result, ...httpResponse } = await campaignsV2Controller.updateCampaignFirmwareDevices(
-    account,
-    campaignId,
-    body
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
-
-
-# Cancel Campaign
-
-This endpoint allows user to cancel software upgrade. A software upgrade already started can not be cancelled.
-
-```ts
-async cancelCampaign(
-  account: string,
-  campaignId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2SuccessResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier. |
-| `campaignId` | `string` | Template, Required | Unique identifier of campaign. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`FotaV2SuccessResult`](../../doc/models/fota-v2-success-result.md)
-
-## Example Usage
-
-```ts
-const account = '0000123456-00001';
-
-const campaignId = '60b5d639-ccdc-4db8-8824-069bd94c95bf';
-
-try {
-  const { result, ...httpResponse } = await campaignsV2Controller.cancelCampaign(
-    account,
-    campaignId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "success": true
 }
 ```
 
@@ -510,6 +272,244 @@ try {
     const errors = error.result;
     // const { statusCode, headers } = error;
   }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
+
+
+# Update Campaign Firmware Devices
+
+This endpoint allows user to Add or Remove devices to an existing software upgrade.
+
+```ts
+async updateCampaignFirmwareDevices(
+  account: string,
+  campaignId: string,
+  body: V2AddOrRemoveDeviceRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<V2AddOrRemoveDeviceResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier. |
+| `campaignId` | `string` | Template, Required | Software upgrade information. |
+| `body` | [`V2AddOrRemoveDeviceRequest`](../../doc/models/v2-add-or-remove-device-request.md) | Body, Required | Request to add or remove device to existing software upgrade information. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`V2AddOrRemoveDeviceResult`](../../doc/models/v2-add-or-remove-device-result.md)
+
+## Example Usage
+
+```ts
+const account = '0000123456-00001';
+
+const campaignId = '60b5d639-ccdc-4db8-8824-069bd94c95bf';
+
+const body: V2AddOrRemoveDeviceRequest = {
+  type: 'remove',
+  deviceList: [
+    '990013907884259',
+    '990013907835573',
+    '990013907833575'
+  ],
+};
+
+try {
+  const { result, ...httpResponse } = await campaignsV2Controller.updateCampaignFirmwareDevices(
+    account,
+    campaignId,
+    body
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
+
+
+# Schedule Campaign Firmware Upgrade
+
+This endpoint allows user to schedule a software upgrade.
+
+```ts
+async scheduleCampaignFirmwareUpgrade(
+  account: string,
+  body: CampaignSoftwareUpgrade,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<CampaignSoftware>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier. |
+| `body` | [`CampaignSoftwareUpgrade`](../../doc/models/campaign-software-upgrade.md) | Body, Required | Software upgrade information. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`CampaignSoftware`](../../doc/models/campaign-software.md)
+
+## Example Usage
+
+```ts
+const account = '0000123456-00001';
+
+const body: CampaignSoftwareUpgrade = {
+  softwareName: 'FOTA_Verizon_Model-A_02To03_HF',
+  softwareFrom: 'FOTA_Verizon_Model-A_00To01_HF',
+  softwareTo: 'FOTA_Verizon_Model-A_02To03_HF',
+  distributionType: 'HTTP',
+  startDate: '2020-08-21',
+  endDate: '2020-08-22',
+  deviceList: [
+    '990013907835573',
+    '990013907884259'
+  ],
+  campaignName: 'FOTA_Verizon_Upgrade',
+  downloadAfterDate: '2020-08-21',
+  downloadTimeWindowList: [
+    {
+      startTime: 20,
+      endTime: 21,
+    }
+  ],
+  installAfterDate: '2020-08-21',
+  installTimeWindowList: [
+    {
+      startTime: 22,
+      endTime: 23,
+    }
+  ],
+};
+
+try {
+  const { result, ...httpResponse } = await campaignsV2Controller.scheduleCampaignFirmwareUpgrade(
+    account,
+    body
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "id": "60b5d639-ccdc-4db8-8824-069bd94c95bf",
+  "accountName": "0402196254-00001",
+  "campaignName": "FOTA_Verizon_Upgrade",
+  "softwareName": "FOTA_Verizon_Model-A_02To03_HF",
+  "distributionType": "HTTP",
+  "make": "Verizon",
+  "model": "Model-A",
+  "softwareFrom": "FOTA_Verizon_Model-A_00To01_HF",
+  "softwareTo": "FOTA_Verizon_Model-A_02To03_HF",
+  "startDate": "2020-08-21",
+  "endDate": "2020-08-22",
+  "downloadAfterDate": "2020-08-21",
+  "downloadTimeWindowList": [
+    {
+      "startTime": 20,
+      "endTime": 21
+    }
+  ],
+  "installAfterDate": "2020-08-21",
+  "installTimeWindowList": [
+    {
+      "startTime": 22,
+      "endTime": 23
+    }
+  ],
+  "status": "CampaignRequestPending"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
+
+
+# Cancel Campaign
+
+This endpoint allows user to cancel software upgrade. A software upgrade already started can not be cancelled.
+
+```ts
+async cancelCampaign(
+  account: string,
+  campaignId: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<FotaV2SuccessResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier. |
+| `campaignId` | `string` | Template, Required | Unique identifier of campaign. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`FotaV2SuccessResult`](../../doc/models/fota-v2-success-result.md)
+
+## Example Usage
+
+```ts
+const account = '0000123456-00001';
+
+const campaignId = '60b5d639-ccdc-4db8-8824-069bd94c95bf';
+
+try {
+  const { result, ...httpResponse } = await campaignsV2Controller.cancelCampaign(
+    account,
+    campaignId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "success": true
 }
 ```
 

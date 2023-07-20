@@ -50,54 +50,6 @@ import { BaseController } from './baseController';
 
 export class CloudConnectorDevicesController extends BaseController {
   /**
-   * Change configuration values on a device, such as setting how often a device records and reports
-   * sensor readings.
-   *
-   * @param body         The request body changes configuration values on a
-   *                                                          device.
-   * @return Response from the API call
-   */
-  async updateDevicesConfigurationValue(
-    body: ChangeConfigurationRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ChangeConfigurationResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/devices/configuration/actions/set'
-    );
-    req.baseUrl('Cloud Connector');
-    const mapped = req.prepareArgs({
-      body: [body, changeConfigurationRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    return req.callAsJson(changeConfigurationResponseSchema, requestOptions);
-  }
-
-  /**
-   * Find devices by property values. Returns an array of all matching device resources.
-   *
-   * @param body         The request body specifies fields and values to match.
-   * @return Response from the API call
-   */
-  async findDeviceByPropertyValues(
-    body: QuerySubscriptionRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FindDeviceByPropertyResponseList>> {
-    const req = this.createRequest('POST', '/devices/actions/query');
-    req.baseUrl('Cloud Connector');
-    const mapped = req.prepareArgs({
-      body: [body, querySubscriptionRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    return req.callAsJson(
-      findDeviceByPropertyResponseListSchema,
-      requestOptions
-    );
-  }
-
-  /**
    * Search for devices by property values. Returns an array of all matching device resources.
    *
    * @param body         The request body specifies fields and values to match.
@@ -149,6 +101,29 @@ export class CloudConnectorDevicesController extends BaseController {
   }
 
   /**
+   * Find devices by property values. Returns an array of all matching device resources.
+   *
+   * @param body         The request body specifies fields and values to match.
+   * @return Response from the API call
+   */
+  async findDeviceByPropertyValues(
+    body: QuerySubscriptionRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<FindDeviceByPropertyResponseList>> {
+    const req = this.createRequest('POST', '/devices/actions/query');
+    req.baseUrl('Cloud Connector');
+    const mapped = req.prepareArgs({
+      body: [body, querySubscriptionRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    return req.callAsJson(
+      findDeviceByPropertyResponseListSchema,
+      requestOptions
+    );
+  }
+
+  /**
    * Returns the readings of a specified sensor, with the most recent reading first. Sensor readings are
    * stored as events; this request an array of events.
    *
@@ -174,6 +149,31 @@ export class CloudConnectorDevicesController extends BaseController {
       searchSensorHistoryResponseListSchema,
       requestOptions
     );
+  }
+
+  /**
+   * Change configuration values on a device, such as setting how often a device records and reports
+   * sensor readings.
+   *
+   * @param body         The request body changes configuration values on a
+   *                                                          device.
+   * @return Response from the API call
+   */
+  async updateDevicesConfigurationValue(
+    body: ChangeConfigurationRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ChangeConfigurationResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/devices/configuration/actions/set'
+    );
+    req.baseUrl('Cloud Connector');
+    const mapped = req.prepareArgs({
+      body: [body, changeConfigurationRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    return req.callAsJson(changeConfigurationResponseSchema, requestOptions);
   }
 
   /**

@@ -39,25 +39,26 @@ import { BaseController } from './baseController';
 
 export class BillingController extends BaseController {
   /**
-   * This endpoint allows user to add managed accounts to a primary account.
+   * This endpoint allows user to retrieve the list of all accounts managed by a primary account.
    *
-   *
-   * @param body         Service name and list of accounts to add
+   * @param accountName Primary account identifier
+   * @param serviceName Service name
    * @return Response from the API call
    */
-  async addAccount(
-    body: ManagedAccountsAddRequest,
+  async listManagedAccount(
+    accountName: string,
+    serviceName: string,
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ManagedAccountsAddResponse>> {
-    const req = this.createRequest('POST', '/managedaccounts/actions/add');
+  ): Promise<ApiResponse<ManagedAccountsGetAllResponse>> {
+    const req = this.createRequest('GET');
     req.baseUrl('Subscription Server');
     const mapped = req.prepareArgs({
-      body: [body, managedAccountsAddRequestSchema],
+      accountName: [accountName, string()],
+      serviceName: [serviceName, string()],
     });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
+    req.appendTemplatePath`/managedaccounts/${mapped.accountName}/service/${mapped.serviceName}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    return req.callAsJson(managedAccountsAddResponseSchema, requestOptions);
+    return req.callAsJson(managedAccountsGetAllResponseSchema, requestOptions);
   }
 
   /**
@@ -110,25 +111,24 @@ export class BillingController extends BaseController {
   }
 
   /**
-   * This endpoint allows user to retrieve the list of all accounts managed by a primary account.
+   * This endpoint allows user to add managed accounts to a primary account.
    *
-   * @param accountName Primary account identifier
-   * @param serviceName Service name
+   *
+   * @param body         Service name and list of accounts to add
    * @return Response from the API call
    */
-  async listManagedAccount(
-    accountName: string,
-    serviceName: string,
+  async addAccount(
+    body: ManagedAccountsAddRequest,
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ManagedAccountsGetAllResponse>> {
-    const req = this.createRequest('GET');
+  ): Promise<ApiResponse<ManagedAccountsAddResponse>> {
+    const req = this.createRequest('POST', '/managedaccounts/actions/add');
     req.baseUrl('Subscription Server');
     const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceName: [serviceName, string()],
+      body: [body, managedAccountsAddRequestSchema],
     });
-    req.appendTemplatePath`/managedaccounts/${mapped.accountName}/service/${mapped.serviceName}`;
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    return req.callAsJson(managedAccountsGetAllResponseSchema, requestOptions);
+    return req.callAsJson(managedAccountsAddResponseSchema, requestOptions);
   }
 }

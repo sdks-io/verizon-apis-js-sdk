@@ -19,34 +19,6 @@ import { BaseController } from './baseController';
 
 export class ConfigurationFilesController extends BaseController {
   /**
-   * You can retrieve a list of configuration or supplementary of files for an account.
-   *
-   * @param acc              Account identifier.
-   * @param distributionType Filter the distributionType to only retrieve files for a specific distribution
-   *                                   type.
-   * @return Response from the API call
-   */
-  async getListOfFiles(
-    acc: string,
-    distributionType: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RetrievesAvailableFilesResponseList>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      acc: [acc, string()],
-      distributionType: [distributionType, string()],
-    });
-    req.query('distributionType', mapped.distributionType);
-    req.appendTemplatePath`/files/${mapped.acc}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(
-      retrievesAvailableFilesResponseListSchema,
-      requestOptions
-    );
-  }
-
-  /**
    * Uploads a configuration/supplementary file for an account. ThingSpace generates a fileName after the
    * upload and is returned in the response.
    *
@@ -87,6 +59,34 @@ export class ConfigurationFilesController extends BaseController {
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
     return req.callAsJson(
       uploadConfigurationFilesResponseSchema,
+      requestOptions
+    );
+  }
+
+  /**
+   * You can retrieve a list of configuration or supplementary of files for an account.
+   *
+   * @param acc              Account identifier.
+   * @param distributionType Filter the distributionType to only retrieve files for a specific distribution
+   *                                   type.
+   * @return Response from the API call
+   */
+  async getListOfFiles(
+    acc: string,
+    distributionType: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<RetrievesAvailableFilesResponseList>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      acc: [acc, string()],
+      distributionType: [distributionType, string()],
+    });
+    req.query('distributionType', mapped.distributionType);
+    req.appendTemplatePath`/files/${mapped.acc}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    return req.callAsJson(
+      retrievesAvailableFilesResponseListSchema,
       requestOptions
     );
   }

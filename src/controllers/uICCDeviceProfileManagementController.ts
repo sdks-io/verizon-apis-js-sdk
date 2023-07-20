@@ -25,18 +25,19 @@ import { BaseController } from './baseController';
 
 export class UICCDeviceProfileManagementController extends BaseController {
   /**
-   * Downloads an eUICC local profile to devices and enables the profile.
+   * Disable a local profile on eUICC devices. The default or boot profile will become the enabled
+   * profile.
    *
-   * @param body         Device Profile Query
+   * @param body         Update state
    * @return Response from the API call
    */
-  async downloadLocalProfileToEnable(
+  async disableLocalProfile(
     body: ProfileChangeStateRequest,
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceManagementResult>> {
+  ): Promise<ApiResponse<RequestResponse>> {
     const req = this.createRequest(
       'POST',
-      '/v1/devices/profile/actions/download_enable'
+      '/v1/devices/profile/actions/disable'
     );
     req.baseUrl('M2M');
     const mapped = req.prepareArgs({
@@ -44,8 +45,8 @@ export class UICCDeviceProfileManagementController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    return req.callAsJson(deviceManagementResultSchema, requestOptions);
+    req.throwOn(400, RestErrorResponseError, 'Error Response');
+    return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
   /**
@@ -73,55 +74,6 @@ export class UICCDeviceProfileManagementController extends BaseController {
   }
 
   /**
-   * Enable a local profile that has been downloaded to eUICC devices.
-   *
-   * @param body         Update state
-   * @return Response from the API call
-   */
-  async enableLocalProfile(
-    body: ProfileChangeStateRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RequestResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/v1/devices/profile/actions/enable'
-    );
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, profileChangeStateRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, RestErrorResponseError, 'Error Response');
-    return req.callAsJson(requestResponseSchema, requestOptions);
-  }
-
-  /**
-   * Disable a local profile on eUICC devices. The default or boot profile will become the enabled
-   * profile.
-   *
-   * @param body         Update state
-   * @return Response from the API call
-   */
-  async disableLocalProfile(
-    body: ProfileChangeStateRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RequestResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/v1/devices/profile/actions/disable'
-    );
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, profileChangeStateRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, RestErrorResponseError, 'Error Response');
-    return req.callAsJson(requestResponseSchema, requestOptions);
-  }
-
-  /**
    * Delete a local profile from eUICC devices. If the local profile is enabled, it will first be
    * disabled and the boot or default profile will be enabled.
    *
@@ -135,6 +87,54 @@ export class UICCDeviceProfileManagementController extends BaseController {
     const req = this.createRequest(
       'POST',
       '/v1/devices/profile/actions/delete'
+    );
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({
+      body: [body, profileChangeStateRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, RestErrorResponseError, 'Error Response');
+    return req.callAsJson(requestResponseSchema, requestOptions);
+  }
+
+  /**
+   * Downloads an eUICC local profile to devices and enables the profile.
+   *
+   * @param body         Device Profile Query
+   * @return Response from the API call
+   */
+  async downloadLocalProfileToEnable(
+    body: ProfileChangeStateRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceManagementResult>> {
+    const req = this.createRequest(
+      'POST',
+      '/v1/devices/profile/actions/download_enable'
+    );
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({
+      body: [body, profileChangeStateRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    return req.callAsJson(deviceManagementResultSchema, requestOptions);
+  }
+
+  /**
+   * Enable a local profile that has been downloaded to eUICC devices.
+   *
+   * @param body         Update state
+   * @return Response from the API call
+   */
+  async enableLocalProfile(
+    body: ProfileChangeStateRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<RequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/v1/devices/profile/actions/enable'
     );
     req.baseUrl('M2M');
     const mapped = req.prepareArgs({

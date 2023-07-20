@@ -27,6 +27,30 @@ import { BaseController } from './baseController';
 
 export class DeviceProfileManagementController extends BaseController {
   /**
+   * Allows the profile to set the fallback attribute to the device.
+   *
+   * @param body         Device Profile Query
+   * @return Response from the API call
+   */
+  async profileToSetFallbackAttribute(
+    body: SetFallbackAttributeRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<RequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/v1/devices/profile/actions/setfallbackattribute'
+    );
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({
+      body: [body, setFallbackAttributeRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, RestErrorResponseError, 'Bad request');
+    return req.callAsJson(requestResponseSchema, requestOptions);
+  }
+
+  /**
    * Uses the profile to bring the device under management.
    *
    * @param body         Device Profile Query
@@ -88,30 +112,6 @@ export class DeviceProfileManagementController extends BaseController {
     );
     req.baseUrl('M2M');
     const mapped = req.prepareArgs({ body: [body, profileRequest2Schema] });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, RestErrorResponseError, 'Bad request');
-    return req.callAsJson(requestResponseSchema, requestOptions);
-  }
-
-  /**
-   * Allows the profile to set the fallback attribute to the device.
-   *
-   * @param body         Device Profile Query
-   * @return Response from the API call
-   */
-  async profileToSetFallbackAttribute(
-    body: SetFallbackAttributeRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RequestResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/v1/devices/profile/actions/setfallbackattribute'
-    );
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, setFallbackAttributeRequestSchema],
-    });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');

@@ -23,28 +23,6 @@ import { BaseController } from './baseController';
 
 export class CloudConnectorSubscriptionsController extends BaseController {
   /**
-   * Create a subscription to define a streaming channel that sends data from devices in the account to
-   * an endpoint defined in a target resource.
-   *
-   * @param body         The request body provides the details of the subscription
-   *                                                         that you want to create.
-   * @return Response from the API call
-   */
-  async createSubscription(
-    body: CreateSubscriptionRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<Subscription>> {
-    const req = this.createRequest('POST', '/subscriptions');
-    req.baseUrl('Cloud Connector');
-    const mapped = req.prepareArgs({
-      body: [body, createSubscriptionRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    return req.callAsJson(subscriptionSchema, requestOptions);
-  }
-
-  /**
    * Search for subscriptions by property values. Returns an array of all matching subscription resources.
    *
    * @param body         The request body specifies fields and values to match.
@@ -82,5 +60,27 @@ export class CloudConnectorSubscriptionsController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     return req.call(requestOptions);
+  }
+
+  /**
+   * Create a subscription to define a streaming channel that sends data from devices in the account to
+   * an endpoint defined in a target resource.
+   *
+   * @param body         The request body provides the details of the subscription
+   *                                                         that you want to create.
+   * @return Response from the API call
+   */
+  async createSubscription(
+    body: CreateSubscriptionRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<Subscription>> {
+    const req = this.createRequest('POST', '/subscriptions');
+    req.baseUrl('Cloud Connector');
+    const mapped = req.prepareArgs({
+      body: [body, createSubscriptionRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    return req.callAsJson(subscriptionSchema, requestOptions);
   }
 }

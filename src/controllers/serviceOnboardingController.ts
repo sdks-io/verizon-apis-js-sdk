@@ -37,58 +37,6 @@ import { BaseController } from './baseController';
 
 export class ServiceOnboardingController extends BaseController {
   /**
-   * Upload workload payload/package in the MEC platform.
-   *
-   * @param accountName     User account name.
-   * @param serviceName     Service name to which the file is going to be associated.
-   * @param version         Version of the service being used.
-   * @param categoryType    Type of the file being uploaded.
-   * @param categoryName    `workloadName` used in the service while creation.
-   * @param payload         Payload/file which is to be uploaded should be provided in formData.
-   * @param correlationId
-   * @param categoryVersion It is mandatory for only service file, not mandatory for workload and
-   *                                            workflow file.
-   * @return Response from the API call
-   */
-  async uploadServiceWorkloadFile(
-    accountName: string,
-    serviceName: string,
-    version: string,
-    categoryType: CategoryTypeEnum,
-    categoryName: string,
-    payload: FileWrapper,
-    correlationId?: string,
-    categoryVersion?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ServiceFile>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceName: [serviceName, string()],
-      version: [version, string()],
-      categoryType: [categoryType, categoryTypeEnumSchema],
-      categoryName: [categoryName, string()],
-      correlationId: [correlationId, optional(string())],
-      categoryVersion: [categoryVersion, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('correlationId', mapped.correlationId);
-    req.query('categoryType', mapped.categoryType);
-    req.query('categoryName', mapped.categoryName);
-    req.query('categoryVersion', mapped.categoryVersion);
-    req.formData({
-      payload: payload,
-    });
-    req.appendTemplatePath`/v1/files/${mapped.serviceName}/${mapped.version}/uploadAndValidate`;
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    return req.callAsJson(serviceFileSchema, requestOptions);
-  }
-
-  /**
    * Fetch all organizational services in the platform.
    *
    * @param accountName   User account name.
@@ -182,6 +130,58 @@ export class ServiceOnboardingController extends BaseController {
   }
 
   /**
+   * Upload workload payload/package in the MEC platform.
+   *
+   * @param accountName     User account name.
+   * @param serviceName     Service name to which the file is going to be associated.
+   * @param version         Version of the service being used.
+   * @param categoryType    Type of the file being uploaded.
+   * @param categoryName    `workloadName` used in the service while creation.
+   * @param payload         Payload/file which is to be uploaded should be provided in formData.
+   * @param correlationId
+   * @param categoryVersion It is mandatory for only service file, not mandatory for workload and
+   *                                            workflow file.
+   * @return Response from the API call
+   */
+  async uploadServiceWorkloadFile(
+    accountName: string,
+    serviceName: string,
+    version: string,
+    categoryType: CategoryTypeEnum,
+    categoryName: string,
+    payload: FileWrapper,
+    correlationId?: string,
+    categoryVersion?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ServiceFile>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      serviceName: [serviceName, string()],
+      version: [version, string()],
+      categoryType: [categoryType, categoryTypeEnumSchema],
+      categoryName: [categoryName, string()],
+      correlationId: [correlationId, optional(string())],
+      categoryVersion: [categoryVersion, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('correlationId', mapped.correlationId);
+    req.query('categoryType', mapped.categoryType);
+    req.query('categoryName', mapped.categoryName);
+    req.query('categoryVersion', mapped.categoryVersion);
+    req.formData({
+      payload: payload,
+    });
+    req.appendTemplatePath`/v1/files/${mapped.serviceName}/${mapped.version}/uploadAndValidate`;
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    return req.callAsJson(serviceFileSchema, requestOptions);
+  }
+
+  /**
    * Fetch a service details within user's organization using service name and version.
    *
    * @param accountName   User account name.
@@ -214,6 +214,45 @@ export class ServiceOnboardingController extends BaseController {
     req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
     req.defaultToError(EdgeServiceOnboardingResultError, 'Unexpected error.');
     return req.callAsJson(serviceSchema, requestOptions);
+  }
+
+  /**
+   * Initiate testing of a service in sandbox environment per claim based on service's compatibility(s).
+   *
+   * @param accountName   User account name.
+   * @param serviceId     An id of the service created e.g. UUID.
+   * @param claimId       Id of the claim created e.g. UUID.
+   * @param body
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async startServiceClaimSandBoxTesting(
+    accountName: string,
+    serviceId: string,
+    claimId: string,
+    body: ClusterInfoDetails,
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ServiceManagementResult>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      serviceId: [serviceId, string()],
+      claimId: [claimId, string()],
+      body: [body, clusterInfoDetailsSchema],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('Content-Type', 'application/json');
+    req.header('correlationId', mapped.correlationId);
+    req.json(mapped.body);
+    req.appendTemplatePath`/v1/services/${mapped.serviceId}/claims/${mapped.claimId}/sandBoxStart`;
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    req.defaultToError(EdgeServiceOnboardingResultError, 'Unexpected error.');
+    return req.callAsJson(serviceManagementResultSchema, requestOptions);
   }
 
   /**
@@ -250,6 +289,76 @@ export class ServiceOnboardingController extends BaseController {
       edgeServiceOnboardingDeleteResultSchema,
       requestOptions
     );
+  }
+
+  /**
+   * Start service certification process. On successful completion of this process, service's status will
+   * change to certified.
+   *
+   * @param accountName   User account name.
+   * @param serviceName   Name of the service e.g. any sub string of serviceName.
+   * @param version       Version of service which is to be certified.
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async stopServiceTesting(
+    accountName: string,
+    serviceName: string,
+    version: string,
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ServiceManagementResult>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      serviceName: [serviceName, string()],
+      version: [version, string()],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('correlationId', mapped.correlationId);
+    req.appendTemplatePath`/v1/services/${mapped.serviceName}/${mapped.version}/certify`;
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    req.defaultToError(EdgeServiceOnboardingResultError, 'Unexpected error.');
+    return req.callAsJson(serviceManagementResultSchema, requestOptions);
+  }
+
+  /**
+   * Start the process to change a service's status to "Ready to Use". On success, service's status will
+   * be changed to "Ready to Use". Only a ready to use service can be deployed in production environment.
+   *
+   * @param accountName   User account name.
+   * @param serviceName   Name of the service e.g. any sub string of serviceName.
+   * @param version       Version of the service which is already certified and is ready for public use.
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async markServiceAsReadyForPublicUse(
+    accountName: string,
+    serviceName: string,
+    version: string,
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ServiceManagementResult>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      serviceName: [serviceName, string()],
+      version: [version, string()],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('correlationId', mapped.correlationId);
+    req.appendTemplatePath`/v1/services/${mapped.serviceName}/${mapped.version}/readyToPublicUse`;
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    req.defaultToError(EdgeServiceOnboardingResultError, 'Unexpected error.');
+    return req.callAsJson(serviceManagementResultSchema, requestOptions);
   }
 
   /**
@@ -322,45 +431,6 @@ export class ServiceOnboardingController extends BaseController {
   }
 
   /**
-   * Initiate testing of a service in sandbox environment per claim based on service's compatibility(s).
-   *
-   * @param accountName   User account name.
-   * @param serviceId     An id of the service created e.g. UUID.
-   * @param claimId       Id of the claim created e.g. UUID.
-   * @param body
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async startServiceClaimSandBoxTesting(
-    accountName: string,
-    serviceId: string,
-    claimId: string,
-    body: ClusterInfoDetails,
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ServiceManagementResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceId: [serviceId, string()],
-      claimId: [claimId, string()],
-      body: [body, clusterInfoDetailsSchema],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('Content-Type', 'application/json');
-    req.header('correlationId', mapped.correlationId);
-    req.json(mapped.body);
-    req.appendTemplatePath`/v1/services/${mapped.serviceId}/claims/${mapped.claimId}/sandBoxStart`;
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    req.defaultToError(EdgeServiceOnboardingResultError, 'Unexpected error.');
-    return req.callAsJson(serviceManagementResultSchema, requestOptions);
-  }
-
-  /**
    * Start publishing a service. On successful completion, service's status can be marked as Publish.
    *
    * @param accountName   User account name.
@@ -387,76 +457,6 @@ export class ServiceOnboardingController extends BaseController {
     req.header('AccountName', mapped.accountName);
     req.header('correlationId', mapped.correlationId);
     req.appendTemplatePath`/v1/services/${mapped.serviceName}/${mapped.version}/publish`;
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    req.defaultToError(EdgeServiceOnboardingResultError, 'Unexpected error.');
-    return req.callAsJson(serviceManagementResultSchema, requestOptions);
-  }
-
-  /**
-   * Start service certification process. On successful completion of this process, service's status will
-   * change to certified.
-   *
-   * @param accountName   User account name.
-   * @param serviceName   Name of the service e.g. any sub string of serviceName.
-   * @param version       Version of service which is to be certified.
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async stopServiceTesting(
-    accountName: string,
-    serviceName: string,
-    version: string,
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ServiceManagementResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceName: [serviceName, string()],
-      version: [version, string()],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('correlationId', mapped.correlationId);
-    req.appendTemplatePath`/v1/services/${mapped.serviceName}/${mapped.version}/certify`;
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    req.defaultToError(EdgeServiceOnboardingResultError, 'Unexpected error.');
-    return req.callAsJson(serviceManagementResultSchema, requestOptions);
-  }
-
-  /**
-   * Start the process to change a service's status to "Ready to Use". On success, service's status will
-   * be changed to "Ready to Use". Only a ready to use service can be deployed in production environment.
-   *
-   * @param accountName   User account name.
-   * @param serviceName   Name of the service e.g. any sub string of serviceName.
-   * @param version       Version of the service which is already certified and is ready for public use.
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async markServiceAsReadyForPublicUse(
-    accountName: string,
-    serviceName: string,
-    version: string,
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ServiceManagementResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceName: [serviceName, string()],
-      version: [version, string()],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('correlationId', mapped.correlationId);
-    req.appendTemplatePath`/v1/services/${mapped.serviceName}/${mapped.version}/readyToPublicUse`;
     req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
     req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
     req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');

@@ -36,6 +36,30 @@ import { BaseController } from './baseController';
 
 export class CampaignsV3Controller extends BaseController {
   /**
+   * This endpoint allows user to cancel a firmware campaign. A firmware campaign already started can not
+   * be cancelled.
+   *
+   * @param acc        Account identifier.
+   * @param campaignId Firmware upgrade information.
+   * @return Response from the API call
+   */
+  async cancelCampaign(
+    acc: string,
+    campaignId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<FotaV3SuccessResult>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Software Management V3');
+    const mapped = req.prepareArgs({
+      acc: [acc, string()],
+      campaignId: [campaignId, string()],
+    });
+    req.appendTemplatePath`/campaigns/${mapped.acc}/${mapped.campaignId}`;
+    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    return req.callAsJson(fotaV3SuccessResultSchema, requestOptions);
+  }
+
+  /**
    * This endpoint allows a user to schedule a firmware upgrade for a list of devices.
    *
    * @param acc          Account identifier.
@@ -138,29 +162,5 @@ export class CampaignsV3Controller extends BaseController {
     req.appendTemplatePath`/campaigns/${mapped.acc}/${mapped.campaignId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
     return req.callAsJson(campaignSchema, requestOptions);
-  }
-
-  /**
-   * This endpoint allows user to cancel a firmware campaign. A firmware campaign already started can not
-   * be cancelled.
-   *
-   * @param acc        Account identifier.
-   * @param campaignId Firmware upgrade information.
-   * @return Response from the API call
-   */
-  async cancelCampaign(
-    acc: string,
-    campaignId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FotaV3SuccessResult>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Software Management V3');
-    const mapped = req.prepareArgs({
-      acc: [acc, string()],
-      campaignId: [campaignId, string()],
-    });
-    req.appendTemplatePath`/campaigns/${mapped.acc}/${mapped.campaignId}`;
-    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    return req.callAsJson(fotaV3SuccessResultSchema, requestOptions);
   }
 }

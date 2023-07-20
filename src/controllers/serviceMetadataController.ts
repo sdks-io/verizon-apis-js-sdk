@@ -15,38 +15,6 @@ import { BaseController } from './baseController';
 
 export class ServiceMetadataController extends BaseController {
   /**
-   * Create a new category within user's organization.
-   *
-   * @param accountName   User account name.
-   * @param body
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async createServiceCategory(
-    accountName: string,
-    body: Category[],
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<Category[]>> {
-    const req = this.createRequest('POST', '/v1/category');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      body: [body, array(categorySchema)],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('Content-Type', 'application/json');
-    req.header('correlationId', mapped.correlationId);
-    req.json(mapped.body);
-    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    return req.callAsJson(array(categorySchema), requestOptions);
-  }
-
-  /**
    * Create a new Tag within user's organization.
    *
    * @param accountName   User account name.
@@ -76,5 +44,37 @@ export class ServiceMetadataController extends BaseController {
     req.throwOn(415, EdgeServiceOnboardingResultError, 'Unsupported media type.');
     req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
     return req.callAsJson(array(tagSchema), requestOptions);
+  }
+
+  /**
+   * Create a new category within user's organization.
+   *
+   * @param accountName   User account name.
+   * @param body
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async createServiceCategory(
+    accountName: string,
+    body: Category[],
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<Category[]>> {
+    const req = this.createRequest('POST', '/v1/category');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      body: [body, array(categorySchema)],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('Content-Type', 'application/json');
+    req.header('correlationId', mapped.correlationId);
+    req.json(mapped.body);
+    req.throwOn(400, EdgeServiceOnboardingResultError, 'Bad Request.');
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    return req.callAsJson(array(categorySchema), requestOptions);
   }
 }

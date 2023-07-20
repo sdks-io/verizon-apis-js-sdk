@@ -10,11 +10,72 @@ const campaignsV3Controller = new CampaignsV3Controller(client);
 
 ## Methods
 
+* [Cancel Campaign](../../doc/controllers/campaigns-v3.md#cancel-campaign)
 * [Schedule Campaign Firmware Upgrade](../../doc/controllers/campaigns-v3.md#schedule-campaign-firmware-upgrade)
 * [Update Campaign Firmware Devices](../../doc/controllers/campaigns-v3.md#update-campaign-firmware-devices)
 * [Update Campaign Dates](../../doc/controllers/campaigns-v3.md#update-campaign-dates)
 * [Get Campaign Information](../../doc/controllers/campaigns-v3.md#get-campaign-information)
-* [Cancel Campaign](../../doc/controllers/campaigns-v3.md#cancel-campaign)
+
+
+# Cancel Campaign
+
+This endpoint allows user to cancel a firmware campaign. A firmware campaign already started can not be cancelled.
+
+```ts
+async cancelCampaign(
+  acc: string,
+  campaignId: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<FotaV3SuccessResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `acc` | `string` | Template, Required | Account identifier. |
+| `campaignId` | `string` | Template, Required | Firmware upgrade information. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`FotaV3SuccessResult`](../../doc/models/fota-v3-success-result.md)
+
+## Example Usage
+
+```ts
+const acc = '0000123456-00001';
+
+const campaignId = 'f858b8c4-2153-11ec-8c44-aeb16d1aa652';
+
+try {
+  const { result, ...httpResponse } = await campaignsV3Controller.cancelCampaign(
+    acc,
+    campaignId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "success": true
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV3ResultError`](../../doc/models/fota-v3-result-error.md) |
 
 
 # Schedule Campaign Firmware Upgrade
@@ -351,67 +412,6 @@ try {
       "endTime": 22
     }
   ]
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV3ResultError`](../../doc/models/fota-v3-result-error.md) |
-
-
-# Cancel Campaign
-
-This endpoint allows user to cancel a firmware campaign. A firmware campaign already started can not be cancelled.
-
-```ts
-async cancelCampaign(
-  acc: string,
-  campaignId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV3SuccessResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `acc` | `string` | Template, Required | Account identifier. |
-| `campaignId` | `string` | Template, Required | Firmware upgrade information. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`FotaV3SuccessResult`](../../doc/models/fota-v3-success-result.md)
-
-## Example Usage
-
-```ts
-const acc = '0000123456-00001';
-
-const campaignId = 'f858b8c4-2153-11ec-8c44-aeb16d1aa652';
-
-try {
-  const { result, ...httpResponse } = await campaignsV3Controller.cancelCampaign(
-    acc,
-    campaignId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "success": true
 }
 ```
 

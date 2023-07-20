@@ -10,94 +10,9 @@ const anomalyTriggersController = new AnomalyTriggersController(client);
 
 ## Methods
 
-* [Create Anomaly Detection Trigger](../../doc/controllers/anomaly-triggers.md#create-anomaly-detection-trigger)
 * [Update Anomaly Detection Trigger](../../doc/controllers/anomaly-triggers.md#update-anomaly-detection-trigger)
 * [List Anomaly Detection Trigger Settings](../../doc/controllers/anomaly-triggers.md#list-anomaly-detection-trigger-settings)
-
-
-# Create Anomaly Detection Trigger
-
-Creates the trigger to identify an anomaly.
-
-```ts
-async createAnomalyDetectionTrigger(
-  body: CreateTriggerRequestOptions[],
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AnomalyDetectionTrigger>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`CreateTriggerRequestOptions[]`](../../doc/models/create-trigger-request-options.md) | Body, Required | Request to create an anomaly trigger. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`AnomalyDetectionTrigger`](../../doc/models/anomaly-detection-trigger.md)
-
-## Example Usage
-
-```ts
-const body: CreateTriggerRequestOptions[] = [
-  {
-    name: 'Anomaly Daily Usage REST Test-Patch 1',
-    triggerCategory: 'UsageAnomaly',
-    accountName: '0000123456-00001',
-    anomalyTriggerRequest: {
-      accountNames: '0000123456-00001',
-      includeAbnormal: true,
-      includeVeryAbnormal: true,
-      includeUnderExpectedUsage: true,
-      includeOverExpectedUsage: true,
-    },
-    notification: {
-      notificationType: 'DailySummary',
-      callback: true,
-      emailNotification: false,
-      notificationGroupName: 'Anomaly Test API',
-      notificationFrequencyFactor: 3,
-      notificationFrequencyInterval: 'Hourly',
-      externalEmailRecipients: 'placeholder@verizon.com',
-      smsNotification: true,
-      smsNumbers: [
-        {
-          carrier: 'US Cellular',
-          number: '9299280711',
-        }
-      ],
-      reminder: true,
-      severity: 'Critical',
-    },
-  }
-];
-
-try {
-  const { result, ...httpResponse } = await anomalyTriggersController.createAnomalyDetectionTrigger(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "triggerId": "595f5c44-c31c-4552-8670-020a1545a84d"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| Default | An error occurred. | [`IntelligenceResultError`](../../doc/models/intelligence-result-error.md) |
+* [Create Anomaly Detection Trigger](../../doc/controllers/anomaly-triggers.md#create-anomaly-detection-trigger)
 
 
 # Update Anomaly Detection Trigger
@@ -262,6 +177,91 @@ try {
       }
     }
   ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | An error occurred. | [`IntelligenceResultError`](../../doc/models/intelligence-result-error.md) |
+
+
+# Create Anomaly Detection Trigger
+
+Creates the trigger to identify an anomaly.
+
+```ts
+async createAnomalyDetectionTrigger(
+  body: CreateTriggerRequestOptions[],
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<AnomalyDetectionTrigger>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CreateTriggerRequestOptions[]`](../../doc/models/create-trigger-request-options.md) | Body, Required | Request to create an anomaly trigger. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`AnomalyDetectionTrigger`](../../doc/models/anomaly-detection-trigger.md)
+
+## Example Usage
+
+```ts
+const body: CreateTriggerRequestOptions[] = [
+  {
+    name: 'Anomaly Daily Usage REST Test-Patch 1',
+    triggerCategory: 'UsageAnomaly',
+    accountName: '0000123456-00001',
+    anomalyTriggerRequest: {
+      accountNames: '0000123456-00001',
+      includeAbnormal: true,
+      includeVeryAbnormal: true,
+      includeUnderExpectedUsage: true,
+      includeOverExpectedUsage: true,
+    },
+    notification: {
+      notificationType: 'DailySummary',
+      callback: true,
+      emailNotification: false,
+      notificationGroupName: 'Anomaly Test API',
+      notificationFrequencyFactor: 3,
+      notificationFrequencyInterval: 'Hourly',
+      externalEmailRecipients: 'placeholder@verizon.com',
+      smsNotification: true,
+      smsNumbers: [
+        {
+          carrier: 'US Cellular',
+          number: '9299280711',
+        }
+      ],
+      reminder: true,
+      severity: 'Critical',
+    },
+  }
+];
+
+try {
+  const { result, ...httpResponse } = await anomalyTriggersController.createAnomalyDetectionTrigger(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "triggerId": "595f5c44-c31c-4552-8670-020a1545a84d"
 }
 ```
 

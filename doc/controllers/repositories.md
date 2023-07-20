@@ -10,9 +10,80 @@ const repositoriesController = new RepositoriesController(client);
 
 ## Methods
 
+* [Delete Repository](../../doc/controllers/repositories.md#delete-repository)
 * [List Repositories](../../doc/controllers/repositories.md#list-repositories)
 * [Create Repository](../../doc/controllers/repositories.md#create-repository)
-* [Delete Repository](../../doc/controllers/repositories.md#delete-repository)
+
+
+# Delete Repository
+
+Delete the repository.
+
+```ts
+async deleteRepository(
+  accountName: string,
+  repositoryName: string,
+  correlationId?: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<EdgeServiceOnboardingDeleteResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Header, Required | User account name.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9\-_]+$` |
+| `repositoryName` | `string` | Template, Required | Name of the repository which is about to be deleted.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9-]+$` |
+| `correlationId` | `string \| undefined` | Header, Optional | **Constraints**: *Maximum Length*: `50`, *Pattern*: `^[a-zA-Z0-9-]+$` |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`EdgeServiceOnboardingDeleteResult`](../../doc/models/edge-service-onboarding-delete-result.md)
+
+## Example Usage
+
+```ts
+const accountName = 'test_account1';
+
+const repositoryName = 'dev-api-demo-repo-mdp';
+
+const correlationId = '9958f2f8-c4e3-46e0-8982-356de6515ae9';
+
+try {
+  const { result, ...httpResponse } = await repositoriesController.deleteRepository(
+    accountName,
+    repositoryName,
+    correlationId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "message": "service deleted succesfully",
+  "status": "success",
+  "subStatus": "service delete - success"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad Request. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 404 | Not found. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 
 
 # List Repositories
@@ -166,76 +237,5 @@ try {
 |  --- | --- | --- |
 | 400 | Bad Request. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 | 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-
-
-# Delete Repository
-
-Delete the repository.
-
-```ts
-async deleteRepository(
-  accountName: string,
-  repositoryName: string,
-  correlationId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<EdgeServiceOnboardingDeleteResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `accountName` | `string` | Header, Required | User account name.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9\-_]+$` |
-| `repositoryName` | `string` | Template, Required | Name of the repository which is about to be deleted.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9-]+$` |
-| `correlationId` | `string \| undefined` | Header, Optional | **Constraints**: *Maximum Length*: `50`, *Pattern*: `^[a-zA-Z0-9-]+$` |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`EdgeServiceOnboardingDeleteResult`](../../doc/models/edge-service-onboarding-delete-result.md)
-
-## Example Usage
-
-```ts
-const accountName = 'test_account1';
-
-const repositoryName = 'dev-api-demo-repo-mdp';
-
-const correlationId = '9958f2f8-c4e3-46e0-8982-356de6515ae9';
-
-try {
-  const { result, ...httpResponse } = await repositoriesController.deleteRepository(
-    accountName,
-    repositoryName,
-    correlationId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "message": "service deleted succesfully",
-  "status": "success",
-  "subStatus": "service delete - success"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad Request. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 404 | Not found. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 | 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 

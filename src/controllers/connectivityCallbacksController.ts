@@ -25,6 +25,29 @@ import { BaseController } from './baseController';
 
 export class ConnectivityCallbacksController extends BaseController {
   /**
+   * Stops ThingSpace from sending callback messages for the specified account and service.
+   *
+   * @param aname Account name.
+   * @param sname Service name.
+   * @return Response from the API call
+   */
+  async deregisterCallback(
+    aname: string,
+    sname: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<CallbackActionResult>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({
+      aname: [aname, string()],
+      sname: [sname, string()],
+    });
+    req.appendTemplatePath`/v1/callbacks/${mapped.aname}/name/${mapped.sname}`;
+    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    return req.callAsJson(callbackActionResultSchema, requestOptions);
+  }
+
+  /**
    * Returns the name and endpoint URL of the callback listening services registered for a given account.
    *
    * @param aname Account name.
@@ -66,29 +89,6 @@ export class ConnectivityCallbacksController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.appendTemplatePath`/v1/callbacks/${mapped.aname}`;
-    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    return req.callAsJson(callbackActionResultSchema, requestOptions);
-  }
-
-  /**
-   * Stops ThingSpace from sending callback messages for the specified account and service.
-   *
-   * @param aname Account name.
-   * @param sname Service name.
-   * @return Response from the API call
-   */
-  async deregisterCallback(
-    aname: string,
-    sname: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<CallbackActionResult>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      aname: [aname, string()],
-      sname: [sname, string()],
-    });
-    req.appendTemplatePath`/v1/callbacks/${mapped.aname}/name/${mapped.sname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
     return req.callAsJson(callbackActionResultSchema, requestOptions);
   }

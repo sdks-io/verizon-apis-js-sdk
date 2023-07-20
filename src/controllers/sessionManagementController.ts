@@ -24,6 +24,28 @@ import { BaseController } from './baseController';
 
 export class SessionManagementController extends BaseController {
   /**
+   * The new password is effective immediately. Passwords do not expire, but Verizon recommends changing
+   * your password every 90 days.
+   *
+   * @param body         Request with current password that needs to be reset.
+   * @return Response from the API call
+   */
+  async resetConnectivityManagementPassword(
+    body: SessionResetPasswordRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<SessionResetPasswordResult>> {
+    const req = this.createRequest('PUT', '/v1/session/password/actions/reset');
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({
+      body: [body, sessionResetPasswordRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    return req.callAsJson(sessionResetPasswordResultSchema, requestOptions);
+  }
+
+  /**
    * Initiates a Connectivity Management session and returns a VZ-M2M session token that is required in
    * subsequent API requests.
    *
@@ -57,27 +79,5 @@ export class SessionManagementController extends BaseController {
     req.baseUrl('M2M');
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
     return req.callAsJson(logOutRequestSchema, requestOptions);
-  }
-
-  /**
-   * The new password is effective immediately. Passwords do not expire, but Verizon recommends changing
-   * your password every 90 days.
-   *
-   * @param body         Request with current password that needs to be reset.
-   * @return Response from the API call
-   */
-  async resetConnectivityManagementPassword(
-    body: SessionResetPasswordRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<SessionResetPasswordResult>> {
-    const req = this.createRequest('PUT', '/v1/session/password/actions/reset');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, sessionResetPasswordRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    return req.callAsJson(sessionResetPasswordResultSchema, requestOptions);
   }
 }

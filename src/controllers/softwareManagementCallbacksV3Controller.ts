@@ -45,34 +45,6 @@ export class SoftwareManagementCallbacksV3Controller extends BaseController {
   }
 
   /**
-   * This endpoint allows the user to update the HTTPS callback address.
-   *
-   * @param acc          Account identifier.
-   * @param body         Callback URL registration.
-   * @return Response from the API call
-   */
-  async updateCallback(
-    acc: string,
-    body: FotaV3CallbackRegistrationRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FotaV3CallbackRegistrationResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Software Management V3');
-    const mapped = req.prepareArgs({
-      acc: [acc, string()],
-      body: [body, fotaV3CallbackRegistrationRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.appendTemplatePath`/callbacks/${mapped.acc}`;
-    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    return req.callAsJson(
-      fotaV3CallbackRegistrationResultSchema,
-      requestOptions
-    );
-  }
-
-  /**
    * This endpoint allows the user to create the HTTPS callback address.
    *
    * @param acc          Account identifier.
@@ -116,5 +88,33 @@ export class SoftwareManagementCallbacksV3Controller extends BaseController {
     req.appendTemplatePath`/callbacks/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
     return req.callAsJson(fotaV3SuccessResultSchema, requestOptions);
+  }
+
+  /**
+   * This endpoint allows the user to update the HTTPS callback address.
+   *
+   * @param acc          Account identifier.
+   * @param body         Callback URL registration.
+   * @return Response from the API call
+   */
+  async updateCallback(
+    acc: string,
+    body: FotaV3CallbackRegistrationRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<FotaV3CallbackRegistrationResult>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Software Management V3');
+    const mapped = req.prepareArgs({
+      acc: [acc, string()],
+      body: [body, fotaV3CallbackRegistrationRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.appendTemplatePath`/callbacks/${mapped.acc}`;
+    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    return req.callAsJson(
+      fotaV3CallbackRegistrationResultSchema,
+      requestOptions
+    );
   }
 }

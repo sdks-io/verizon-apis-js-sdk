@@ -11,9 +11,9 @@ const softwareManagementCallbacksV3Controller = new SoftwareManagementCallbacksV
 ## Methods
 
 * [List Registered Callbacks](../../doc/controllers/software-management-callbacks-v3.md#list-registered-callbacks)
-* [Update Callback](../../doc/controllers/software-management-callbacks-v3.md#update-callback)
 * [Register Callback](../../doc/controllers/software-management-callbacks-v3.md#register-callback)
 * [Deregister Callback](../../doc/controllers/software-management-callbacks-v3.md#deregister-callback)
+* [Update Callback](../../doc/controllers/software-management-callbacks-v3.md#update-callback)
 
 
 # List Registered Callbacks
@@ -60,69 +60,6 @@ try {
 ```json
 {
   "url": "http://10.120.102.183:50559/CallbackListener/FirmwareServiceMessages.asmx"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV3ResultError`](../../doc/models/fota-v3-result-error.md) |
-
-
-# Update Callback
-
-This endpoint allows the user to update the HTTPS callback address.
-
-```ts
-async updateCallback(
-  acc: string,
-  body: FotaV3CallbackRegistrationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV3CallbackRegistrationResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `acc` | `string` | Template, Required | Account identifier. |
-| `body` | [`FotaV3CallbackRegistrationRequest`](../../doc/models/fota-v3-callback-registration-request.md) | Body, Required | Callback URL registration. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`FotaV3CallbackRegistrationResult`](../../doc/models/fota-v3-callback-registration-result.md)
-
-## Example Usage
-
-```ts
-const acc = '0000123456-00001';
-
-const body: FotaV3CallbackRegistrationRequest = {
-  url: 'https://255.255.11.135:50559/CallbackListener/FirmwareServiceMessages.asmx',
-};
-
-try {
-  const { result, ...httpResponse } = await softwareManagementCallbacksV3Controller.updateCallback(
-    acc,
-    body
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "url": "https://255.255.11.135:50559/CallbackListener/FirmwareServiceMessages.asmx"
 }
 ```
 
@@ -240,6 +177,69 @@ try {
 ```json
 {
   "success": true
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV3ResultError`](../../doc/models/fota-v3-result-error.md) |
+
+
+# Update Callback
+
+This endpoint allows the user to update the HTTPS callback address.
+
+```ts
+async updateCallback(
+  acc: string,
+  body: FotaV3CallbackRegistrationRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<FotaV3CallbackRegistrationResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `acc` | `string` | Template, Required | Account identifier. |
+| `body` | [`FotaV3CallbackRegistrationRequest`](../../doc/models/fota-v3-callback-registration-request.md) | Body, Required | Callback URL registration. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`FotaV3CallbackRegistrationResult`](../../doc/models/fota-v3-callback-registration-result.md)
+
+## Example Usage
+
+```ts
+const acc = '0000123456-00001';
+
+const body: FotaV3CallbackRegistrationRequest = {
+  url: 'https://255.255.11.135:50559/CallbackListener/FirmwareServiceMessages.asmx',
+};
+
+try {
+  const { result, ...httpResponse } = await softwareManagementCallbacksV3Controller.updateCallback(
+    acc,
+    body
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "url": "https://255.255.11.135:50559/CallbackListener/FirmwareServiceMessages.asmx"
 }
 ```
 

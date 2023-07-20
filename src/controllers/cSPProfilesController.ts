@@ -19,48 +19,6 @@ import { BaseController } from './baseController';
 
 export class CSPProfilesController extends BaseController {
   /**
-   * Fetch available cloud credentials within user's organization.
-   *
-   * @param accountName   User account name.
-   * @param correlationId
-   * @param q             Use the coloumn (:) character to separate multiple query params eg type=AWS:
-   *                                awsCspProfile.credType=ACCESS_KEY,ROLE_ARN:state=UNVERIFIED,VERIFIED.
-   * @param limit         Number of items to return.
-   * @param offSet        Id of the last respose value in the previous list.
-   * @return Response from the API call
-   */
-  async fetchCloudCredentialDetails(
-    accountName: string,
-    correlationId?: string,
-    q?: string,
-    limit?: bigint,
-    offSet?: bigint,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<CSPProfileData>> {
-    const req = this.createRequest('GET', '/v1/cspProfiles/');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      correlationId: [correlationId, optional(string())],
-      q: [q, optional(string())],
-      limit: [limit, optional(bigint())],
-      offSet: [offSet, optional(bigint())],
-    });
-    req.header('AccountName', mapped.accountName);
-    req.header('correlationId', mapped.correlationId);
-    req.query('q', mapped.q);
-    req.query('limit', mapped.limit);
-    req.query('offSet', mapped.offSet);
-    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
-    req.throwOn(403, EdgeServiceOnboardingResultError, 'Forbidden.');
-    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
-    req.throwOn(429, EdgeServiceOnboardingResultError, 'Too many requests.');
-    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
-    req.defaultToError(EdgeServiceOnboardingResultError, 'Forbidden.');
-    return req.callAsJson(cSPProfileDataSchema, requestOptions);
-  }
-
-  /**
    * Create a new cloud credential within user's organization.
    *
    * @param accountName   User account name.
@@ -125,5 +83,47 @@ export class CSPProfilesController extends BaseController {
       edgeServiceOnboardingDeleteResultSchema,
       requestOptions
     );
+  }
+
+  /**
+   * Fetch available cloud credentials within user's organization.
+   *
+   * @param accountName   User account name.
+   * @param correlationId
+   * @param q             Use the coloumn (:) character to separate multiple query params eg type=AWS:
+   *                                awsCspProfile.credType=ACCESS_KEY,ROLE_ARN:state=UNVERIFIED,VERIFIED.
+   * @param limit         Number of items to return.
+   * @param offSet        Id of the last respose value in the previous list.
+   * @return Response from the API call
+   */
+  async fetchCloudCredentialDetails(
+    accountName: string,
+    correlationId?: string,
+    q?: string,
+    limit?: bigint,
+    offSet?: bigint,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<CSPProfileData>> {
+    const req = this.createRequest('GET', '/v1/cspProfiles/');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      correlationId: [correlationId, optional(string())],
+      q: [q, optional(string())],
+      limit: [limit, optional(bigint())],
+      offSet: [offSet, optional(bigint())],
+    });
+    req.header('AccountName', mapped.accountName);
+    req.header('correlationId', mapped.correlationId);
+    req.query('q', mapped.q);
+    req.query('limit', mapped.limit);
+    req.query('offSet', mapped.offSet);
+    req.throwOn(401, EdgeServiceOnboardingResultError, 'Unauthorized.');
+    req.throwOn(403, EdgeServiceOnboardingResultError, 'Forbidden.');
+    req.throwOn(404, EdgeServiceOnboardingResultError, 'Not found.');
+    req.throwOn(429, EdgeServiceOnboardingResultError, 'Too many requests.');
+    req.throwOn(500, EdgeServiceOnboardingResultError, 'Internal Server Error.');
+    req.defaultToError(EdgeServiceOnboardingResultError, 'Forbidden.');
+    return req.callAsJson(cSPProfileDataSchema, requestOptions);
   }
 }

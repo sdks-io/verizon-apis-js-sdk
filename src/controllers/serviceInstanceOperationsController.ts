@@ -18,53 +18,6 @@ import { BaseController } from './baseController';
 
 export class ServiceInstanceOperationsController extends BaseController {
   /**
-   * Resumes a suspended Service Instance
-   *
-   * @param serviceInstanceId
-   * @param userId
-   * @param requestId
-   * @param userRole
-   * @param customerId
-   * @param correlationId
-   * @return Response from the API call
-   */
-  async serviceResume(
-    serviceInstanceId: string,
-    userId: string,
-    requestId: string,
-    userRole: UserRoleEnum,
-    customerId: string,
-    correlationId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ServiceResumeResult>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Services');
-    const mapped = req.prepareArgs({
-      serviceInstanceId: [serviceInstanceId, string()],
-      userId: [userId, string()],
-      requestId: [requestId, string()],
-      userRole: [userRole, userRoleEnumSchema],
-      customerId: [customerId, string()],
-      correlationId: [correlationId, optional(string())],
-    });
-    req.header('userId', mapped.userId);
-    req.header('requestId', mapped.requestId);
-    req.header('user_role', mapped.userRole);
-    req.header('customerId', mapped.customerId);
-    req.header('correlationId', mapped.correlationId);
-    req.appendTemplatePath`/v1/service/instances/${mapped.serviceInstanceId}/resume`;
-    req.throwOn(400, EdgeServiceLaunchResultError, 'Bad Request.');
-    req.throwOn(401, EdgeServiceLaunchResultError, 'Unauthorized.');
-    req.throwOn(403, EdgeServiceLaunchResultError, 'Forbidden.');
-    req.throwOn(404, EdgeServiceLaunchResultError, 'Not found.');
-    req.throwOn(415, EdgeServiceLaunchResultError, 'Unsupported media type.');
-    req.throwOn(429, EdgeServiceLaunchResultError, 'Too many requests.');
-    req.throwOn(500, EdgeServiceLaunchResultError, 'Internal Server Error.');
-    req.defaultToError(EdgeServiceLaunchResultError, 'Unexpected error.');
-    return req.callAsJson(serviceResumeResultSchema, requestOptions);
-  }
-
-  /**
    * Suspend a service Instance
    *
    * @param serviceInstanceId
@@ -147,6 +100,53 @@ export class ServiceInstanceOperationsController extends BaseController {
     req.header('customerId', mapped.customerId);
     req.header('correlationId', mapped.correlationId);
     req.appendTemplatePath`/v1/service/instances/${mapped.serviceInstanceId}/remove`;
+    req.throwOn(400, EdgeServiceLaunchResultError, 'Bad Request.');
+    req.throwOn(401, EdgeServiceLaunchResultError, 'Unauthorized.');
+    req.throwOn(403, EdgeServiceLaunchResultError, 'Forbidden.');
+    req.throwOn(404, EdgeServiceLaunchResultError, 'Not found.');
+    req.throwOn(415, EdgeServiceLaunchResultError, 'Unsupported media type.');
+    req.throwOn(429, EdgeServiceLaunchResultError, 'Too many requests.');
+    req.throwOn(500, EdgeServiceLaunchResultError, 'Internal Server Error.');
+    req.defaultToError(EdgeServiceLaunchResultError, 'Unexpected error.');
+    return req.callAsJson(serviceResumeResultSchema, requestOptions);
+  }
+
+  /**
+   * Resumes a suspended Service Instance
+   *
+   * @param serviceInstanceId
+   * @param userId
+   * @param requestId
+   * @param userRole
+   * @param customerId
+   * @param correlationId
+   * @return Response from the API call
+   */
+  async serviceResume(
+    serviceInstanceId: string,
+    userId: string,
+    requestId: string,
+    userRole: UserRoleEnum,
+    customerId: string,
+    correlationId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ServiceResumeResult>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Services');
+    const mapped = req.prepareArgs({
+      serviceInstanceId: [serviceInstanceId, string()],
+      userId: [userId, string()],
+      requestId: [requestId, string()],
+      userRole: [userRole, userRoleEnumSchema],
+      customerId: [customerId, string()],
+      correlationId: [correlationId, optional(string())],
+    });
+    req.header('userId', mapped.userId);
+    req.header('requestId', mapped.requestId);
+    req.header('user_role', mapped.userRole);
+    req.header('customerId', mapped.customerId);
+    req.header('correlationId', mapped.correlationId);
+    req.appendTemplatePath`/v1/service/instances/${mapped.serviceInstanceId}/resume`;
     req.throwOn(400, EdgeServiceLaunchResultError, 'Bad Request.');
     req.throwOn(401, EdgeServiceLaunchResultError, 'Unauthorized.');
     req.throwOn(403, EdgeServiceLaunchResultError, 'Forbidden.');

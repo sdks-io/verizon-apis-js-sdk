@@ -10,12 +10,65 @@ const clientLoggingController = new ClientLoggingController(client);
 
 ## Methods
 
+* [Disable Device Logging](../../doc/controllers/client-logging.md#disable-device-logging)
 * [List Devices With Logging Enabled](../../doc/controllers/client-logging.md#list-devices-with-logging-enabled)
 * [Enable Logging for Devices](../../doc/controllers/client-logging.md#enable-logging-for-devices)
+* [List Device Logs](../../doc/controllers/client-logging.md#list-device-logs)
 * [Disable Logging for Devices](../../doc/controllers/client-logging.md#disable-logging-for-devices)
 * [Enable Device Logging](../../doc/controllers/client-logging.md#enable-device-logging)
-* [Disable Device Logging](../../doc/controllers/client-logging.md#disable-device-logging)
-* [List Device Logs](../../doc/controllers/client-logging.md#list-device-logs)
+
+
+# Disable Device Logging
+
+Disables logging for a specific device.
+
+```ts
+async disableDeviceLogging(
+  account: string,
+  deviceId: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<void>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier. |
+| `deviceId` | `string` | Template, Required | Device IMEI identifier. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+`void`
+
+## Example Usage
+
+```ts
+const account = '0000123456-00001';
+
+const deviceId = '990013907835573';
+
+try {
+  const { result, ...httpResponse } = await clientLoggingController.disableDeviceLogging(
+    account,
+    deviceId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
 
 
 # List Devices With Logging Enabled
@@ -179,6 +232,74 @@ try {
 | 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
 
 
+# List Device Logs
+
+Gets logs for a specific device.
+
+```ts
+async listDeviceLogs(
+  account: string,
+  deviceId: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<DeviceLog[]>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier. |
+| `deviceId` | `string` | Template, Required | Device IMEI identifier. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`DeviceLog[]`](../../doc/models/device-log.md)
+
+## Example Usage
+
+```ts
+const account = '0000123456-00001';
+
+const deviceId = '990013907835573';
+
+try {
+  const { result, ...httpResponse } = await clientLoggingController.listDeviceLogs(
+    account,
+    deviceId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "deviceId": "990013907835573",
+    "logTime": "2020-10-22T19:29:50.901Z",
+    "logType": "string",
+    "eventLog": "string",
+    "binaryLogFileBase64": "string",
+    "binaryLogFilename": "string"
+  }
+]
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
+
+
 # Disable Logging for Devices
 
 Turn logging off for a list of devices.
@@ -285,127 +406,6 @@ try {
   "deviceId": "990013907835573",
   "expiryDate": "2020-10-19"
 }
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
-
-
-# Disable Device Logging
-
-Disables logging for a specific device.
-
-```ts
-async disableDeviceLogging(
-  account: string,
-  deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier. |
-| `deviceId` | `string` | Template, Required | Device IMEI identifier. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-`void`
-
-## Example Usage
-
-```ts
-const account = '0000123456-00001';
-
-const deviceId = '990013907835573';
-
-try {
-  const { result, ...httpResponse } = await clientLoggingController.disableDeviceLogging(
-    account,
-    deviceId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
-
-
-# List Device Logs
-
-Gets logs for a specific device.
-
-```ts
-async listDeviceLogs(
-  account: string,
-  deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLog[]>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier. |
-| `deviceId` | `string` | Template, Required | Device IMEI identifier. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`DeviceLog[]`](../../doc/models/device-log.md)
-
-## Example Usage
-
-```ts
-const account = '0000123456-00001';
-
-const deviceId = '990013907835573';
-
-try {
-  const { result, ...httpResponse } = await clientLoggingController.listDeviceLogs(
-    account,
-    deviceId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "deviceId": "990013907835573",
-    "logTime": "2020-10-22T19:29:50.901Z",
-    "logType": "string",
-    "eventLog": "string",
-    "binaryLogFileBase64": "string",
-    "binaryLogFilename": "string"
-  }
-]
 ```
 
 ## Errors

@@ -47,31 +47,6 @@ import { BaseController } from './baseController';
 
 export class CampaignsV2Controller extends BaseController {
   /**
-   * This endpoint allows user to schedule a software upgrade.
-   *
-   * @param account      Account identifier.
-   * @param body         Software upgrade information.
-   * @return Response from the API call
-   */
-  async scheduleCampaignFirmwareUpgrade(
-    account: string,
-    body: CampaignSoftwareUpgrade,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<CampaignSoftware>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      body: [body, campaignSoftwareUpgradeSchema],
-    });
-    req.header('Content-Type', '*/*');
-    req.json(mapped.body);
-    req.appendTemplatePath`/campaigns/${mapped.account}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(campaignSoftwareSchema, requestOptions);
-  }
-
-  /**
    * This endpoint allows user to get information of a software upgrade.
    *
    * @param account    Account identifier.
@@ -92,59 +67,6 @@ export class CampaignsV2Controller extends BaseController {
     req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
     return req.callAsJson(campaignSoftwareSchema, requestOptions);
-  }
-
-  /**
-   * This endpoint allows user to Add or Remove devices to an existing software upgrade.
-   *
-   * @param account      Account identifier.
-   * @param campaignId   Software upgrade information.
-   * @param body         Request to add or remove device to existing software
-   *                                                          upgrade information.
-   * @return Response from the API call
-   */
-  async updateCampaignFirmwareDevices(
-    account: string,
-    campaignId: string,
-    body: V2AddOrRemoveDeviceRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<V2AddOrRemoveDeviceResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      campaignId: [campaignId, string()],
-      body: [body, v2AddOrRemoveDeviceRequestSchema],
-    });
-    req.header('Content-Type', '*/*');
-    req.json(mapped.body);
-    req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(v2AddOrRemoveDeviceResultSchema, requestOptions);
-  }
-
-  /**
-   * This endpoint allows user to cancel software upgrade. A software upgrade already started can not be
-   * cancelled.
-   *
-   * @param account    Account identifier.
-   * @param campaignId Unique identifier of campaign.
-   * @return Response from the API call
-   */
-  async cancelCampaign(
-    account: string,
-    campaignId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FotaV2SuccessResult>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      campaignId: [campaignId, string()],
-    });
-    req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(fotaV2SuccessResultSchema, requestOptions);
   }
 
   /**
@@ -199,6 +121,84 @@ export class CampaignsV2Controller extends BaseController {
     req.appendTemplatePath`/campaigns/files/${mapped.acc}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
     return req.callAsJson(uploadAndScheduleFileResponseSchema, requestOptions);
+  }
+
+  /**
+   * This endpoint allows user to Add or Remove devices to an existing software upgrade.
+   *
+   * @param account      Account identifier.
+   * @param campaignId   Software upgrade information.
+   * @param body         Request to add or remove device to existing software
+   *                                                          upgrade information.
+   * @return Response from the API call
+   */
+  async updateCampaignFirmwareDevices(
+    account: string,
+    campaignId: string,
+    body: V2AddOrRemoveDeviceRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<V2AddOrRemoveDeviceResult>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      campaignId: [campaignId, string()],
+      body: [body, v2AddOrRemoveDeviceRequestSchema],
+    });
+    req.header('Content-Type', '*/*');
+    req.json(mapped.body);
+    req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    return req.callAsJson(v2AddOrRemoveDeviceResultSchema, requestOptions);
+  }
+
+  /**
+   * This endpoint allows user to schedule a software upgrade.
+   *
+   * @param account      Account identifier.
+   * @param body         Software upgrade information.
+   * @return Response from the API call
+   */
+  async scheduleCampaignFirmwareUpgrade(
+    account: string,
+    body: CampaignSoftwareUpgrade,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<CampaignSoftware>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      body: [body, campaignSoftwareUpgradeSchema],
+    });
+    req.header('Content-Type', '*/*');
+    req.json(mapped.body);
+    req.appendTemplatePath`/campaigns/${mapped.account}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    return req.callAsJson(campaignSoftwareSchema, requestOptions);
+  }
+
+  /**
+   * This endpoint allows user to cancel software upgrade. A software upgrade already started can not be
+   * cancelled.
+   *
+   * @param account    Account identifier.
+   * @param campaignId Unique identifier of campaign.
+   * @return Response from the API call
+   */
+  async cancelCampaign(
+    account: string,
+    campaignId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<FotaV2SuccessResult>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      campaignId: [campaignId, string()],
+    });
+    req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    return req.callAsJson(fotaV2SuccessResultSchema, requestOptions);
   }
 
   /**

@@ -98,28 +98,6 @@ export class DevicesLocationsController extends BaseController {
   }
 
   /**
-   * Request an asynchronous device location report.
-   *
-   * @param body         Request for device location report.
-   * @return Response from the API call
-   */
-  async createLocationReport(
-    body: LocationRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<AsynchronousLocationRequestResult>> {
-    const req = this.createRequest('POST', '/locationreports');
-    req.baseUrl('Device Location');
-    const mapped = req.prepareArgs({ body: [body, locationRequestSchema] });
-    req.header('Content-Type', '*/*');
-    req.json(mapped.body);
-    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    return req.callAsJson(
-      asynchronousLocationRequestResultSchema,
-      requestOptions
-    );
-  }
-
-  /**
    * Download a completed asynchronous device location report.
    *
    * @param account    Account identifier in "##########-#####".
@@ -166,6 +144,28 @@ export class DevicesLocationsController extends BaseController {
     req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}/status`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
     return req.callAsJson(locationReportStatusSchema, requestOptions);
+  }
+
+  /**
+   * Request an asynchronous device location report.
+   *
+   * @param body         Request for device location report.
+   * @return Response from the API call
+   */
+  async createLocationReport(
+    body: LocationRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AsynchronousLocationRequestResult>> {
+    const req = this.createRequest('POST', '/locationreports');
+    req.baseUrl('Device Location');
+    const mapped = req.prepareArgs({ body: [body, locationRequestSchema] });
+    req.header('Content-Type', '*/*');
+    req.json(mapped.body);
+    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    return req.callAsJson(
+      asynchronousLocationRequestResultSchema,
+      requestOptions
+    );
   }
 
   /**

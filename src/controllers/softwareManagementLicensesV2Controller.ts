@@ -36,27 +36,23 @@ import { BaseController } from './baseController';
 
 export class SoftwareManagementLicensesV2Controller extends BaseController {
   /**
-   * The endpoint allows user to list license usage.
+   * This endpoint allows user to delete a created cancel candidate device list.
    *
-   * @param account          Account identifier.
-   * @param lastSeenDeviceId Last seen device identifier.
+   * @param account Account identifier.
    * @return Response from the API call
+   * @deprecated
    */
-  async getAccountLicenseStatus(
+  async deleteListOfLicensesToRemove(
     account: string,
-    lastSeenDeviceId?: string,
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<V2LicenseSummary>> {
-    const req = this.createRequest('GET');
+  ): Promise<ApiResponse<FotaV2SuccessResult>> {
+    const req = this.createRequest('DELETE');
     req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      lastSeenDeviceId: [lastSeenDeviceId, optional(string())],
-    });
-    req.query('lastSeenDeviceId', mapped.lastSeenDeviceId);
-    req.appendTemplatePath`/licenses/${mapped.account}`;
+    const mapped = req.prepareArgs({ account: [account, string()] });
+    req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
+    req.deprecated('SoftwareManagementLicensesV2Controller.deleteListOfLicensesToRemove');
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(v2LicenseSummarySchema, requestOptions);
+    return req.callAsJson(fotaV2SuccessResultSchema, requestOptions);
   }
 
   /**
@@ -87,6 +83,30 @@ export class SoftwareManagementLicensesV2Controller extends BaseController {
       v2LicensesAssignedRemovedResultSchema,
       requestOptions
     );
+  }
+
+  /**
+   * The endpoint allows user to list license usage.
+   *
+   * @param account          Account identifier.
+   * @param lastSeenDeviceId Last seen device identifier.
+   * @return Response from the API call
+   */
+  async getAccountLicenseStatus(
+    account: string,
+    lastSeenDeviceId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<V2LicenseSummary>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      lastSeenDeviceId: [lastSeenDeviceId, optional(string())],
+    });
+    req.query('lastSeenDeviceId', mapped.lastSeenDeviceId);
+    req.appendTemplatePath`/licenses/${mapped.account}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    return req.callAsJson(v2LicenseSummarySchema, requestOptions);
   }
 
   /**
@@ -170,25 +190,5 @@ export class SoftwareManagementLicensesV2Controller extends BaseController {
     req.deprecated('SoftwareManagementLicensesV2Controller.createListOfLicensesToRemove');
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
     return req.callAsJson(v2ListOfLicensesToRemoveResultSchema, requestOptions);
-  }
-
-  /**
-   * This endpoint allows user to delete a created cancel candidate device list.
-   *
-   * @param account Account identifier.
-   * @return Response from the API call
-   * @deprecated
-   */
-  async deleteListOfLicensesToRemove(
-    account: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FotaV2SuccessResult>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({ account: [account, string()] });
-    req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
-    req.deprecated('SoftwareManagementLicensesV2Controller.deleteListOfLicensesToRemove');
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(fotaV2SuccessResultSchema, requestOptions);
   }
 }

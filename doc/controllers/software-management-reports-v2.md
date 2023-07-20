@@ -11,9 +11,9 @@ const softwareManagementReportsV2Controller = new SoftwareManagementReportsV2Con
 ## Methods
 
 * [List Available Software](../../doc/controllers/software-management-reports-v2.md#list-available-software)
+* [Get Campaign History by Status](../../doc/controllers/software-management-reports-v2.md#get-campaign-history-by-status)
 * [List Account Devices](../../doc/controllers/software-management-reports-v2.md#list-account-devices)
 * [Get Device Firmware Upgrade History](../../doc/controllers/software-management-reports-v2.md#get-device-firmware-upgrade-history)
-* [Get Campaign History by Status](../../doc/controllers/software-management-reports-v2.md#get-campaign-history-by-status)
 * [Get Campaign Device Status](../../doc/controllers/software-management-reports-v2.md#get-campaign-device-status)
 
 
@@ -77,6 +77,103 @@ try {
     "devicePlatformId": "IoT"
   }
 ]
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
+
+
+# Get Campaign History by Status
+
+The report endpoint allows user to get campaign history of an account for specified status.
+
+```ts
+async getCampaignHistoryByStatus(
+  account: string,
+  campaignStatus: string,
+  lastSeenCampaignId?: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<V2CampaignHistory>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier. |
+| `campaignStatus` | `string` | Query, Required | Status of the campaign. |
+| `lastSeenCampaignId` | `string \| undefined` | Query, Optional | Last seen campaign Id. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`V2CampaignHistory`](../../doc/models/v2-campaign-history.md)
+
+## Example Usage
+
+```ts
+const account = '0000123456-00001';
+
+const campaignStatus = 'campaignStatus6';
+
+const lastSeenCampaignId = '60b5d639-ccdc-4db8-8824-069bd94c95bf';
+
+try {
+  const { result, ...httpResponse } = await softwareManagementReportsV2Controller.getCampaignHistoryByStatus(
+    account,
+    campaignStatus,
+    lastSeenCampaignId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "hasMoreData": true,
+  "lastSeenCampaignId": "60b5d639-ccdc-4db8-8824-069bd94c95bf",
+  "campaignList": [
+    {
+      "accountName": "0402196254-00001",
+      "id": "60b5d639-ccdc-4db8-8824-069bd94c95bf",
+      "campaignName": "FOTA_Verizon_Upgrade",
+      "softwareName": "FOTA_Verizon_Model-A_02To03_HF",
+      "distributionType": "HTTP",
+      "softwareFrom": "FOTA_Verizon_Model-A_00To01_HF",
+      "softwareTo": "FOTA_Verizon_Model-A_02To03_HF",
+      "make": "Verizon",
+      "model": "Model-A",
+      "startDate": "2020-08-21",
+      "endDate": "2020-08-22",
+      "downloadAfterDate": "2020-08-21",
+      "downloadTimeWindowList": [
+        {
+          "startTime": 20,
+          "endTime": 21
+        }
+      ],
+      "installAfterDate": "2020-08-21",
+      "installTimeWindowList": [
+        {
+          "startTime": 22,
+          "endTime": 23
+        }
+      ],
+      "status": "CampaignEnded"
+    }
+  ]
+}
 ```
 
 ## Errors
@@ -289,103 +386,6 @@ try {
     "reason": "success"
   }
 ]
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
-
-
-# Get Campaign History by Status
-
-The report endpoint allows user to get campaign history of an account for specified status.
-
-```ts
-async getCampaignHistoryByStatus(
-  account: string,
-  campaignStatus: string,
-  lastSeenCampaignId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2CampaignHistory>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier. |
-| `campaignStatus` | `string` | Query, Required | Status of the campaign. |
-| `lastSeenCampaignId` | `string \| undefined` | Query, Optional | Last seen campaign Id. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`V2CampaignHistory`](../../doc/models/v2-campaign-history.md)
-
-## Example Usage
-
-```ts
-const account = '0000123456-00001';
-
-const campaignStatus = 'campaignStatus6';
-
-const lastSeenCampaignId = '60b5d639-ccdc-4db8-8824-069bd94c95bf';
-
-try {
-  const { result, ...httpResponse } = await softwareManagementReportsV2Controller.getCampaignHistoryByStatus(
-    account,
-    campaignStatus,
-    lastSeenCampaignId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "hasMoreData": true,
-  "lastSeenCampaignId": "60b5d639-ccdc-4db8-8824-069bd94c95bf",
-  "campaignList": [
-    {
-      "accountName": "0402196254-00001",
-      "id": "60b5d639-ccdc-4db8-8824-069bd94c95bf",
-      "campaignName": "FOTA_Verizon_Upgrade",
-      "softwareName": "FOTA_Verizon_Model-A_02To03_HF",
-      "distributionType": "HTTP",
-      "softwareFrom": "FOTA_Verizon_Model-A_00To01_HF",
-      "softwareTo": "FOTA_Verizon_Model-A_02To03_HF",
-      "make": "Verizon",
-      "model": "Model-A",
-      "startDate": "2020-08-21",
-      "endDate": "2020-08-22",
-      "downloadAfterDate": "2020-08-21",
-      "downloadTimeWindowList": [
-        {
-          "startTime": 20,
-          "endTime": 21
-        }
-      ],
-      "installAfterDate": "2020-08-21",
-      "installTimeWindowList": [
-        {
-          "startTime": 22,
-          "endTime": 23
-        }
-      ],
-      "status": "CampaignEnded"
-    }
-  ]
-}
 ```
 
 ## Errors

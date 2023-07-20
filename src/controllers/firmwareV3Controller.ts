@@ -52,31 +52,6 @@ export class FirmwareV3Controller extends BaseController {
   }
 
   /**
-   * Synchronize ThingSpace with the FOTA server for up to 100 devices.
-   *
-   * @param acc          Account identifier.
-   * @param body         DeviceIds to get firmware info synchronously.
-   * @return Response from the API call
-   */
-  async synchronizeDeviceFirmware(
-    acc: string,
-    body: FirmwareIMEI,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceFirmwareList>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Software Management V3');
-    const mapped = req.prepareArgs({
-      acc: [acc, string()],
-      body: [body, firmwareIMEISchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.appendTemplatePath`/firmware/${mapped.acc}/devices`;
-    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    return req.callAsJson(deviceFirmwareListSchema, requestOptions);
-  }
-
-  /**
    * Ask a device to report its firmware version asynchronously.
    *
    * @param acc      Account identifier.
@@ -100,5 +75,30 @@ export class FirmwareV3Controller extends BaseController {
       deviceFirmwareVersionUpdateResultSchema,
       requestOptions
     );
+  }
+
+  /**
+   * Synchronize ThingSpace with the FOTA server for up to 100 devices.
+   *
+   * @param acc          Account identifier.
+   * @param body         DeviceIds to get firmware info synchronously.
+   * @return Response from the API call
+   */
+  async synchronizeDeviceFirmware(
+    acc: string,
+    body: FirmwareIMEI,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceFirmwareList>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Software Management V3');
+    const mapped = req.prepareArgs({
+      acc: [acc, string()],
+      body: [body, firmwareIMEISchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.appendTemplatePath`/firmware/${mapped.acc}/devices`;
+    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    return req.callAsJson(deviceFirmwareListSchema, requestOptions);
   }
 }

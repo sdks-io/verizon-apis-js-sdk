@@ -35,6 +35,56 @@ import { BaseController } from './baseController';
 
 export class SoftwareManagementLicensesV1Controller extends BaseController {
   /**
+   * Remove unused licenses from device.
+   *
+   * @param account      Account identifier in "##########-#####".
+   * @param body         IMEIs of the devices to remove licenses from.
+   * @return Response from the API call
+   * @deprecated
+   */
+  async removeLicensesFromDevices(
+    account: string,
+    body: V1LicensesAssignedRemovedRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<V1LicensesAssignedRemovedResult>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Software Management V1');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      body: [body, v1LicensesAssignedRemovedRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.appendTemplatePath`/licenses/${mapped.account}/remove`;
+    req.deprecated('SoftwareManagementLicensesV1Controller.removeLicensesFromDevices');
+    req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
+    return req.callAsJson(
+      v1LicensesAssignedRemovedResultSchema,
+      requestOptions
+    );
+  }
+
+  /**
+   * Deletes the entire list of cancellation candidate devices.
+   *
+   * @param account Account identifier in "##########-#####".
+   * @return Response from the API call
+   * @deprecated
+   */
+  async deleteListOfLicensesToRemove(
+    account: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<FotaV1SuccessResult>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Software Management V1');
+    const mapped = req.prepareArgs({ account: [account, string()] });
+    req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
+    req.deprecated('SoftwareManagementLicensesV1Controller.deleteListOfLicensesToRemove');
+    req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
+    return req.callAsJson(fotaV1SuccessResultSchema, requestOptions);
+  }
+
+  /**
    * Assigns licenses to a specified list of devices so that firmware upgrades can be scheduled for those
    * devices.
    *
@@ -58,36 +108,6 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/licenses/${mapped.account}/assign`;
     req.deprecated('SoftwareManagementLicensesV1Controller.assignLicensesToDevices');
-    req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    return req.callAsJson(
-      v1LicensesAssignedRemovedResultSchema,
-      requestOptions
-    );
-  }
-
-  /**
-   * Remove unused licenses from device.
-   *
-   * @param account      Account identifier in "##########-#####".
-   * @param body         IMEIs of the devices to remove licenses from.
-   * @return Response from the API call
-   * @deprecated
-   */
-  async removeLicensesFromDevices(
-    account: string,
-    body: V1LicensesAssignedRemovedRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<V1LicensesAssignedRemovedResult>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Software Management V1');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      body: [body, v1LicensesAssignedRemovedRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.appendTemplatePath`/licenses/${mapped.account}/remove`;
-    req.deprecated('SoftwareManagementLicensesV1Controller.removeLicensesFromDevices');
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     return req.callAsJson(
       v1LicensesAssignedRemovedResultSchema,
@@ -121,26 +141,6 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.deprecated('SoftwareManagementLicensesV1Controller.createListOfLicensesToRemove');
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     return req.callAsJson(v1ListOfLicensesToRemoveResultSchema, requestOptions);
-  }
-
-  /**
-   * Deletes the entire list of cancellation candidate devices.
-   *
-   * @param account Account identifier in "##########-#####".
-   * @return Response from the API call
-   * @deprecated
-   */
-  async deleteListOfLicensesToRemove(
-    account: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FotaV1SuccessResult>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Software Management V1');
-    const mapped = req.prepareArgs({ account: [account, string()] });
-    req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
-    req.deprecated('SoftwareManagementLicensesV1Controller.deleteListOfLicensesToRemove');
-    req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    return req.callAsJson(fotaV1SuccessResultSchema, requestOptions);
   }
 
   /**

@@ -10,11 +10,70 @@ const serviceProfilesController = new ServiceProfilesController(client);
 
 ## Methods
 
-* [Create Service Profile](../../doc/controllers/service-profiles.md#create-service-profile)
 * [List Service Profiles](../../doc/controllers/service-profiles.md#list-service-profiles)
-* [Get Service Profile](../../doc/controllers/service-profiles.md#get-service-profile)
+* [Create Service Profile](../../doc/controllers/service-profiles.md#create-service-profile)
 * [Update Service Profile](../../doc/controllers/service-profiles.md#update-service-profile)
+* [Get Service Profile](../../doc/controllers/service-profiles.md#get-service-profile)
 * [Delete Service Profile](../../doc/controllers/service-profiles.md#delete-service-profile)
+
+
+# List Service Profiles
+
+List all service profiles registered under your API key.
+
+```ts
+async listServiceProfiles(
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<ListServiceProfilesResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Requires scope
+
+`Edgediscoveryread`, `Edgeserviceprofileread`, `Edgeserviceprofilewrite`, `Edgeserviceregistryread`, `Edgeserviceregistrywrite`, `TsApplicationRo`, `TsMecFullaccess`, `TsMecLimitaccess`
+
+## Response Type
+
+[`ListServiceProfilesResult`](../../doc/models/list-service-profiles-result.md)
+
+## Example Usage
+
+```ts
+try {
+  const { result, ...httpResponse } = await serviceProfilesController.listServiceProfiles();
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "status": "Success",
+  "data": [
+    "serviceProfileId"
+  ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | HTTP 400 Bad Request. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
+| 401 | HTTP 401 Unauthorized. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
+| Default | HTTP 500 Internal Server Error. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
 
 
 # Create Service Profile
@@ -78,146 +137,6 @@ try {
   if (error instanceof ApiError) {
     const errors = error.result;
     // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | HTTP 400 Bad Request. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-| 401 | HTTP 401 Unauthorized. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-| Default | HTTP 500 Internal Server Error. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-
-
-# List Service Profiles
-
-List all service profiles registered under your API key.
-
-```ts
-async listServiceProfiles(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ListServiceProfilesResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Requires scope
-
-`Edgediscoveryread`, `Edgeserviceprofileread`, `Edgeserviceprofilewrite`, `Edgeserviceregistryread`, `Edgeserviceregistrywrite`, `TsApplicationRo`, `TsMecFullaccess`, `TsMecLimitaccess`
-
-## Response Type
-
-[`ListServiceProfilesResult`](../../doc/models/list-service-profiles-result.md)
-
-## Example Usage
-
-```ts
-try {
-  const { result, ...httpResponse } = await serviceProfilesController.listServiceProfiles();
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "status": "Success",
-  "data": [
-    "serviceProfileId"
-  ]
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | HTTP 400 Bad Request. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-| 401 | HTTP 401 Unauthorized. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-| Default | HTTP 500 Internal Server Error. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
-
-
-# Get Service Profile
-
-Returns a specified service profile.
-
-```ts
-async getServiceProfile(
-  serviceProfileId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ResourcesServiceProfileWithId>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `serviceProfileId` | `string` | Template, Required | **Constraints**: *Maximum Length*: `36`, *Pattern*: `^[a-zA-Z0-9!@#$&()\-`.+,/"]{3,36}$` |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Requires scope
-
-`Edgediscoveryread`, `Edgeserviceprofileread`, `Edgeserviceprofilewrite`, `Edgeserviceregistryread`, `Edgeserviceregistrywrite`, `TsApplicationRo`, `TsMecFullaccess`, `TsMecLimitaccess`
-
-## Response Type
-
-[`ResourcesServiceProfileWithId`](../../doc/models/resources-service-profile-with-id.md)
-
-## Example Usage
-
-```ts
-const serviceProfileId = 'serviceProfileId2';
-
-try {
-  const { result, ...httpResponse } = await serviceProfilesController.getServiceProfile(serviceProfileId);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "serviceProfileId": "4054ea9a-593e-4776-b488-697b1bfa4f3b",
-  "ecspFilter": "Verizon",
-  "clientSchedule": "time windows",
-  "clientServiceArea": "BAY AREA",
-  "clientType": "V2X",
-  "networkResources": {
-    "minBandwidthKbits": 1,
-    "serviceContinuitySupport": true,
-    "maxRequestRate": 15,
-    "maxLatencyMs": 20,
-    "minAvailability": 1
-  },
-  "computeResources": {
-    "GPU": {
-      "minCoreClockMHz": 1,
-      "minMemoryClockMHz": 35740,
-      "minBandwidthGBs": 588,
-      "minTFLOPS": 33
-    },
-    "minRAMGB": 1,
-    "minStorageGB": 1
   }
 }
 ```
@@ -306,6 +225,87 @@ try {
 {
   "status": "Success",
   "message": "Service Profile Updated"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | HTTP 400 Bad Request. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
+| 401 | HTTP 401 Unauthorized. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
+| Default | HTTP 500 Internal Server Error. | [`EdgeDiscoveryResultError`](../../doc/models/edge-discovery-result-error.md) |
+
+
+# Get Service Profile
+
+Returns a specified service profile.
+
+```ts
+async getServiceProfile(
+  serviceProfileId: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<ResourcesServiceProfileWithId>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `serviceProfileId` | `string` | Template, Required | **Constraints**: *Maximum Length*: `36`, *Pattern*: `^[a-zA-Z0-9!@#$&()\-`.+,/"]{3,36}$` |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Requires scope
+
+`Edgediscoveryread`, `Edgeserviceprofileread`, `Edgeserviceprofilewrite`, `Edgeserviceregistryread`, `Edgeserviceregistrywrite`, `TsApplicationRo`, `TsMecFullaccess`, `TsMecLimitaccess`
+
+## Response Type
+
+[`ResourcesServiceProfileWithId`](../../doc/models/resources-service-profile-with-id.md)
+
+## Example Usage
+
+```ts
+const serviceProfileId = 'serviceProfileId2';
+
+try {
+  const { result, ...httpResponse } = await serviceProfilesController.getServiceProfile(serviceProfileId);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "serviceProfileId": "4054ea9a-593e-4776-b488-697b1bfa4f3b",
+  "ecspFilter": "Verizon",
+  "clientSchedule": "time windows",
+  "clientServiceArea": "BAY AREA",
+  "clientType": "V2X",
+  "networkResources": {
+    "minBandwidthKbits": 1,
+    "serviceContinuitySupport": true,
+    "maxRequestRate": 15,
+    "maxLatencyMs": 20,
+    "minAvailability": 1
+  },
+  "computeResources": {
+    "GPU": {
+      "minCoreClockMHz": 1,
+      "minMemoryClockMHz": 35740,
+      "minBandwidthGBs": 588,
+      "minTFLOPS": 33
+    },
+    "minRAMGB": 1,
+    "minStorageGB": 1
+  }
 }
 ```
 

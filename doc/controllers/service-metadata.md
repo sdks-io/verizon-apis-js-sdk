@@ -10,8 +10,87 @@ const serviceMetadataController = new ServiceMetadataController(client);
 
 ## Methods
 
-* [Create Service Category](../../doc/controllers/service-metadata.md#create-service-category)
 * [Create Service Tag](../../doc/controllers/service-metadata.md#create-service-tag)
+* [Create Service Category](../../doc/controllers/service-metadata.md#create-service-category)
+
+
+# Create Service Tag
+
+Create a new Tag within user's organization.
+
+```ts
+async createServiceTag(
+  accountName: string,
+  body: Tag[],
+  correlationId?: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<Tag[]>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Header, Required | User account name.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9\-_]+$` |
+| `body` | [`Tag[]`](../../doc/models/tag.md) | Body, Required | **Constraints**: *Maximum Items*: `10000` |
+| `correlationId` | `string \| undefined` | Header, Optional | **Constraints**: *Maximum Length*: `50`, *Pattern*: `^[a-zA-Z0-9-]+$` |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`Tag[]`](../../doc/models/tag.md)
+
+## Example Usage
+
+```ts
+const accountName = 'test_account1';
+
+const body: Tag[] = [
+  {
+    key: 'vnsp.mec.verizon.com/servicetype',
+    description: 'My service.',
+    value: 'My service',
+  }
+];
+
+const correlationId = '9958f2f8-c4e3-46e0-8982-356de6515ae9';
+
+try {
+  const { result, ...httpResponse } = await serviceMetadataController.createServiceTag(
+    accountName,
+    body,
+    correlationId
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "key": "vnsp.mec.verizon.com/servicetype",
+    "value": "My service",
+    "description": "My service."
+  }
+]
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 404 | Not found. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 415 | Unsupported media type. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
+| 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 
 
 # Create Service Category
@@ -93,84 +172,5 @@ try {
 | 400 | Bad Request. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 | 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 | 404 | Not found. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-
-
-# Create Service Tag
-
-Create a new Tag within user's organization.
-
-```ts
-async createServiceTag(
-  accountName: string,
-  body: Tag[],
-  correlationId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Tag[]>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `accountName` | `string` | Header, Required | User account name.<br>**Constraints**: *Maximum Length*: `32`, *Pattern*: `^[a-zA-Z0-9\-_]+$` |
-| `body` | [`Tag[]`](../../doc/models/tag.md) | Body, Required | **Constraints**: *Maximum Items*: `10000` |
-| `correlationId` | `string \| undefined` | Header, Optional | **Constraints**: *Maximum Length*: `50`, *Pattern*: `^[a-zA-Z0-9-]+$` |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`Tag[]`](../../doc/models/tag.md)
-
-## Example Usage
-
-```ts
-const accountName = 'test_account1';
-
-const body: Tag[] = [
-  {
-    key: 'vnsp.mec.verizon.com/servicetype',
-    description: 'My service.',
-    value: 'My service',
-  }
-];
-
-const correlationId = '9958f2f8-c4e3-46e0-8982-356de6515ae9';
-
-try {
-  const { result, ...httpResponse } = await serviceMetadataController.createServiceTag(
-    accountName,
-    body,
-    correlationId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-[
-  {
-    "key": "vnsp.mec.verizon.com/servicetype",
-    "value": "My service",
-    "description": "My service."
-  }
-]
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | Unauthorized. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 404 | Not found. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
-| 415 | Unsupported media type. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 | 500 | Internal Server Error. | [`EdgeServiceOnboardingResultError`](../../doc/models/edge-service-onboarding-result-error.md) |
 

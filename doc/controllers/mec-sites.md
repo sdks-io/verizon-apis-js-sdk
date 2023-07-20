@@ -10,56 +10,8 @@ const mECSitesController = new MECSitesController(client);
 
 ## Methods
 
-* [List MEC Site Locations](../../doc/controllers/mec-sites.md#list-mec-site-locations)
 * [List ERN Cluster Namespaces](../../doc/controllers/mec-sites.md#list-ern-cluster-namespaces)
-
-
-# List MEC Site Locations
-
-Supports fetching MEC locations so the user can view the city.
-
-```ts
-async listMECSiteLocations(
-  accountName?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<MECSiteLocationsResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `accountName` | `string \| undefined` | Header, Optional | User account name.<br>**Constraints**: *Maximum Length*: `64`, *Pattern*: `^[A-Za-z0-9]` |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`MECSiteLocationsResult`](../../doc/models/mec-site-locations-result.md)
-
-## Example Usage
-
-```ts
-const accountName = 'test_account1';
-
-try {
-  const { result, ...httpResponse } = await mECSitesController.listMECSiteLocations(
-    accountName
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Error Response. | [`EdgeServiceLaunchResultError`](../../doc/models/edge-service-launch-result-error.md) |
+* [List MEC Site Locations](../../doc/controllers/mec-sites.md#list-mec-site-locations)
 
 
 # List ERN Cluster Namespaces
@@ -138,4 +90,52 @@ try {
 | 404 | Not found. | [`EdgeServiceLaunchResultError`](../../doc/models/edge-service-launch-result-error.md) |
 | 500 | Internal Server Error. | [`EdgeServiceLaunchResultError`](../../doc/models/edge-service-launch-result-error.md) |
 | Default | Unexpected error. | [`EdgeServiceLaunchResultError`](../../doc/models/edge-service-launch-result-error.md) |
+
+
+# List MEC Site Locations
+
+Supports fetching MEC locations so the user can view the city.
+
+```ts
+async listMECSiteLocations(
+  accountName?: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<MECSiteLocationsResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string \| undefined` | Header, Optional | User account name.<br>**Constraints**: *Maximum Length*: `64`, *Pattern*: `^[A-Za-z0-9]` |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`MECSiteLocationsResult`](../../doc/models/mec-site-locations-result.md)
+
+## Example Usage
+
+```ts
+const accountName = 'test_account1';
+
+try {
+  const { result, ...httpResponse } = await mECSitesController.listMECSiteLocations(
+    accountName
+  );
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Error Response. | [`EdgeServiceLaunchResultError`](../../doc/models/edge-service-launch-result-error.md) |
 

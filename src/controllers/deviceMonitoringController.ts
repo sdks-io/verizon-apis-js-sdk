@@ -19,30 +19,6 @@ import { BaseController } from './baseController';
 
 export class DeviceMonitoringController extends BaseController {
   /**
-   * Register for notification reports based on the request type.
-   *
-   * @param body         Create Reachability Report Request
-   * @return Response from the API call
-   */
-  async deviceReachability(
-    body: NotificationReportRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RequestResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/v1/diagnostics/basic/devicereachability'
-    );
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, notificationReportRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, RestErrorResponseError, 'Error Response');
-    return req.callAsJson(requestResponseSchema, requestOptions);
-  }
-
-  /**
    * Stop Device Reachability monitors.
    *
    * @param accountName The numeric name of the account.
@@ -65,6 +41,30 @@ export class DeviceMonitoringController extends BaseController {
     });
     req.query('accountName', mapped.accountName);
     req.query('monitorIds', mapped.monitorIds);
+    req.throwOn(400, RestErrorResponseError, 'Error Response');
+    return req.callAsJson(requestResponseSchema, requestOptions);
+  }
+
+  /**
+   * Register for notification reports based on the request type.
+   *
+   * @param body         Create Reachability Report Request
+   * @return Response from the API call
+   */
+  async deviceReachability(
+    body: NotificationReportRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<RequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/v1/diagnostics/basic/devicereachability'
+    );
+    req.baseUrl('M2M');
+    const mapped = req.prepareArgs({
+      body: [body, notificationReportRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Error Response');
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
