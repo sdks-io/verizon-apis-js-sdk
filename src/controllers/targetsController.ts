@@ -53,7 +53,48 @@ export class TargetsController extends BaseController {
     const mapped = req.prepareArgs({ body: [body, queryTargetRequestSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(targetSchema), requestOptions);
+  }
+
+  /**
+   * Remove a target from a ThingSpace account.
+   *
+   * @param body         The request body identifies the target to delete.
+   * @return Response from the API call
+   */
+  async deleteTarget(
+    body: DeleteTargetRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<void>> {
+    const req = this.createRequest('POST', '/targets/actions/delete');
+    req.baseUrl('Cloud Connector');
+    const mapped = req.prepareArgs({ body: [body, deleteTargetRequestSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
+    return req.call(requestOptions);
+  }
+
+  /**
+   * Define a target to receive data streams, alerts, or callbacks. After creating the target resource,
+   * use its ID in a subscription to set up a data stream.
+   *
+   * @param body         The request body provides the details of the target that you
+   *                                                   want to create.
+   * @return Response from the API call
+   */
+  async createTarget(
+    body: CreateTargetRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<Target>> {
+    const req = this.createRequest('POST', '/targets');
+    req.baseUrl('Cloud Connector');
+    const mapped = req.prepareArgs({ body: [body, createTargetRequestSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(targetSchema, requestOptions);
   }
 
   /**
@@ -102,44 +143,7 @@ export class TargetsController extends BaseController {
     req.header('BillingaccountID', mapped.billingaccountID);
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(createIoTApplicationResponseSchema, requestOptions);
-  }
-
-  /**
-   * Define a target to receive data streams, alerts, or callbacks. After creating the target resource,
-   * use its ID in a subscription to set up a data stream.
-   *
-   * @param body         The request body provides the details of the target that you
-   *                                                   want to create.
-   * @return Response from the API call
-   */
-  async createTarget(
-    body: CreateTargetRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<Target>> {
-    const req = this.createRequest('POST', '/targets');
-    req.baseUrl('Cloud Connector');
-    const mapped = req.prepareArgs({ body: [body, createTargetRequestSchema] });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    return req.callAsJson(targetSchema, requestOptions);
-  }
-
-  /**
-   * Remove a target from a ThingSpace account.
-   *
-   * @param body         The request body identifies the target to delete.
-   * @return Response from the API call
-   */
-  async deleteTarget(
-    body: DeleteTargetRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<void>> {
-    const req = this.createRequest('POST', '/targets/actions/delete');
-    req.baseUrl('Cloud Connector');
-    const mapped = req.prepareArgs({ body: [body, deleteTargetRequestSchema] });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    return req.call(requestOptions);
   }
 }

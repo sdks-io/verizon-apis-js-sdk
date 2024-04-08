@@ -10,11 +10,11 @@ import { DeviceList, deviceListSchema } from './deviceList';
 
 /** Maximum of 2,000 objects are allowed in the array. */
 export interface AccountLabels {
-  devices?: DeviceList[];
+  devices: DeviceList[];
   label?: DeviceLabels[];
 }
 
 export const accountLabelsSchema: Schema<AccountLabels> = object({
-  devices: ['devices', optional(array(lazy(() => deviceListSchema)))],
+  devices: ['devices', array(lazy(() => deviceListSchema))],
   label: ['label', optional(array(lazy(() => deviceLabelsSchema)))],
 });

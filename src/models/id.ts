@@ -5,16 +5,15 @@
  */
 
 import { object, optional, Schema, string } from '../schema';
-import { KindEnum, kindEnumSchema } from './kindEnum';
 
 export interface Id {
   /** The value of the device identifier. */
   id?: string;
   /** The type of the device identifier. Valid types of identifiers are:ESN (decimal),EID,ICCID (up to 20 digits),IMEI (up to 16 digits),MDN,MEID (hexadecimal),MSISDN. */
-  kind?: KindEnum;
+  kind?: string;
 }
 
 export const idSchema: Schema<Id> = object({
   id: ['id', optional(string())],
-  kind: ['kind', optional(kindEnumSchema)],
+  kind: ['kind', optional(string())],
 });

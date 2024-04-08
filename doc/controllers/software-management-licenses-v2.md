@@ -10,25 +10,24 @@ const softwareManagementLicensesV2Controller = new SoftwareManagementLicensesV2C
 
 ## Methods
 
-* [Delete List of Licenses to Remove](../../doc/controllers/software-management-licenses-v2.md#delete-list-of-licenses-to-remove)
-* [Assign Licenses to Devices](../../doc/controllers/software-management-licenses-v2.md#assign-licenses-to-devices)
 * [Get Account License Status](../../doc/controllers/software-management-licenses-v2.md#get-account-license-status)
+* [Assign Licenses to Devices](../../doc/controllers/software-management-licenses-v2.md#assign-licenses-to-devices)
 * [Remove Licenses From Devices](../../doc/controllers/software-management-licenses-v2.md#remove-licenses-from-devices)
 * [List Licenses to Remove](../../doc/controllers/software-management-licenses-v2.md#list-licenses-to-remove)
 * [Create List of Licenses to Remove](../../doc/controllers/software-management-licenses-v2.md#create-list-of-licenses-to-remove)
+* [Delete List of Licenses to Remove](../../doc/controllers/software-management-licenses-v2.md#delete-list-of-licenses-to-remove)
 
 
-# Delete List of Licenses to Remove
+# Get Account License Status
 
-**This endpoint is deprecated.**
-
-This endpoint allows user to delete a created cancel candidate device list.
+The endpoint allows user to list license usage.
 
 ```ts
-async deleteListOfLicensesToRemove(
+async getAccountLicenseStatus(
   account: string,
+  lastSeenDeviceId?: string,
   requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2SuccessResult>>
+): Promise<ApiResponse<V2LicenseSummary>>
 ```
 
 ## Parameters
@@ -36,19 +35,25 @@ async deleteListOfLicensesToRemove(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `account` | `string` | Template, Required | Account identifier. |
+| `lastSeenDeviceId` | `string \| undefined` | Query, Optional | Last seen device identifier. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
 
-[`FotaV2SuccessResult`](../../doc/models/fota-v2-success-result.md)
+[`V2LicenseSummary`](../../doc/models/v2-license-summary.md)
 
 ## Example Usage
 
 ```ts
-const account = '0242078689-00001';
+const account = '0000123456-00001';
+
+const lastSeenDeviceId = '15-digit IMEI';
 
 try {
-  const { result, ...httpResponse } = await softwareManagementLicensesV2Controller.deleteListOfLicensesToRemove(account);
+  const { result, ...httpResponse } = await softwareManagementLicensesV2Controller.getAccountLicenseStatus(
+  account,
+  lastSeenDeviceId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -63,7 +68,30 @@ try {
 
 ```json
 {
-  "success": true
+  "accountName": "0402196254-00001",
+  "totalLicense": 5000,
+  "assignedLicenses": 4319,
+  "hasMoreData": true,
+  "lastSeenDeviceId": "1000",
+  "maxPageSize": 10,
+  "deviceList": [
+    {
+      "deviceId": "990003425730535",
+      "assignmentTime": "2017-11-29T16:03:42.000Z"
+    },
+    {
+      "deviceId": "990000473475989",
+      "assignmentTime": "2017-11-29T16:03:42.000Z"
+    },
+    {
+      "deviceId": "990000347475989",
+      "assignmentTime": "2017-11-29T16:03:42.000Z"
+    },
+    {
+      "deviceId": "990007303425535",
+      "assignmentTime": "2017-11-29T16:03:42.000Z"
+    }
+  ]
 }
 ```
 
@@ -114,9 +142,9 @@ const body: V2LicenseIMEI = {
 
 try {
   const { result, ...httpResponse } = await softwareManagementLicensesV2Controller.assignLicensesToDevices(
-    account,
-    body
-  );
+  account,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -144,90 +172,6 @@ try {
       "deviceId": "990000473475967",
       "status": "Failure",
       "resultReason": "Device does not exist."
-    }
-  ]
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
-
-
-# Get Account License Status
-
-The endpoint allows user to list license usage.
-
-```ts
-async getAccountLicenseStatus(
-  account: string,
-  lastSeenDeviceId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2LicenseSummary>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier. |
-| `lastSeenDeviceId` | `string \| undefined` | Query, Optional | Last seen device identifier. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`V2LicenseSummary`](../../doc/models/v2-license-summary.md)
-
-## Example Usage
-
-```ts
-const account = '0000123456-00001';
-
-const lastSeenDeviceId = '15-digit IMEI';
-
-try {
-  const { result, ...httpResponse } = await softwareManagementLicensesV2Controller.getAccountLicenseStatus(
-    account,
-    lastSeenDeviceId
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "accountName": "0402196254-00001",
-  "totalLicense": 5000,
-  "assignedLicenses": 4319,
-  "hasMoreData": true,
-  "lastSeenDeviceId": "1000",
-  "maxPageSize": 10,
-  "deviceList": [
-    {
-      "deviceId": "990003425730535",
-      "assignmentTime": "2017-11-29T16:03:42.000Z"
-    },
-    {
-      "deviceId": "990000473475989",
-      "assignmentTime": "2017-11-29T16:03:42.000Z"
-    },
-    {
-      "deviceId": "990000347475989",
-      "assignmentTime": "2017-11-29T16:03:42.000Z"
-    },
-    {
-      "deviceId": "990007303425535",
-      "assignmentTime": "2017-11-29T16:03:42.000Z"
     }
   ]
 }
@@ -281,9 +225,9 @@ const body: V2LicenseIMEI = {
 
 try {
   const { result, ...httpResponse } = await softwareManagementLicensesV2Controller.removeLicensesFromDevices(
-    account,
-    body
-  );
+  account,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -438,9 +382,9 @@ const body: V2ListOfLicensesToRemoveRequest = {
 
 try {
   const { result, ...httpResponse } = await softwareManagementLicensesV2Controller.createListOfLicensesToRemove(
-    account,
-    body
-  );
+  account,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -460,6 +404,62 @@ try {
     "990003425730535",
     "990000473475989"
   ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
+
+
+# Delete List of Licenses to Remove
+
+**This endpoint is deprecated.**
+
+This endpoint allows user to delete a created cancel candidate device list.
+
+```ts
+async deleteListOfLicensesToRemove(
+  account: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<FotaV2SuccessResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`FotaV2SuccessResult`](../../doc/models/fota-v2-success-result.md)
+
+## Example Usage
+
+```ts
+const account = '0242078689-00001';
+
+try {
+  const { result, ...httpResponse } = await softwareManagementLicensesV2Controller.deleteListOfLicensesToRemove(account);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "success": true
 }
 ```
 

@@ -42,9 +42,9 @@ const requestId = '86c83330-4bf5-4235-9c4e-a83f93aeae4c';
 
 try {
   const { result, ...httpResponse } = await accountRequestsController.getCurrentAsynchronousRequestStatus(
-    aname,
-    requestId
-  );
+  aname,
+  requestId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

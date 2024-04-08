@@ -10,11 +10,11 @@ import {
   ActivateDeviceProfileRequest,
   activateDeviceProfileRequestSchema,
 } from '../models/activateDeviceProfileRequest';
-import { ProfileRequest, profileRequestSchema } from '../models/profileRequest';
 import {
-  ProfileRequest2,
-  profileRequest2Schema,
-} from '../models/profileRequest2';
+  DeactivateDeviceProfileRequest,
+  deactivateDeviceProfileRequestSchema,
+} from '../models/deactivateDeviceProfileRequest';
+import { ProfileRequest, profileRequestSchema } from '../models/profileRequest';
 import {
   RequestResponse,
   requestResponseSchema,
@@ -27,30 +27,6 @@ import { BaseController } from './baseController';
 
 export class DeviceProfileManagementController extends BaseController {
   /**
-   * Allows the profile to set the fallback attribute to the device.
-   *
-   * @param body         Device Profile Query
-   * @return Response from the API call
-   */
-  async profileToSetFallbackAttribute(
-    body: SetFallbackAttributeRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RequestResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/v1/devices/profile/actions/setfallbackattribute'
-    );
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, setFallbackAttributeRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, RestErrorResponseError, 'Bad request');
-    return req.callAsJson(requestResponseSchema, requestOptions);
-  }
-
-  /**
    * Uses the profile to bring the device under management.
    *
    * @param body         Device Profile Query
@@ -62,15 +38,16 @@ export class DeviceProfileManagementController extends BaseController {
   ): Promise<ApiResponse<RequestResponse>> {
     const req = this.createRequest(
       'POST',
-      '/v1/devices/profile/actions/activate_enable'
+      '/m2m/v1/devices/profile/actions/activate_enable'
     );
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       body: [body, activateDeviceProfileRequestSchema],
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
@@ -86,13 +63,14 @@ export class DeviceProfileManagementController extends BaseController {
   ): Promise<ApiResponse<RequestResponse>> {
     const req = this.createRequest(
       'POST',
-      '/v1/devices/profile/actions/activate'
+      '/m2m/v1/devices/profile/actions/activate'
     );
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ body: [body, profileRequestSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
@@ -103,18 +81,46 @@ export class DeviceProfileManagementController extends BaseController {
    * @return Response from the API call
    */
   async profileToDeactivateDevice(
-    body: ProfileRequest2,
+    body: DeactivateDeviceProfileRequest,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<RequestResponse>> {
     const req = this.createRequest(
       'POST',
-      '/v1/devices/profile/actions/deactivate'
+      '/m2m/v1/devices/profile/actions/deactivate'
     );
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({ body: [body, profileRequest2Schema] });
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({
+      body: [body, deactivateDeviceProfileRequestSchema],
+    });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(requestResponseSchema, requestOptions);
+  }
+
+  /**
+   * Allows the profile to set the fallback attribute to the device.
+   *
+   * @param body         Device Profile Query
+   * @return Response from the API call
+   */
+  async profileToSetFallbackAttribute(
+    body: SetFallbackAttributeRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<RequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/m2m/v1/devices/profile/actions/setfallbackattribute'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({
+      body: [body, setFallbackAttributeRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, RestErrorResponseError, 'Bad request');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 }

@@ -18,11 +18,6 @@ export enum OauthScopeEnum {
   TsMecFullaccess = 'ts.mec.fullaccess',
   TsMecLimitaccess = 'ts.mec.limitaccess',
   TsApplicationRo = 'ts.application.ro',
-  Edgediscoveryread = 'edge:discovery:read',
-  Edgeserviceprofileread = 'edge:serviceprofile:read',
-  Edgeserviceprofilewrite = 'edge:serviceprofile:write',
-  Edgeserviceregistryread = 'edge:serviceregistry:read',
-  Edgeserviceregistrywrite = 'edge:serviceregistry:write',
   Read = 'read',
   Write = 'write',
 }
@@ -30,4 +25,4 @@ export enum OauthScopeEnum {
 /**
  * Schema for OauthScopeEnum
  */
-export const oauthScopeEnumSchema: Schema<OauthScopeEnum> = stringEnum(OauthScopeEnum);
+export const  oauthScopeEnumSchema: Schema<OauthScopeEnum> = stringEnum(OauthScopeEnum);

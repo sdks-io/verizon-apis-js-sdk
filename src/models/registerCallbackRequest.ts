@@ -9,9 +9,9 @@ import { object, optional, Schema, string } from '../schema';
 /** Request to register a callback. */
 export interface RegisterCallbackRequest {
   /** The name of the callback service that you want to subscribe to. */
-  name?: string;
+  name: string;
   /** The address on your server where you have enabled a listening service for callback messages. */
-  url?: string;
+  url: string;
   /** The user name that the M2M Platform should return in the callback messages. */
   username?: string;
   /** The password that the M2M Platform should return in the callback messages. */
@@ -20,8 +20,8 @@ export interface RegisterCallbackRequest {
 
 export const registerCallbackRequestSchema: Schema<RegisterCallbackRequest> = object(
   {
-    name: ['name', optional(string())],
-    url: ['url', optional(string())],
+    name: ['name', string()],
+    url: ['url', string()],
     username: ['username', optional(string())],
     password: ['password', optional(string())],
   }

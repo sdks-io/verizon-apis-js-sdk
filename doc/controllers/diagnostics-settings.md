@@ -42,9 +42,9 @@ const devices = '[{"id":"864508030026238","kind":"IMEI"},{"id":"864508030026238"
 
 try {
   const { result, ...httpResponse } = await diagnosticsSettingsController.listDiagnosticsSettings(
-    accountName,
-    devices
-  );
+  accountName,
+  devices
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

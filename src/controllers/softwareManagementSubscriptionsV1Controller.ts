@@ -34,6 +34,7 @@ export class SoftwareManagementSubscriptionsV1Controller extends BaseController 
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/subscriptions/${mapped.account}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v1AccountSubscriptionSchema, requestOptions);
   }
 
@@ -60,6 +61,7 @@ export class SoftwareManagementSubscriptionsV1Controller extends BaseController 
     });
     req.appendTemplatePath`/licenses/${mapped.account}/index/${mapped.startIndex}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(accountLicenseInfoSchema, requestOptions);
   }
 }

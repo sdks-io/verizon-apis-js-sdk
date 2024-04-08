@@ -17,4 +17,4 @@ export enum ServiceNameEnum {
 /**
  * Schema for ServiceNameEnum
  */
-export const serviceNameEnumSchema: Schema<ServiceNameEnum> = stringEnum(ServiceNameEnum);
+export const  serviceNameEnumSchema: Schema<ServiceNameEnum> = stringEnum(ServiceNameEnum);

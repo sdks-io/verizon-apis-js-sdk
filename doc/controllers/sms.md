@@ -12,9 +12,67 @@ const sMSController = new SMSController(client);
 
 ## Methods
 
-* [List Devices SMS Messages](../../doc/controllers/sms.md#list-devices-sms-messages)
 * [Send SMS to Device](../../doc/controllers/sms.md#send-sms-to-device)
+* [List Devices SMS Messages](../../doc/controllers/sms.md#list-devices-sms-messages)
 * [Start Queued SMS Delivery](../../doc/controllers/sms.md#start-queued-sms-delivery)
+
+
+# Send SMS to Device
+
+The messages are queued on the ThingSpace Platform and sent as soon as possible, but they may be delayed due to traffic and routing considerations.
+
+```ts
+async sendSMSToDevice(
+  body: SMSSendRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<DeviceManagementResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`SMSSendRequest`](../../doc/models/sms-send-request.md) | Body, Required | Request to send SMS. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`DeviceManagementResult`](../../doc/models/device-management-result.md)
+
+## Example Usage
+
+```ts
+const body: SMSSendRequest = {
+  accountName: 'accountName0',
+  smsMessage: 'The rain in Spain stays mainly in the plain.',
+  servicePlan: 'T Plan 2',
+};
+
+try {
+  const { result, ...httpResponse } = await sMSController.sendSMSToDevice(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "requestId": "595f5c44-c31c-4552-8670-020a1545a84d"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Error response. | [`ConnectivityManagementResultError`](../../doc/models/connectivity-management-result-error.md) |
 
 
 # List Devices SMS Messages
@@ -85,63 +143,6 @@ try {
     }
   ],
   "hasMoreData": false
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Error response. | [`ConnectivityManagementResultError`](../../doc/models/connectivity-management-result-error.md) |
-
-
-# Send SMS to Device
-
-The messages are queued on the ThingSpace Platform and sent as soon as possible, but they may be delayed due to traffic and routing considerations.
-
-```ts
-async sendSMSToDevice(
-  body: SMSSendRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`SMSSendRequest`](../../doc/models/sms-send-request.md) | Body, Required | Request to send SMS. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`DeviceManagementResult`](../../doc/models/device-management-result.md)
-
-## Example Usage
-
-```ts
-const body: SMSSendRequest = {
-  servicePlan: 'T Plan 2',
-  smsMessage: 'The rain in Spain stays mainly in the plain.',
-};
-
-try {
-  const { result, ...httpResponse } = await sMSController.sendSMSToDevice(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "requestId": "595f5c44-c31c-4552-8670-020a1545a84d"
 }
 ```
 

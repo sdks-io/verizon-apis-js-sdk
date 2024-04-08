@@ -52,35 +52,8 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.query('distributionType', mapped.distributionType);
     req.appendTemplatePath`/software/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(softwarePackageSchema), requestOptions);
-  }
-
-  /**
-   * The report endpoint allows user to get campaign history of an account for specified status.
-   *
-   * @param account            Account identifier.
-   * @param campaignStatus     Status of the campaign.
-   * @param lastSeenCampaignId Last seen campaign Id.
-   * @return Response from the API call
-   */
-  async getCampaignHistoryByStatus(
-    account: string,
-    campaignStatus: string,
-    lastSeenCampaignId?: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<V2CampaignHistory>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      campaignStatus: [campaignStatus, string()],
-      lastSeenCampaignId: [lastSeenCampaignId, optional(string())],
-    });
-    req.query('campaignStatus', mapped.campaignStatus);
-    req.query('lastSeenCampaignId', mapped.lastSeenCampaignId);
-    req.appendTemplatePath`/reports/${mapped.account}/campaigns`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(v2CampaignHistorySchema, requestOptions);
   }
 
   /**
@@ -109,6 +82,7 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.query('distributionType', mapped.distributionType);
     req.appendTemplatePath`/devices/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v2AccountDeviceListSchema, requestOptions);
   }
 
@@ -132,7 +106,37 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     });
     req.appendTemplatePath`/reports/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(deviceSoftwareUpgradeSchema), requestOptions);
+  }
+
+  /**
+   * The report endpoint allows user to get campaign history of an account for specified status.
+   *
+   * @param account            Account identifier.
+   * @param campaignStatus     Status of the campaign.
+   * @param lastSeenCampaignId Last seen campaign Id.
+   * @return Response from the API call
+   */
+  async getCampaignHistoryByStatus(
+    account: string,
+    campaignStatus: string,
+    lastSeenCampaignId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<V2CampaignHistory>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      campaignStatus: [campaignStatus, string()],
+      lastSeenCampaignId: [lastSeenCampaignId, optional(string())],
+    });
+    req.query('campaignStatus', mapped.campaignStatus);
+    req.query('lastSeenCampaignId', mapped.lastSeenCampaignId);
+    req.appendTemplatePath`/reports/${mapped.account}/campaigns`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(v2CampaignHistorySchema, requestOptions);
   }
 
   /**
@@ -159,6 +163,7 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.query('lastSeenDeviceId', mapped.lastSeenDeviceId);
     req.appendTemplatePath`/reports/${mapped.account}/campaigns/${mapped.campaignId}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v2CampaignDeviceSchema, requestOptions);
   }
 }

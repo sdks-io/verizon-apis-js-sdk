@@ -19,4 +19,4 @@ export enum NumericalDataUnitEnum {
 /**
  * Schema for NumericalDataUnitEnum
  */
-export const numericalDataUnitEnumSchema: Schema<NumericalDataUnitEnum> = stringEnum(NumericalDataUnitEnum);
+export const  numericalDataUnitEnumSchema: Schema<NumericalDataUnitEnum> = stringEnum(NumericalDataUnitEnum);

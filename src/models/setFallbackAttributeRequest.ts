@@ -8,15 +8,15 @@ import { array, lazy, object, optional, Schema, string } from '../schema';
 import { DeviceList, deviceListSchema } from './deviceList';
 
 export interface SetFallbackAttributeRequest {
-  devices?: DeviceList[];
-  accountName?: string;
+  devices: DeviceList[];
+  accountName: string;
   carrierName?: string;
 }
 
 export const setFallbackAttributeRequestSchema: Schema<SetFallbackAttributeRequest> = object(
   {
-    devices: ['devices', optional(array(lazy(() => deviceListSchema)))],
-    accountName: ['accountName', optional(string())],
+    devices: ['devices', array(lazy(() => deviceListSchema))],
+    accountName: ['accountName', string()],
     carrierName: ['carrierName', optional(string())],
   }
 );

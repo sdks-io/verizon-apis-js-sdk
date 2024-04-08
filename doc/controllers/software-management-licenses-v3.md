@@ -48,9 +48,9 @@ const lastSeenDeviceId = '0';
 
 try {
   const { result, ...httpResponse } = await softwareManagementLicensesV3Controller.getAccountLicensesStatus(
-    acc,
-    lastSeenDeviceId
-  );
+  acc,
+  lastSeenDeviceId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -128,9 +128,9 @@ const body: V3LicenseIMEI = {
 
 try {
   const { result, ...httpResponse } = await softwareManagementLicensesV3Controller.assignLicensesToDevices(
-    acc,
-    body
-  );
+  acc,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -207,9 +207,9 @@ const body: V3LicenseIMEI = {
 
 try {
   const { result, ...httpResponse } = await softwareManagementLicensesV3Controller.removeLicensesFromDevices(
-    acc,
-    body
-  );
+  acc,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

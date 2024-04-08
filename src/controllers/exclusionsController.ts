@@ -35,6 +35,7 @@ export class ExclusionsController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deviceLocationSuccessResultSchema, requestOptions);
   }
 
@@ -60,6 +61,7 @@ export class ExclusionsController extends BaseController {
     req.query('accountName', mapped.accountName);
     req.query('deviceList', mapped.deviceList);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deviceLocationSuccessResultSchema, requestOptions);
   }
 
@@ -83,6 +85,7 @@ export class ExclusionsController extends BaseController {
     });
     req.appendTemplatePath`/consents/${mapped.account}/index/${mapped.startIndex}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(devicesConsentResultSchema, requestOptions);
   }
 }

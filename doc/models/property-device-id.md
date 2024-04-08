@@ -10,14 +10,14 @@
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `id` | `string \| undefined` | Optional | - |
-| `kind` | [`Kind1Enum \| undefined`](../../doc/models/kind-1-enum.md) | Optional | - |
+| `kind` | `string \| undefined` | Optional | The type of the device identifier. Valid types of identifiers are:ESN (decimal),EID,ICCID (up to 20 digits),IMEI (up to 16 digits),MDN,MEID (hexadecimal),MSISDN. |
 
 ## Example (as JSON)
 
 ```json
 {
-  "id": "id0",
-  "kind": "esn"
+  "kind": "imei",
+  "id": "id2"
 }
 ```
 

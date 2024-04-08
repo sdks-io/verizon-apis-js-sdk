@@ -23,22 +23,6 @@ import { BaseController } from './baseController';
 
 export class M5gEdgePlatformsController extends BaseController {
   /**
-   * List the geographical regions available, based on the user's bearer token. **Note:** Country code,
-   * Metropolitan area, Area and Zone are future functionality and will currently return a "null" value.
-   *
-   * @return Response from the API call
-   */
-  async listRegions(
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ListRegionsResult>> {
-    const req = this.createRequest('GET', '/regions');
-    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
-    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
-    return req.callAsJson(listRegionsResultSchema, requestOptions);
-  }
-
-  /**
    * Returns a list of optimal MEC Platforms where you can register your deployed application. **Note:**
    * If a query is sent with all of the parameters, it will fail with a "400" error. You can search based
    * on the following parameter combinations - region plus Service Profile ID and subscriber density
@@ -83,6 +67,24 @@ export class M5gEdgePlatformsController extends BaseController {
     req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
     req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
     req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(listMECPlatformsResultSchema, requestOptions);
+  }
+
+  /**
+   * List the geographical regions available, based on the user's bearer token. **Note:** Country code,
+   * Metropolitan area, Area and Zone are future functionality and will currently return a "null" value.
+   *
+   * @return Response from the API call
+   */
+  async listRegions(
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ListRegionsResult>> {
+    const req = this.createRequest('GET', '/regions');
+    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
+    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
+    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(listRegionsResultSchema, requestOptions);
   }
 }

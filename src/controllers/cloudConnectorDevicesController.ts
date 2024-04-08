@@ -50,6 +50,56 @@ import { BaseController } from './baseController';
 
 export class CloudConnectorDevicesController extends BaseController {
   /**
+   * Change configuration values on a device, such as setting how often a device records and reports
+   * sensor readings.
+   *
+   * @param body         The request body changes configuration values on a
+   *                                                          device.
+   * @return Response from the API call
+   */
+  async updateDevicesConfigurationValue(
+    body: ChangeConfigurationRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ChangeConfigurationResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/devices/configuration/actions/set'
+    );
+    req.baseUrl('Cloud Connector');
+    const mapped = req.prepareArgs({
+      body: [body, changeConfigurationRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(changeConfigurationResponseSchema, requestOptions);
+  }
+
+  /**
+   * Find devices by property values. Returns an array of all matching device resources.
+   *
+   * @param body         The request body specifies fields and values to match.
+   * @return Response from the API call
+   */
+  async findDeviceByPropertyValues(
+    body: QuerySubscriptionRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<FindDeviceByPropertyResponseList>> {
+    const req = this.createRequest('POST', '/devices/actions/query');
+    req.baseUrl('Cloud Connector');
+    const mapped = req.prepareArgs({
+      body: [body, querySubscriptionRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(
+      findDeviceByPropertyResponseListSchema,
+      requestOptions
+    );
+  }
+
+  /**
    * Search for devices by property values. Returns an array of all matching device resources.
    *
    * @param body         The request body specifies fields and values to match.
@@ -66,6 +116,7 @@ export class CloudConnectorDevicesController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       searchDeviceByPropertyResponseListSchema,
       requestOptions
@@ -94,31 +145,9 @@ export class CloudConnectorDevicesController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       searchDeviceEventHistoryResponseListSchema,
-      requestOptions
-    );
-  }
-
-  /**
-   * Find devices by property values. Returns an array of all matching device resources.
-   *
-   * @param body         The request body specifies fields and values to match.
-   * @return Response from the API call
-   */
-  async findDeviceByPropertyValues(
-    body: QuerySubscriptionRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<FindDeviceByPropertyResponseList>> {
-    const req = this.createRequest('POST', '/devices/actions/query');
-    req.baseUrl('Cloud Connector');
-    const mapped = req.prepareArgs({
-      body: [body, querySubscriptionRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    return req.callAsJson(
-      findDeviceByPropertyResponseListSchema,
       requestOptions
     );
   }
@@ -145,35 +174,11 @@ export class CloudConnectorDevicesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.appendTemplatePath`/devices/fields/${mapped.fieldname}/actions/history`;
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       searchSensorHistoryResponseListSchema,
       requestOptions
     );
-  }
-
-  /**
-   * Change configuration values on a device, such as setting how often a device records and reports
-   * sensor readings.
-   *
-   * @param body         The request body changes configuration values on a
-   *                                                          device.
-   * @return Response from the API call
-   */
-  async updateDevicesConfigurationValue(
-    body: ChangeConfigurationRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ChangeConfigurationResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/devices/configuration/actions/set'
-    );
-    req.baseUrl('Cloud Connector');
-    const mapped = req.prepareArgs({
-      body: [body, changeConfigurationRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    return req.callAsJson(changeConfigurationResponseSchema, requestOptions);
   }
 
   /**
@@ -191,6 +196,7 @@ export class CloudConnectorDevicesController extends BaseController {
     const mapped = req.prepareArgs({ body: [body, removeDeviceRequestSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
+    req.authenticate([{ oauth2: true }]);
     return req.call(requestOptions);
   }
 }

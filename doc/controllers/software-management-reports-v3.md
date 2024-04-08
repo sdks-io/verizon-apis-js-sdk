@@ -52,10 +52,10 @@ const lastSeenCampaignId = '60b5d639-ccdc-4db8-8824-069bd94c95bf';
 
 try {
   const { result, ...httpResponse } = await softwareManagementReportsV3Controller.getCampaignHistoryByStatus(
-    acc,
-    campaignStatus,
-    lastSeenCampaignId
-  );
+  acc,
+  campaignStatus,
+  lastSeenCampaignId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -136,9 +136,9 @@ const deviceId = '15-digit IMEI';
 
 try {
   const { result, ...httpResponse } = await softwareManagementReportsV3Controller.getDeviceFirmwareUpgradeHistory(
-    acc,
-    deviceId
-  );
+  acc,
+  deviceId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -224,10 +224,10 @@ const lastSeenDeviceId = '15-digit IMEI';
 
 try {
   const { result, ...httpResponse } = await softwareManagementReportsV3Controller.getCampaignDeviceStatus(
-    acc,
-    campaignId,
-    lastSeenDeviceId
-  );
+  acc,
+  campaignId,
+  lastSeenDeviceId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

@@ -133,9 +133,9 @@ const accountName = '0000123456-00001';
 
 try {
   const { result, ...httpResponse } = await diagnosticsObservationsController.stopDiagnosticsObservation(
-    transactionId,
-    accountName
-  );
+  transactionId,
+  accountName
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

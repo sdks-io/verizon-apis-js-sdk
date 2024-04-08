@@ -11,7 +11,9 @@ import { DeviceId, deviceIdSchema } from './deviceId';
 /** Request to send SMS. */
 export interface SMSSendRequest {
   /** The name of a billing account. */
-  accountName?: string;
+  accountName: string;
+  /** The contents of the SMS message. The SMS message is limited to 160 characters in 7-bit format, or 140 characters in 8-bit format. */
+  smsMessage: string;
   /** The names and values of custom fields, if you want to only include devices that have matching custom fields. */
   customFields?: CustomFields[];
   /** The SMS message encoding, which can be 7-bit (default), 8-bit-ASCII, 8-bit-UTF-8, 8-bit-DATA. */
@@ -22,12 +24,11 @@ export interface SMSSendRequest {
   groupName?: string;
   /** The name of a service plan, if you want to only include devices that have that service plan. */
   servicePlan?: string;
-  /** The contents of the SMS message. The SMS message is limited to 160 characters in 7-bit format, or 140 characters in 8-bit format. */
-  smsMessage?: string;
 }
 
 export const sMSSendRequestSchema: Schema<SMSSendRequest> = object({
-  accountName: ['accountName', optional(string())],
+  accountName: ['accountName', string()],
+  smsMessage: ['smsMessage', string()],
   customFields: [
     'customFields',
     optional(array(lazy(() => customFieldsSchema))),
@@ -36,5 +37,4 @@ export const sMSSendRequestSchema: Schema<SMSSendRequest> = object({
   deviceIds: ['deviceIds', optional(array(lazy(() => deviceIdSchema)))],
   groupName: ['groupName', optional(string())],
   servicePlan: ['servicePlan', optional(string())],
-  smsMessage: ['smsMessage', optional(string())],
 });

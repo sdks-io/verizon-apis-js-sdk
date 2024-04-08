@@ -10,59 +10,10 @@ const deviceProfileManagementController = new DeviceProfileManagementController(
 
 ## Methods
 
-* [Profile to Set Fallback Attribute](../../doc/controllers/device-profile-management.md#profile-to-set-fallback-attribute)
 * [Activate Device Through Profile](../../doc/controllers/device-profile-management.md#activate-device-through-profile)
 * [Profile to Activate Device](../../doc/controllers/device-profile-management.md#profile-to-activate-device)
 * [Profile to Deactivate Device](../../doc/controllers/device-profile-management.md#profile-to-deactivate-device)
-
-
-# Profile to Set Fallback Attribute
-
-Allows the profile to set the fallback attribute to the device.
-
-```ts
-async profileToSetFallbackAttribute(
-  body: SetFallbackAttributeRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`SetFallbackAttributeRequest`](../../doc/models/set-fallback-attribute-request.md) | Body, Required | Device Profile Query |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`RequestResponse`](../../doc/models/request-response.md)
-
-## Example Usage
-
-```ts
-const body: SetFallbackAttributeRequest = {
-  accountName: '0000123456-00001',
-  carrierName: 'the name of the mobile service provider',
-};
-
-try {
-  const { result, ...httpResponse } = await deviceProfileManagementController.profileToSetFallbackAttribute(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Bad request | [`RestErrorResponseError`](../../doc/models/rest-error-response-error.md) |
+* [Profile to Set Fallback Attribute](../../doc/controllers/device-profile-management.md#profile-to-set-fallback-attribute)
 
 
 # Activate Device Through Profile
@@ -96,11 +47,11 @@ const body: ActivateDeviceProfileRequest = {
       deviceIds: [
         {
           id: '32-digit EID',
-          kind: KindEnum.Eid,
+          kind: 'eid',
         },
         {
           id: '15-digit IMEI',
-          kind: KindEnum.Imei,
+          kind: 'imei',
         }
       ],
     }
@@ -155,8 +106,11 @@ async profileToActivateDevice(
 
 ```ts
 const body: ProfileRequest = {
-  carrierName: 'the name of the mobile service provider',
   accountName: '0000123456-00001',
+  devices: [
+    {}
+  ],
+  carrierName: 'the name of the mobile service provider',
   servicePlan: 'The service plan name',
   mdnZipCode: 'five digit zip code',
 };
@@ -186,7 +140,7 @@ Uses the profile to deactivate the device.
 
 ```ts
 async profileToDeactivateDevice(
-  body: ProfileRequest2,
+  body: DeactivateDeviceProfileRequest,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<RequestResponse>>
 ```
@@ -195,7 +149,7 @@ async profileToDeactivateDevice(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`ProfileRequest2`](../../doc/models/profile-request-2.md) | Body, Required | Device Profile Query |
+| `body` | [`DeactivateDeviceProfileRequest`](../../doc/models/deactivate-device-profile-request.md) | Body, Required | Device Profile Query |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -205,16 +159,68 @@ async profileToDeactivateDevice(
 ## Example Usage
 
 ```ts
-const body: ProfileRequest2 = {
+const body: DeactivateDeviceProfileRequest = {
   accountName: '0000123456-00001',
-  carrierName: 'the name of the mobile service provider',
   reasonCode: 'a short code for the reason action was taken',
+  carrierName: 'the name of the mobile service provider',
   etfWaiver: true,
   checkFallbackProfile: false,
 };
 
 try {
   const { result, ...httpResponse } = await deviceProfileManagementController.profileToDeactivateDevice(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Bad request | [`RestErrorResponseError`](../../doc/models/rest-error-response-error.md) |
+
+
+# Profile to Set Fallback Attribute
+
+Allows the profile to set the fallback attribute to the device.
+
+```ts
+async profileToSetFallbackAttribute(
+  body: SetFallbackAttributeRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<RequestResponse>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`SetFallbackAttributeRequest`](../../doc/models/set-fallback-attribute-request.md) | Body, Required | Device Profile Query |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`RequestResponse`](../../doc/models/request-response.md)
+
+## Example Usage
+
+```ts
+const body: SetFallbackAttributeRequest = {
+  devices: [
+    {}
+  ],
+  accountName: '0000123456-00001',
+  carrierName: 'the name of the mobile service provider',
+};
+
+try {
+  const { result, ...httpResponse } = await deviceProfileManagementController.profileToSetFallbackAttribute(body);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

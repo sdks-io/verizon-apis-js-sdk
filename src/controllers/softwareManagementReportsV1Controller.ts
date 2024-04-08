@@ -27,6 +27,34 @@ import { BaseController } from './baseController';
 
 export class SoftwareManagementReportsV1Controller extends BaseController {
   /**
+   * Returns an array of all devices in the specified account. Each device object includes information
+   * needed for managing firmware, including the device make and model, MDN and IMEI, and current
+   * firmware version.
+   *
+   * @param account    Account identifier in "##########-#####".
+   * @param startIndex Only return devices with IMEIs larger than this value. Use 0 for the first request.
+   *                             If `hasMoreData`=true in the response, use the `lastSeenDeviceId` value from the
+   *                             response as the startIndex in the next request.
+   * @return Response from the API call
+   */
+  async listAccountDevices(
+    account: string,
+    startIndex: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceListQueryResult>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Software Management V1');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      startIndex: [startIndex, string()],
+    });
+    req.appendTemplatePath`/devices/${mapped.account}/index/${mapped.startIndex}`;
+    req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(deviceListQueryResultSchema, requestOptions);
+  }
+
+  /**
    * Returns a list of all upgrades with a specified status.
    *
    * @param account       Account identifier in "##########-#####".
@@ -52,34 +80,8 @@ export class SoftwareManagementReportsV1Controller extends BaseController {
     });
     req.appendTemplatePath`/reports/${mapped.account}/status/${mapped.upgradeStatus}/index/${mapped.startIndex}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(upgradeListQueryResultSchema, requestOptions);
-  }
-
-  /**
-   * Returns an array of all devices in the specified account. Each device object includes information
-   * needed for managing firmware, including the device make and model, MDN and IMEI, and current
-   * firmware version.
-   *
-   * @param account    Account identifier in "##########-#####".
-   * @param startIndex Only return devices with IMEIs larger than this value. Use 0 for the first request.
-   *                             If `hasMoreData`=true in the response, use the `lastSeenDeviceId` value from the
-   *                             response as the startIndex in the next request.
-   * @return Response from the API call
-   */
-  async listAccountDevices(
-    account: string,
-    startIndex: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceListQueryResult>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('Software Management V1');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      startIndex: [startIndex, string()],
-    });
-    req.appendTemplatePath`/devices/${mapped.account}/index/${mapped.startIndex}`;
-    req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    return req.callAsJson(deviceListQueryResultSchema, requestOptions);
   }
 
   /**
@@ -102,6 +104,7 @@ export class SoftwareManagementReportsV1Controller extends BaseController {
     });
     req.appendTemplatePath`/reports/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(deviceUpgradeHistorySchema), requestOptions);
   }
 }

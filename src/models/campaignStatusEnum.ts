@@ -23,4 +23,4 @@ export enum CampaignStatusEnum {
 /**
  * Schema for CampaignStatusEnum
  */
-export const campaignStatusEnumSchema: Schema<CampaignStatusEnum> = stringEnum(CampaignStatusEnum);
+export const  campaignStatusEnumSchema: Schema<CampaignStatusEnum> = stringEnum(CampaignStatusEnum);

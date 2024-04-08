@@ -16,4 +16,4 @@ export enum UserEquipmentIdentityTypeEnum {
 /**
  * Schema for UserEquipmentIdentityTypeEnum
  */
-export const userEquipmentIdentityTypeEnumSchema: Schema<UserEquipmentIdentityTypeEnum> = stringEnum(UserEquipmentIdentityTypeEnum);
+export const  userEquipmentIdentityTypeEnumSchema: Schema<UserEquipmentIdentityTypeEnum> = stringEnum(UserEquipmentIdentityTypeEnum);

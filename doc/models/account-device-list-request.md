@@ -20,6 +20,8 @@ Request for listing account devices.
 | `groupName` | `string \| undefined` | Optional | Only include devices that are in this device group. |
 | `latest` | `string \| undefined` | Optional | Only include devices that were added before this date and time. |
 | `servicePlan` | `string \| undefined` | Optional | Only include devices that have this service plan. |
+| `maxNumberOfDevices` | `number \| undefined` | Optional | **Constraints**: `>= 0`, `<= 100` |
+| `largestDeviceIdSeen` | `bigint \| undefined` | Optional | **Constraints**: `>= 0`, `<= 100` |
 
 ## Example (as JSON)
 
@@ -31,8 +33,8 @@ Request for listing account devices.
       {
         "kind": "iccid",
         "contains": "4259",
-        "startswith": "startswith0",
-        "endswith": "endswith2"
+        "startswith": "startswith8",
+        "endswith": "endswith0"
       }
     ]
   },
@@ -40,19 +42,15 @@ Request for listing account devices.
     "id": "id0",
     "kind": "kind8"
   },
-  "currentState": "currentState6",
+  "currentState": "currentState0",
   "customFields": [
     {
       "key": "key0",
       "value": "value2"
     },
     {
-      "key": "key1",
-      "value": "value3"
-    },
-    {
-      "key": "key2",
-      "value": "value4"
+      "key": "key0",
+      "value": "value2"
     }
   ]
 }

@@ -13,10 +13,20 @@ export interface Configuration {
   timeout: number;
   vZM2mToken: string;
   environment: Environment;
-  oauthClientId: string;
-  oauthClientSecret: string;
+  /** @deprecated use clientCredentialsAuthCredentials field instead */
+  oauthClientId?: string;
+  /** @deprecated use clientCredentialsAuthCredentials field instead */
+  oauthClientSecret?: string;
+  /** @deprecated use clientCredentialsAuthCredentials field instead */
   oauthToken?: OauthToken;
+  /** @deprecated use clientCredentialsAuthCredentials field instead */
   oauthScopes?: OauthScopeEnum[];
+  clientCredentialsAuthCredentials?: {
+    oauthClientId: string;
+    oauthClientSecret: string;
+    oauthToken?: OauthToken;
+    oauthScopes?: OauthScopeEnum[];
+  };
   httpClientOptions?: Partial<HttpClientOptions>;
   unstable_httpClientOptions?: any;
 }

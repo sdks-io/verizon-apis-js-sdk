@@ -48,9 +48,10 @@ const fieldParameters: Record<string, string> = {
 
 try {
   const { result, ...httpResponse } = await oauthAuthorizationController.requestToken(
-    authorization,
-    fieldParameters
-  );
+  authorization,
+  undefined,
+  fieldParameters
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

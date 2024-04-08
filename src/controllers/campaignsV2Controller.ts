@@ -47,6 +47,32 @@ import { BaseController } from './baseController';
 
 export class CampaignsV2Controller extends BaseController {
   /**
+   * This endpoint allows user to schedule a software upgrade.
+   *
+   * @param account      Account identifier.
+   * @param body         Software upgrade information.
+   * @return Response from the API call
+   */
+  async scheduleCampaignFirmwareUpgrade(
+    account: string,
+    body: CampaignSoftwareUpgrade,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<CampaignSoftware>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      body: [body, campaignSoftwareUpgradeSchema],
+    });
+    req.header('Content-Type', '*/*');
+    req.json(mapped.body);
+    req.appendTemplatePath`/campaigns/${mapped.account}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(campaignSoftwareSchema, requestOptions);
+  }
+
+  /**
    * This endpoint allows user to get information of a software upgrade.
    *
    * @param account    Account identifier.
@@ -66,61 +92,8 @@ export class CampaignsV2Controller extends BaseController {
     });
     req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(campaignSoftwareSchema, requestOptions);
-  }
-
-  /**
-   * This endpoint allows user to change campaign dates and time windows. Fields which need to remain
-   * unchanged should be also provided.
-   *
-   * @param account      Account identifier.
-   * @param campaignId   Software upgrade information.
-   * @param body         New dates and time windows.
-   * @return Response from the API call
-   */
-  async updateCampaignDates(
-    account: string,
-    campaignId: string,
-    body: V2ChangeCampaignDatesRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<CampaignSoftware>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      campaignId: [campaignId, string()],
-      body: [body, v2ChangeCampaignDatesRequestSchema],
-    });
-    req.header('Content-Type', '*/*');
-    req.json(mapped.body);
-    req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}/dates`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(campaignSoftwareSchema, requestOptions);
-  }
-
-  /**
-   * You can upload configuration files and schedule them in a campaign to devices.
-   *
-   * @param acc          Account identifier.
-   * @param body         Device logging information.
-   * @return Response from the API call
-   */
-  async scheduleFileUpgrade(
-    acc: string,
-    body: UploadAndScheduleFileRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<UploadAndScheduleFileResponse>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      acc: [acc, string()],
-      body: [body, uploadAndScheduleFileRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.appendTemplatePath`/campaigns/files/${mapped.acc}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(uploadAndScheduleFileResponseSchema, requestOptions);
   }
 
   /**
@@ -149,32 +122,8 @@ export class CampaignsV2Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v2AddOrRemoveDeviceResultSchema, requestOptions);
-  }
-
-  /**
-   * This endpoint allows user to schedule a software upgrade.
-   *
-   * @param account      Account identifier.
-   * @param body         Software upgrade information.
-   * @return Response from the API call
-   */
-  async scheduleCampaignFirmwareUpgrade(
-    account: string,
-    body: CampaignSoftwareUpgrade,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<CampaignSoftware>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      body: [body, campaignSoftwareUpgradeSchema],
-    });
-    req.header('Content-Type', '*/*');
-    req.json(mapped.body);
-    req.appendTemplatePath`/campaigns/${mapped.account}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(campaignSoftwareSchema, requestOptions);
   }
 
   /**
@@ -198,7 +147,64 @@ export class CampaignsV2Controller extends BaseController {
     });
     req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(fotaV2SuccessResultSchema, requestOptions);
+  }
+
+  /**
+   * This endpoint allows user to change campaign dates and time windows. Fields which need to remain
+   * unchanged should be also provided.
+   *
+   * @param account      Account identifier.
+   * @param campaignId   Software upgrade information.
+   * @param body         New dates and time windows.
+   * @return Response from the API call
+   */
+  async updateCampaignDates(
+    account: string,
+    campaignId: string,
+    body: V2ChangeCampaignDatesRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<CampaignSoftware>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      campaignId: [campaignId, string()],
+      body: [body, v2ChangeCampaignDatesRequestSchema],
+    });
+    req.header('Content-Type', '*/*');
+    req.json(mapped.body);
+    req.appendTemplatePath`/campaigns/${mapped.account}/${mapped.campaignId}/dates`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(campaignSoftwareSchema, requestOptions);
+  }
+
+  /**
+   * You can upload configuration files and schedule them in a campaign to devices.
+   *
+   * @param acc          Account identifier.
+   * @param body         Device logging information.
+   * @return Response from the API call
+   */
+  async scheduleFileUpgrade(
+    acc: string,
+    body: UploadAndScheduleFileRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<UploadAndScheduleFileResponse>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      acc: [acc, string()],
+      body: [body, uploadAndScheduleFileRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.appendTemplatePath`/campaigns/files/${mapped.acc}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(uploadAndScheduleFileResponseSchema, requestOptions);
   }
 
   /**
@@ -224,6 +230,7 @@ export class CampaignsV2Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/campaigns/software/${mapped.acc}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(uploadAndScheduleFileResponseSchema, requestOptions);
   }
 }

@@ -83,4 +83,4 @@ export enum HttpStatusCodeEnum {
 /**
  * Schema for HttpStatusCodeEnum
  */
-export const httpStatusCodeEnumSchema: Schema<HttpStatusCodeEnum> = stringEnum(HttpStatusCodeEnum);
+export const  httpStatusCodeEnumSchema: Schema<HttpStatusCodeEnum> = stringEnum(HttpStatusCodeEnum);

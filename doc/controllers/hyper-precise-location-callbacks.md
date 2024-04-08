@@ -114,9 +114,9 @@ const body: HyperPreciseLocationCallback = {
 
 try {
   const { result, ...httpResponse } = await hyperPreciseLocationCallbacksController.registerCallback(
-    accountNumber,
-    body
-  );
+  accountNumber,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -181,9 +181,9 @@ const service = 'BullseyeReporting';
 
 try {
   const { result, ...httpResponse } = await hyperPreciseLocationCallbacksController.deregisterCallback(
-    accountNumber,
-    service
-  );
+  accountNumber,
+  service
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

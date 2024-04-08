@@ -30,35 +30,48 @@ import { BaseController } from './baseController';
 
 export class DeviceGroupsController extends BaseController {
   /**
-   * Make changes to a device group, including changing the name and description, and adding or removing
-   * devices.
+   * Create a new device group and optionally add devices to the group. Device groups can make it easier
+   * to manage similar devices and to get reports on their usage.
    *
-   * @param aname        Account name.
-   * @param gname        Group name.
-   * @param body         Request to update device group.
+   * @param body         A request to create a new device group.
    * @return Response from the API call
    */
-  async updateDeviceGroup(
-    aname: string,
-    gname: string,
-    body: DeviceGroupUpdateRequest,
+  async createDeviceGroup(
+    body: CreateDeviceGroupRequest,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<ConnectivityManagementSuccessResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('M2M');
+    const req = this.createRequest('POST', '/m2m/v1/groups');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
-      aname: [aname, string()],
-      gname: [gname, string()],
-      body: [body, deviceGroupUpdateRequestSchema],
+      body: [body, createDeviceGroupRequestSchema],
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.appendTemplatePath`/v1/groups/${mapped.aname}/name/${mapped.gname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions
     );
+  }
+
+  /**
+   * Returns a list of all device groups in a specified account.
+   *
+   * @param aname Account name.
+   * @return Response from the API call
+   */
+  async listDeviceGroups(
+    aname: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceGroup[]>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ aname: [aname, string()] });
+    req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}`;
+    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(array(deviceGroupSchema), requestOptions);
   }
 
   /**
@@ -77,59 +90,50 @@ export class DeviceGroupsController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<DeviceGroupDevicesData>> {
     const req = this.createRequest('GET');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       aname: [aname, string()],
       gname: [gname, string()],
       next: [next, optional(bigint())],
     });
     req.query('next', mapped.next);
-    req.appendTemplatePath`/v1/groups/${mapped.aname}/name/${mapped.gname}`;
+    req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}/name/${mapped.gname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deviceGroupDevicesDataSchema, requestOptions);
   }
 
   /**
-   * Create a new device group and optionally add devices to the group. Device groups can make it easier
-   * to manage similar devices and to get reports on their usage.
+   * Make changes to a device group, including changing the name and description, and adding or removing
+   * devices.
    *
-   * @param body         A request to create a new device group.
+   * @param aname        Account name.
+   * @param gname        Group name.
+   * @param body         Request to update device group.
    * @return Response from the API call
    */
-  async createDeviceGroup(
-    body: CreateDeviceGroupRequest,
+  async updateDeviceGroup(
+    aname: string,
+    gname: string,
+    body: DeviceGroupUpdateRequest,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<ConnectivityManagementSuccessResult>> {
-    const req = this.createRequest('POST', '/v1/groups');
-    req.baseUrl('M2M');
+    const req = this.createRequest('PUT');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
-      body: [body, createDeviceGroupRequestSchema],
+      aname: [aname, string()],
+      gname: [gname, string()],
+      body: [body, deviceGroupUpdateRequestSchema],
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
+    req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}/name/${mapped.gname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions
     );
-  }
-
-  /**
-   * Returns a list of all device groups in a specified account.
-   *
-   * @param aname Account name.
-   * @return Response from the API call
-   */
-  async listDeviceGroups(
-    aname: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceGroup[]>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({ aname: [aname, string()] });
-    req.appendTemplatePath`/v1/groups/${mapped.aname}`;
-    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    return req.callAsJson(array(deviceGroupSchema), requestOptions);
   }
 
   /**
@@ -146,13 +150,14 @@ export class DeviceGroupsController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<ConnectivityManagementSuccessResult>> {
     const req = this.createRequest('DELETE');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       aname: [aname, string()],
       gname: [gname, string()],
     });
-    req.appendTemplatePath`/v1/groups/${mapped.aname}/name/${mapped.gname}`;
+    req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}/name/${mapped.gname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions

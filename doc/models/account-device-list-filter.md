@@ -11,7 +11,7 @@ Filter for a list of devices.
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `deviceIdentifierFilters` | [`DeviceIdSearch[] \| undefined`](../../doc/models/device-id-search.md) | Optional | Specify the kind of the device identifier, the type of match, and the string that you want to match. |
+| `deviceIdentifierFilters` | [`DeviceIdSearch[]`](../../doc/models/device-id-search.md) | Required | Specify the kind of the device identifier, the type of match, and the string that you want to match. |
 
 ## Example (as JSON)
 
@@ -21,8 +21,8 @@ Filter for a list of devices.
     {
       "kind": "iccid",
       "contains": "4259",
-      "startswith": "startswith4",
-      "endswith": "endswith6"
+      "startswith": "startswith8",
+      "endswith": "endswith0"
     }
   ]
 }

@@ -18,4 +18,4 @@ export enum RequestStatusEnum {
 /**
  * Schema for RequestStatusEnum
  */
-export const requestStatusEnumSchema: Schema<RequestStatusEnum> = stringEnum(RequestStatusEnum);
+export const  requestStatusEnumSchema: Schema<RequestStatusEnum> = stringEnum(RequestStatusEnum);

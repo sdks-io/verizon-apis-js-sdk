@@ -13,7 +13,7 @@ Upgrade information.
 |  --- | --- | --- | --- |
 | `hasMoreFlag` | `boolean \| undefined` | Optional | True if there are more devices to retrieve. |
 | `lastSeenUpgradeId` | `number \| undefined` | Optional | If hasMoreData=true, the startIndex to use for the next request. 0 if hasMoreData=false. |
-| `reportList` | [`FirmwareUpgrade[] \| undefined`](../../doc/models/firmware-upgrade.md) | Optional | Array of upgrade objects with the specified status. |
+| `reportList` | [`FirmwareUpgrade[] \| null \| undefined`](../../doc/models/firmware-upgrade.md) | Optional | Array of upgrade objects with the specified status. |
 
 ## Example (as JSON)
 
@@ -57,7 +57,7 @@ Upgrade information.
       ]
     }
   ],
-  "lastSeenUpgradeId": 10
+  "lastSeenUpgradeId": 120
 }
 ```
 

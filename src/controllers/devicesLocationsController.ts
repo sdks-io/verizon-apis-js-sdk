@@ -45,6 +45,7 @@ export class DevicesLocationsController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(locationSchema), requestOptions);
   }
 
@@ -66,6 +67,7 @@ export class DevicesLocationsController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       synchronousLocationRequestResultSchema,
       requestOptions
@@ -94,7 +96,31 @@ export class DevicesLocationsController extends BaseController {
     req.query('accountName', mapped.accountName);
     req.appendTemplatePath`/devicelocations/${mapped.txid}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(transactionIDSchema, requestOptions);
+  }
+
+  /**
+   * Request an asynchronous device location report.
+   *
+   * @param body         Request for device location report.
+   * @return Response from the API call
+   */
+  async createLocationReport(
+    body: LocationRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AsynchronousLocationRequestResult>> {
+    const req = this.createRequest('POST', '/locationreports');
+    req.baseUrl('Device Location');
+    const mapped = req.prepareArgs({ body: [body, locationRequestSchema] });
+    req.header('Content-Type', '*/*');
+    req.json(mapped.body);
+    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(
+      asynchronousLocationRequestResultSchema,
+      requestOptions
+    );
   }
 
   /**
@@ -120,6 +146,7 @@ export class DevicesLocationsController extends BaseController {
     });
     req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}/index/${mapped.startindex}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(locationReportSchema, requestOptions);
   }
 
@@ -143,29 +170,8 @@ export class DevicesLocationsController extends BaseController {
     });
     req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}/status`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(locationReportStatusSchema, requestOptions);
-  }
-
-  /**
-   * Request an asynchronous device location report.
-   *
-   * @param body         Request for device location report.
-   * @return Response from the API call
-   */
-  async createLocationReport(
-    body: LocationRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<AsynchronousLocationRequestResult>> {
-    const req = this.createRequest('POST', '/locationreports');
-    req.baseUrl('Device Location');
-    const mapped = req.prepareArgs({ body: [body, locationRequestSchema] });
-    req.header('Content-Type', '*/*');
-    req.json(mapped.body);
-    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    return req.callAsJson(
-      asynchronousLocationRequestResultSchema,
-      requestOptions
-    );
   }
 
   /**
@@ -188,6 +194,7 @@ export class DevicesLocationsController extends BaseController {
     });
     req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(transactionIDSchema, requestOptions);
   }
 }

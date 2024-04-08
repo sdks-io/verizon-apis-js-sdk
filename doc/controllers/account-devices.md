@@ -10,8 +10,66 @@ const accountDevicesController = new AccountDevicesController(client);
 
 ## Methods
 
-* [List Account Devices Information](../../doc/controllers/account-devices.md#list-account-devices-information)
 * [Get Account Device Information](../../doc/controllers/account-devices.md#get-account-device-information)
+* [List Account Devices Information](../../doc/controllers/account-devices.md#list-account-devices-information)
+
+
+# Get Account Device Information
+
+Retrieve account device information such as reported firmware on the devices.
+
+```ts
+async getAccountDeviceInformation(
+  acc: string,
+  lastSeenDeviceId?: string,
+  protocol?: DevicesProtocolEnum,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<V3AccountDeviceList>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `acc` | `string` | Template, Required | Account identifier. |
+| `lastSeenDeviceId` | `string \| undefined` | Query, Optional | Last seen device identifier. |
+| `protocol` | [`DevicesProtocolEnum \| undefined`](../../doc/models/devices-protocol-enum.md) | Query, Optional | Filter to retrieve a specific protocol type used. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`V3AccountDeviceList`](../../doc/models/v3-account-device-list.md)
+
+## Example Usage
+
+```ts
+const acc = '0000123456-00001';
+
+const lastSeenDeviceId = '0';
+
+const protocol = DevicesProtocolEnum.LWM2m;
+
+try {
+  const { result, ...httpResponse } = await accountDevicesController.getAccountDeviceInformation(
+  acc,
+  lastSeenDeviceId,
+  protocol
+);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV3ResultError`](../../doc/models/fota-v3-result-error.md) |
 
 
 # List Account Devices Information
@@ -51,9 +109,9 @@ const body: DeviceIMEI = {
 
 try {
   const { result, ...httpResponse } = await accountDevicesController.listAccountDevicesInformation(
-    acc,
-    body
-  );
+  acc,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -87,64 +145,6 @@ try {
       "lastConnectionTime": "2012-04-23T18:25:43.511Z"
     }
   ]
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV3ResultError`](../../doc/models/fota-v3-result-error.md) |
-
-
-# Get Account Device Information
-
-Retrieve account device information such as reported firmware on the devices.
-
-```ts
-async getAccountDeviceInformation(
-  acc: string,
-  lastSeenDeviceId?: string,
-  protocol?: DevicesProtocolEnum,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3AccountDeviceList>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `acc` | `string` | Template, Required | Account identifier. |
-| `lastSeenDeviceId` | `string \| undefined` | Query, Optional | Last seen device identifier. |
-| `protocol` | [`DevicesProtocolEnum \| undefined`](../../doc/models/devices-protocol-enum.md) | Query, Optional | Filter to retrieve a specific protocol type used.<br>**Default**: `DevicesProtocolEnum.LWM2m` |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`V3AccountDeviceList`](../../doc/models/v3-account-device-list.md)
-
-## Example Usage
-
-```ts
-const acc = '0000123456-00001';
-
-const lastSeenDeviceId = '0';
-
-const protocol = DevicesProtocolEnum.LWM2m;
-
-try {
-  const { result, ...httpResponse } = await accountDevicesController.getAccountDeviceInformation(
-    acc,
-    lastSeenDeviceId,
-    protocol
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
 }
 ```
 

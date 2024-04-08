@@ -52,33 +52,8 @@ export class DeviceReportsController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(aggregateSessionReportSchema, requestOptions);
-  }
-
-  /**
-   * Detailed report of session duration and number of bytes transferred per day.
-   *
-   * @param body         Request for sessions report.
-   * @return Response from the API call
-   */
-  async getSessionsReport(
-    body: SessionReportRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<SessionReport>> {
-    const req = this.createRequest('POST', '/report/sessions');
-    req.baseUrl('Hyper Precise Location');
-    const mapped = req.prepareArgs({
-      body: [body, sessionReportRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, HyperPreciseLocationResultError, 'Bad request.');
-    req.throwOn(401, HyperPreciseLocationResultError, 'Unauthorized request. Access token is missing or invalid.');
-    req.throwOn(403, HyperPreciseLocationResultError, 'Forbidden request.');
-    req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
-    req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
-    req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
-    return req.callAsJson(sessionReportSchema, requestOptions);
   }
 
   /**
@@ -105,6 +80,34 @@ export class DeviceReportsController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(aggregatedReportCallbackResultSchema, requestOptions);
+  }
+
+  /**
+   * Detailed report of session duration and number of bytes transferred per day.
+   *
+   * @param body         Request for sessions report.
+   * @return Response from the API call
+   */
+  async getSessionsReport(
+    body: SessionReportRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<SessionReport>> {
+    const req = this.createRequest('POST', '/report/sessions');
+    req.baseUrl('Hyper Precise Location');
+    const mapped = req.prepareArgs({
+      body: [body, sessionReportRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, HyperPreciseLocationResultError, 'Bad request.');
+    req.throwOn(401, HyperPreciseLocationResultError, 'Unauthorized request. Access token is missing or invalid.');
+    req.throwOn(403, HyperPreciseLocationResultError, 'Forbidden request.');
+    req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
+    req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
+    req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(sessionReportSchema, requestOptions);
   }
 }

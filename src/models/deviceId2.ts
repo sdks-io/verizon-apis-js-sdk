@@ -5,14 +5,13 @@
  */
 
 import { object, optional, Schema, string } from '../schema';
-import { Kind1Enum, kind1EnumSchema } from './kind1Enum';
 
 export interface DeviceId2 {
   id?: string;
-  kind?: Kind1Enum;
+  kind?: string;
 }
 
 export const deviceId2Schema: Schema<DeviceId2> = object({
   id: ['id', optional(string())],
-  kind: ['kind', optional(kind1EnumSchema)],
+  kind: ['kind', optional(string())],
 });

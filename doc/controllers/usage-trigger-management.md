@@ -11,8 +11,8 @@ const usageTriggerManagementController = new UsageTriggerManagementController(cl
 ## Methods
 
 * [Create New Trigger](../../doc/controllers/usage-trigger-management.md#create-new-trigger)
-* [Delete Trigger](../../doc/controllers/usage-trigger-management.md#delete-trigger)
 * [Update Trigger](../../doc/controllers/usage-trigger-management.md#update-trigger)
+* [Delete Trigger](../../doc/controllers/usage-trigger-management.md#delete-trigger)
 
 
 # Create New Trigger
@@ -53,9 +53,82 @@ const body: UsageTriggerAddRequest = {
 };
 
 try {
-  const { result, ...httpResponse } = await usageTriggerManagementController.createNewTrigger(
-    body
-  );
+  const { result, ...httpResponse } = await usageTriggerManagementController.createNewTrigger(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "triggerId": "595f5c44-c31c-4552-8670-020a1545a84d",
+  "triggerName": "90 percent",
+  "accountName": "1000012345-00001",
+  "serviceName": "Location",
+  "thresholdValue": "90",
+  "allowExcess": true,
+  "sendSmsNotification": true,
+  "smsPhoneNumbers": "5558794321",
+  "sendEmailNotification": false,
+  "emailAddresses": "",
+  "createDate": "2018-08-11",
+  "updateDate": "2018-08-12"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
+
+
+# Update Trigger
+
+Update an existing usage trigger
+
+```ts
+async updateTrigger(
+  triggerId: string,
+  body?: UsageTriggerUpdateRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<UsageTriggerResponse>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `triggerId` | `string` | Template, Required | Usage trigger ID |
+| `body` | [`UsageTriggerUpdateRequest \| undefined`](../../doc/models/usage-trigger-update-request.md) | Body, Optional | New trigger values |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`UsageTriggerResponse`](../../doc/models/usage-trigger-response.md)
+
+## Example Usage
+
+```ts
+const triggerId = '595f5c44-c31c-4552-8670-020a1545a84d';
+
+const body: UsageTriggerUpdateRequest = {
+  accountName: '1000012345-00001',
+  thresholdValue: '95',
+};
+
+try {
+  const { result, ...httpResponse } = await usageTriggerManagementController.updateTrigger(
+  triggerId,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -125,9 +198,9 @@ const triggerId = '595f5c44-c31c-4552-8670-020a1545a84d';
 
 try {
   const { result, ...httpResponse } = await usageTriggerManagementController.deleteTrigger(
-    accountName,
-    triggerId
-  );
+  accountName,
+  triggerId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -143,81 +216,6 @@ try {
 ```json
 {
   "success": true
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
-
-
-# Update Trigger
-
-Update an existing usage trigger
-
-```ts
-async updateTrigger(
-  triggerId: string,
-  body?: UsageTriggerUpdateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UsageTriggerResponse>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `triggerId` | `string` | Template, Required | Usage trigger ID |
-| `body` | [`UsageTriggerUpdateRequest \| undefined`](../../doc/models/usage-trigger-update-request.md) | Body, Optional | New trigger values |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`UsageTriggerResponse`](../../doc/models/usage-trigger-response.md)
-
-## Example Usage
-
-```ts
-const triggerId = '595f5c44-c31c-4552-8670-020a1545a84d';
-
-const body: UsageTriggerUpdateRequest = {
-  accountName: '1000012345-00001',
-  thresholdValue: '95',
-};
-
-try {
-  const { result, ...httpResponse } = await usageTriggerManagementController.updateTrigger(
-    triggerId,
-    body
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "triggerId": "595f5c44-c31c-4552-8670-020a1545a84d",
-  "triggerName": "90 percent",
-  "accountName": "1000012345-00001",
-  "serviceName": "Location",
-  "thresholdValue": "90",
-  "allowExcess": true,
-  "sendSmsNotification": true,
-  "smsPhoneNumbers": "5558794321",
-  "sendEmailNotification": false,
-  "emailAddresses": "",
-  "createDate": "2018-08-11",
-  "updateDate": "2018-08-12"
 }
 ```
 

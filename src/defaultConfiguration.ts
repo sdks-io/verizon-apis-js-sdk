@@ -12,8 +12,6 @@ export const DEFAULT_CONFIGURATION: Configuration = {
   timeout: 0,
   vZM2mToken: '',
   environment: Environment.Production,
-  oauthClientId: 'TODO OAuthClientId',
-  oauthClientSecret: 'TODO OAuthClientSecret',
 };
 
 /** Default values for retry configuration parameters. */

@@ -29,7 +29,9 @@ async queryMECPerformanceMetrics(
 
 ## Requires scope
 
-`Edgediscoveryread`, `Edgeserviceprofileread`, `Edgeserviceprofilewrite`, `Edgeserviceregistryread`, `Edgeserviceregistrywrite`, `TsApplicationRo`, `TsMecFullaccess`, `TsMecLimitaccess`
+### oAuth2
+
+`discovery:read`, `serviceprofile:read`, `serviceprofile:write`, `serviceregistry:read`, `serviceregistry:write`, `ts.application.ro`, `ts.mec.fullaccess`, `ts.mec.limitaccess`
 
 ## Response Type
 
@@ -44,9 +46,7 @@ const body: QueryMECPerformanceMetricsRequest = {
 };
 
 try {
-  const { result, ...httpResponse } = await performanceMetricsController.queryMECPerformanceMetrics(
-    body
-  );
+  const { result, ...httpResponse } = await performanceMetricsController.queryMECPerformanceMetrics(body);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

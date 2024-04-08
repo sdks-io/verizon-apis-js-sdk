@@ -14,7 +14,7 @@ export interface DeviceIdSearch {
   startswith?: string;
   /** The identifier must end with the specified string. */
   endswith?: string;
-  /** The type of the device identifier to match. Valid types of identifiers are:EID,ESN,ICCID,IMEI,MDN,MEID,MSISDN. */
+  /** The type of the device identifier. Valid types of identifiers are:ESN (decimal),EID,ICCID (up to 20 digits),IMEI (up to 16 digits),MDN,MEID (hexadecimal),MSISDN. */
   kind: string;
 }
 

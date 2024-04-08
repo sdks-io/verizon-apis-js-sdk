@@ -26,7 +26,7 @@ async listAccountSubscriptions(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `body` | [`SecuritySubscriptionRequest`](../../doc/models/security-subscription-request.md) | Body, Required | Request for account subscription. |
-| `xRequestID` | `string \| undefined` | Header, Optional | Transaction Id.<br>**Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[0-9]-[0-9]{3,32}$` |
+| `xRequestID` | `string \| undefined` | Header, Optional | Transaction Id. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type

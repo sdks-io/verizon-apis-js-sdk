@@ -22,31 +22,6 @@ import { BaseController } from './baseController';
 
 export class AccountsController extends BaseController {
   /**
-   * When HTTP status is 202, a URL will be returned in the Location header of the form /leads/{aname}?
-   * next={token}. This URL can be used to request the next set of leads.
-   *
-   * @param aname Account name.
-   * @param next  Continue the previous query from the pageUrl in Location Header.
-   * @return Response from the API call
-   */
-  async listAccountLeads(
-    aname: string,
-    next?: bigint,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<AccountLeadsResult>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      aname: [aname, string()],
-      next: [next, optional(bigint())],
-    });
-    req.query('next', mapped.next);
-    req.appendTemplatePath`/v1/leads/${mapped.aname}`;
-    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    return req.callAsJson(accountLeadsResultSchema, requestOptions);
-  }
-
-  /**
    * Returns information about a specified account.
    *
    * @param aname Account name.
@@ -57,10 +32,11 @@ export class AccountsController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<Account>> {
     const req = this.createRequest('GET');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ aname: [aname, string()] });
-    req.appendTemplatePath`/v1/accounts/${mapped.aname}`;
+    req.appendTemplatePath`/m2m/v1/accounts/${mapped.aname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(accountSchema, requestOptions);
   }
 
@@ -75,10 +51,37 @@ export class AccountsController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<AccountStatesAndServices>> {
     const req = this.createRequest('GET');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ aname: [aname, string()] });
-    req.appendTemplatePath`/v1/accounts/${mapped.aname}/statesandservices`;
+    req.appendTemplatePath`/m2m/v1/accounts/${mapped.aname}/statesandservices`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(accountStatesAndServicesSchema, requestOptions);
+  }
+
+  /**
+   * When HTTP status is 202, a URL will be returned in the Location header of the form /leads/{aname}?
+   * next={token}. This URL can be used to request the next set of leads.
+   *
+   * @param aname Account name.
+   * @param next  Continue the previous query from the pageUrl in Location Header.
+   * @return Response from the API call
+   */
+  async listAccountLeads(
+    aname: string,
+    next?: bigint,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AccountLeadsResult>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({
+      aname: [aname, string()],
+      next: [next, optional(bigint())],
+    });
+    req.query('next', mapped.next);
+    req.appendTemplatePath`/m2m/v1/leads/${mapped.aname}`;
+    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(accountLeadsResultSchema, requestOptions);
   }
 }

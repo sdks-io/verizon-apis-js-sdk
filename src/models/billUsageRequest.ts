@@ -9,18 +9,18 @@ import { boolean, object, optional, Schema, string } from '../schema';
 /** Bill usage request. */
 export interface BillUsageRequest {
   /** Account identifier. */
-  accountName?: string;
+  accountName: string;
   /** Start date to search for billable usage, mm-dd-yyyy. */
-  startDate?: string;
+  startDate: string;
   /** End date to search for billable usage, mm-dd-yyyy. */
-  endDate?: string;
+  endDate: string;
   /** Request usage for single or multiple accounts. */
   usageForAllAccounts?: boolean;
 }
 
 export const billUsageRequestSchema: Schema<BillUsageRequest> = object({
-  accountName: ['accountName', optional(string())],
-  startDate: ['startDate', optional(string())],
-  endDate: ['endDate', optional(string())],
+  accountName: ['accountName', string()],
+  startDate: ['startDate', string()],
+  endDate: ['endDate', string()],
   usageForAllAccounts: ['usageForAllAccounts', optional(boolean())],
 });

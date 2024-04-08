@@ -5,3 +5,4 @@
  */
 
 export * from '@apimatic/oauth-adapters';
+export * from '@apimatic/authentication-adapters';

@@ -20,29 +20,6 @@ import { BaseController } from './baseController';
 
 export class ClientLoggingController extends BaseController {
   /**
-   * Disables logging for a specific device.
-   *
-   * @param account  Account identifier.
-   * @param deviceId Device IMEI identifier.
-   * @return Response from the API call
-   */
-  async disableDeviceLogging(
-    account: string,
-    deviceId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<void>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      deviceId: [deviceId, string()],
-    });
-    req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.call(requestOptions);
-  }
-
-  /**
    * Returns an array of all devices in the specified account for which logging is enabled.
    *
    * @param account Account identifier.
@@ -57,6 +34,7 @@ export class ClientLoggingController extends BaseController {
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/logging/${mapped.account}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(deviceLoggingStatusSchema), requestOptions);
   }
 
@@ -82,30 +60,8 @@ export class ClientLoggingController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/logging/${mapped.account}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(deviceLoggingStatusSchema), requestOptions);
-  }
-
-  /**
-   * Gets logs for a specific device.
-   *
-   * @param account  Account identifier.
-   * @param deviceId Device IMEI identifier.
-   * @return Response from the API call
-   */
-  async listDeviceLogs(
-    account: string,
-    deviceId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceLog[]>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('Software Management V2');
-    const mapped = req.prepareArgs({
-      account: [account, string()],
-      deviceId: [deviceId, string()],
-    });
-    req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}/logs`;
-    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    return req.callAsJson(array(deviceLogSchema), requestOptions);
   }
 
   /**
@@ -129,6 +85,7 @@ export class ClientLoggingController extends BaseController {
     req.query('deviceIds', mapped.deviceIds);
     req.appendTemplatePath`/logging/${mapped.account}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.call(requestOptions);
   }
 
@@ -152,6 +109,55 @@ export class ClientLoggingController extends BaseController {
     });
     req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deviceLoggingStatusSchema, requestOptions);
+  }
+
+  /**
+   * Disables logging for a specific device.
+   *
+   * @param account  Account identifier.
+   * @param deviceId Device IMEI identifier.
+   * @return Response from the API call
+   */
+  async disableDeviceLogging(
+    account: string,
+    deviceId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<void>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      deviceId: [deviceId, string()],
+    });
+    req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.call(requestOptions);
+  }
+
+  /**
+   * Gets logs for a specific device.
+   *
+   * @param account  Account identifier.
+   * @param deviceId Device IMEI identifier.
+   * @return Response from the API call
+   */
+  async listDeviceLogs(
+    account: string,
+    deviceId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceLog[]>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Software Management V2');
+    const mapped = req.prepareArgs({
+      account: [account, string()],
+      deviceId: [deviceId, string()],
+    });
+    req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}/logs`;
+    req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(array(deviceLogSchema), requestOptions);
   }
 }

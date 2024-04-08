@@ -10,20 +10,20 @@ import { DeviceId, deviceIdSchema } from './deviceId';
 /** Create request for a new device group and optionally add devices to the group. */
 export interface CreateDeviceGroupRequest {
   /** The Verizon billing account that the device group will belong to. An account name is usually numeric, and must include any leading zeros. */
-  accountName?: string;
+  accountName: string;
+  /** A description for the device group. */
+  groupDescription: string;
+  /** The name for the new device group. This name must be unique within the specified account. */
+  groupName: string;
   /** Zero or more devices to add to the device group. You can use POST /devices/actions/list to get a list of all devices in the account. */
   devicesToAdd?: DeviceId[];
-  /** A description for the device group. */
-  groupDescription?: string;
-  /** The name for the new device group. This name must be unique within the specified account. */
-  groupName?: string;
 }
 
 export const createDeviceGroupRequestSchema: Schema<CreateDeviceGroupRequest> = object(
   {
-    accountName: ['accountName', optional(string())],
+    accountName: ['accountName', string()],
+    groupDescription: ['groupDescription', string()],
+    groupName: ['groupName', string()],
     devicesToAdd: ['devicesToAdd', optional(array(lazy(() => deviceIdSchema)))],
-    groupDescription: ['groupDescription', optional(string())],
-    groupName: ['groupName', optional(string())],
   }
 );

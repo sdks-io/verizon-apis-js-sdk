@@ -10,14 +10,14 @@
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `id` | `string \| undefined` | Optional | - |
-| `kind` | [`Kind1Enum \| undefined`](../../doc/models/kind-1-enum.md) | Optional | - |
+| `kind` | `string \| undefined` | Optional | - |
 
 ## Example (as JSON)
 
 ```json
 {
-  "id": "id0",
-  "kind": "esn"
+  "id": "15-digit IMEI",
+  "kind": "imei"
 }
 ```
 

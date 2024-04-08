@@ -37,6 +37,7 @@ export class DiagnosticsSettingsController extends BaseController {
     req.query('accountName', mapped.accountName);
     req.query('devices', mapped.devices);
     req.defaultToError(DeviceDiagnosticsResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       array(diagnosticObservationSettingSchema),
       requestOptions

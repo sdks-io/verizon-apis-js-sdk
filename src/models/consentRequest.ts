@@ -8,7 +8,7 @@ import { array, boolean, object, optional, Schema, string } from '../schema';
 
 export interface ConsentRequest {
   /** Account identifier in "##########-#####". */
-  accountName?: string;
+  accountName: string;
   /** Exclude all devices or not. */
   allDevice?: boolean;
   /** The change to make: append or replace. */
@@ -18,7 +18,7 @@ export interface ConsentRequest {
 }
 
 export const consentRequestSchema: Schema<ConsentRequest> = object({
-  accountName: ['accountName', optional(string())],
+  accountName: ['accountName', string()],
   allDevice: ['allDevice', optional(boolean())],
   type: ['type', optional(string())],
   exclusion: ['exclusion', optional(array(string()))],

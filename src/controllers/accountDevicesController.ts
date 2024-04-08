@@ -24,31 +24,6 @@ import { BaseController } from './baseController';
 
 export class AccountDevicesController extends BaseController {
   /**
-   * Retrieve device information for a list of devices on an account.
-   *
-   * @param acc          Account identifier.
-   * @param body         Request device list information.
-   * @return Response from the API call
-   */
-  async listAccountDevicesInformation(
-    acc: string,
-    body: DeviceIMEI,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceListResult>> {
-    const req = this.createRequest('POST');
-    req.baseUrl('Software Management V3');
-    const mapped = req.prepareArgs({
-      acc: [acc, string()],
-      body: [body, deviceIMEISchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.appendTemplatePath`/devices/${mapped.acc}`;
-    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    return req.callAsJson(deviceListResultSchema, requestOptions);
-  }
-
-  /**
    * Retrieve account device information such as reported firmware on the devices.
    *
    * @param acc              Account identifier.
@@ -73,6 +48,33 @@ export class AccountDevicesController extends BaseController {
     req.query('protocol', mapped.protocol);
     req.appendTemplatePath`/devices/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v3AccountDeviceListSchema, requestOptions);
+  }
+
+  /**
+   * Retrieve device information for a list of devices on an account.
+   *
+   * @param acc          Account identifier.
+   * @param body         Request device list information.
+   * @return Response from the API call
+   */
+  async listAccountDevicesInformation(
+    acc: string,
+    body: DeviceIMEI,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceListResult>> {
+    const req = this.createRequest('POST');
+    req.baseUrl('Software Management V3');
+    const mapped = req.prepareArgs({
+      acc: [acc, string()],
+      body: [body, deviceIMEISchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.appendTemplatePath`/devices/${mapped.acc}`;
+    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(deviceListResultSchema, requestOptions);
   }
 }

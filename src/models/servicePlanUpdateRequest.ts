@@ -10,6 +10,8 @@ import { CustomFields, customFieldsSchema } from './customFields';
 
 /** Request to update service plan. */
 export interface ServicePlanUpdateRequest {
+  /** The service plan code that you want to assign to all specified devices. */
+  servicePlan: string;
   /** The name of a billing account. */
   accountName?: string;
   /** The name of a service plan, if you want to only include devices that have that service plan. */
@@ -20,12 +22,13 @@ export interface ServicePlanUpdateRequest {
   devices?: AccountDeviceList[];
   /** The name of a device group, if you want to restore service for all devices in that group. */
   groupName?: string;
-  /** The service plan code that you want to assign to all specified devices. */
-  servicePlan?: string;
+  carrierIpPoolName?: string;
+  takeEffect?: string;
 }
 
 export const servicePlanUpdateRequestSchema: Schema<ServicePlanUpdateRequest> = object(
   {
+    servicePlan: ['servicePlan', string()],
     accountName: ['accountName', optional(string())],
     currentServicePlan: ['currentServicePlan', optional(string())],
     customFields: [
@@ -34,6 +37,7 @@ export const servicePlanUpdateRequestSchema: Schema<ServicePlanUpdateRequest> = 
     ],
     devices: ['devices', optional(array(lazy(() => accountDeviceListSchema)))],
     groupName: ['groupName', optional(string())],
-    servicePlan: ['servicePlan', optional(string())],
+    carrierIpPoolName: ['carrierIpPoolName', optional(string())],
+    takeEffect: ['takeEffect', optional(string())],
   }
 );

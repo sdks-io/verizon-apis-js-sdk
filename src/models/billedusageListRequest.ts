@@ -11,17 +11,17 @@ import { LabelsList, labelsListSchema } from './labelsList';
 
 /** Information required to associate a usage segmentation label with a device to retrieve billing. */
 export interface BilledusageListRequest {
-  accountName?: string;
+  accountName: string;
   labels?: LabelsList;
-  devices?: DeviceList[];
+  deviceIds?: DeviceList[];
   billingCycle?: BillingCycle;
 }
 
 export const billedusageListRequestSchema: Schema<BilledusageListRequest> = object(
   {
-    accountName: ['accountName', optional(string())],
+    accountName: ['accountName', string()],
     labels: ['labels', optional(lazy(() => labelsListSchema))],
-    devices: ['devices', optional(array(lazy(() => deviceListSchema)))],
-    billingCycle: ['BillingCycle', optional(lazy(() => billingCycleSchema))],
+    deviceIds: ['deviceIds', optional(array(lazy(() => deviceListSchema)))],
+    billingCycle: ['billingCycle', optional(lazy(() => billingCycleSchema))],
   }
 );

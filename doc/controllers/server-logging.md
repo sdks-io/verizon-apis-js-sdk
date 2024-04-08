@@ -42,9 +42,9 @@ const deviceId = '990013907835573';
 
 try {
   const { result, ...httpResponse } = await serverLoggingController.getDeviceCheckInHistory(
-    account,
-    deviceId
-  );
+  account,
+  deviceId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

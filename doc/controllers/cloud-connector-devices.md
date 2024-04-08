@@ -10,12 +10,173 @@ const cloudConnectorDevicesController = new CloudConnectorDevicesController(clie
 
 ## Methods
 
+* [Update Devices Configuration Value](../../doc/controllers/cloud-connector-devices.md#update-devices-configuration-value)
+* [Find Device by Property Values](../../doc/controllers/cloud-connector-devices.md#find-device-by-property-values)
 * [Search Devices Resources by Property Values](../../doc/controllers/cloud-connector-devices.md#search-devices-resources-by-property-values)
 * [Search Device Event History](../../doc/controllers/cloud-connector-devices.md#search-device-event-history)
-* [Find Device by Property Values](../../doc/controllers/cloud-connector-devices.md#find-device-by-property-values)
 * [Search Sensor Readings](../../doc/controllers/cloud-connector-devices.md#search-sensor-readings)
-* [Update Devices Configuration Value](../../doc/controllers/cloud-connector-devices.md#update-devices-configuration-value)
 * [Delete Device From Account](../../doc/controllers/cloud-connector-devices.md#delete-device-from-account)
+
+
+# Update Devices Configuration Value
+
+Change configuration values on a device, such as setting how often a device records and reports sensor readings.
+
+```ts
+async updateDevicesConfigurationValue(
+  body: ChangeConfigurationRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<ChangeConfigurationResponse>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`ChangeConfigurationRequest`](../../doc/models/change-configuration-request.md) | Body, Required | The request body changes configuration values on a device. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`ChangeConfigurationResponse`](../../doc/models/change-configuration-response.md)
+
+## Example Usage
+
+```ts
+const body: ChangeConfigurationRequest = {
+  accountidentifier: {
+    billingaccountid: '1223334444-00001',
+  },
+  resourceidentifier: {
+    imei: '864508030147323',
+  },
+  configuration: {
+    frequency: 'Low',
+  },
+};
+
+try {
+  const { result, ...httpResponse } = await cloudConnectorDevicesController.updateDevicesConfigurationValue(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "action": "set",
+  "createdon": "2019-02-14T01:41:03.619217664Z",
+  "deviceid": "8461f530-2e31-6e87-e357-6c38251d4d01",
+  "fields": {
+    "configuration": {
+      "frequency": "Low"
+    }
+  },
+  "foreignid": "e1f15861-7de7-69cb-ed7d-b4a92e091bc4",
+  "id": "05c12adc-50c0-6ebb-feb0-b9f9637a1dba",
+  "kind": "ts.event.configuration",
+  "lastupdated": "2019-02-14T01:41:03.619217727Z",
+  "name": "SetConfigurationReq",
+  "state": "pending",
+  "transactionid": "1d38aae7-558d-4cb9-8269-e8d4c0519045",
+  "version": "1.0"
+}
+```
+
+
+# Find Device by Property Values
+
+Find devices by property values. Returns an array of all matching device resources.
+
+```ts
+async findDeviceByPropertyValues(
+  body: QuerySubscriptionRequest,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<FindDeviceByPropertyResponseList>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`QuerySubscriptionRequest`](../../doc/models/query-subscription-request.md) | Body, Required | The request body specifies fields and values to match. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`FindDeviceByPropertyResponseList`](../../doc/models/find-device-by-property-response-list.md)
+
+## Example Usage
+
+```ts
+const body: QuerySubscriptionRequest = {
+  accountidentifier: {
+    billingaccountid: '1223334444-00001',
+  },
+  resourceidentifier: {
+    imei: '159495694333703',
+  },
+};
+
+try {
+  const { result, ...httpResponse } = await cloudConnectorDevicesController.findDeviceByPropertyValues(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "DeviceProperty": [
+    {
+      "billingaccountid": "1223334444-00001",
+      "createdon": "2018-12-19T06:45:41.496Z",
+      "eventretention": "90",
+      "iccid": "20332350053095597842",
+      "id": "64612cb3-3685-6dad-fd2b-ea1adeb5a269",
+      "imei": "320778042285497",
+      "kind": "ts.device",
+      "lastupdated": "2018-12-19T06:45:41.508Z",
+      "providerid": "8a314f07-849e-6568-e3c1-8381c1f61bfc",
+      "refid": "20332350053095597842",
+      "refidtype": "iccid",
+      "state": "registered",
+      "version": "1.0",
+      "versionid": "b3cdaddb-0359-11e9-aba2-02420a4e1b0a"
+    },
+    {
+      "billingaccountid": "1223334444-00001",
+      "createdon": "2018-12-20T18:42:23.548Z",
+      "eventretention": "90",
+      "iccid": "89148000004197486411",
+      "id": "0481cf95-e3b1-63eb-eb18-43bf717156cb",
+      "imei": "864508030147323",
+      "kind": "ts.device.cHeAssetTracker",
+      "lastupdated": "2018-12-20T18:42:23.688Z",
+      "providerid": "9dfcfa69-a1c8-4eae-8611-b282646bb113",
+      "refid": "864508030147323",
+      "refidtype": "imei",
+      "state": "ready",
+      "version": "1.0",
+      "versionid": "fd835cc9-0486-11e9-a7da-02420a481608"
+    }
+  ]
+}
+```
 
 
 # Search Devices Resources by Property Values
@@ -183,94 +344,6 @@ try {
 ```
 
 
-# Find Device by Property Values
-
-Find devices by property values. Returns an array of all matching device resources.
-
-```ts
-async findDeviceByPropertyValues(
-  body: QuerySubscriptionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FindDeviceByPropertyResponseList>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`QuerySubscriptionRequest`](../../doc/models/query-subscription-request.md) | Body, Required | The request body specifies fields and values to match. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`FindDeviceByPropertyResponseList`](../../doc/models/find-device-by-property-response-list.md)
-
-## Example Usage
-
-```ts
-const body: QuerySubscriptionRequest = {
-  accountidentifier: {
-    billingaccountid: '1223334444-00001',
-  },
-  resourceidentifier: {
-    imei: '159495694333703',
-  },
-};
-
-try {
-  const { result, ...httpResponse } = await cloudConnectorDevicesController.findDeviceByPropertyValues(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "DeviceProperty": [
-    {
-      "billingaccountid": "1223334444-00001",
-      "createdon": "2018-12-19T06:45:41.496Z",
-      "eventretention": "90",
-      "iccid": "20332350053095597842",
-      "id": "64612cb3-3685-6dad-fd2b-ea1adeb5a269",
-      "imei": "320778042285497",
-      "kind": "ts.device",
-      "lastupdated": "2018-12-19T06:45:41.508Z",
-      "providerid": "8a314f07-849e-6568-e3c1-8381c1f61bfc",
-      "refid": "20332350053095597842",
-      "refidtype": "iccid",
-      "state": "registered",
-      "version": "1.0",
-      "versionid": "b3cdaddb-0359-11e9-aba2-02420a4e1b0a"
-    },
-    {
-      "billingaccountid": "1223334444-00001",
-      "createdon": "2018-12-20T18:42:23.548Z",
-      "eventretention": "90",
-      "iccid": "89148000004197486411",
-      "id": "0481cf95-e3b1-63eb-eb18-43bf717156cb",
-      "imei": "864508030147323",
-      "kind": "ts.device.cHeAssetTracker",
-      "lastupdated": "2018-12-20T18:42:23.688Z",
-      "providerid": "9dfcfa69-a1c8-4eae-8611-b282646bb113",
-      "refid": "864508030147323",
-      "refidtype": "imei",
-      "state": "ready",
-      "version": "1.0",
-      "versionid": "fd835cc9-0486-11e9-a7da-02420a481608"
-    }
-  ]
-}
-```
-
-
 # Search Sensor Readings
 
 Returns the readings of a specified sensor, with the most recent reading first. Sensor readings are stored as events; this request an array of events.
@@ -312,9 +385,9 @@ const body: SearchSensorHistoryRequest = {
 
 try {
   const { result, ...httpResponse } = await cloudConnectorDevicesController.searchSensorReadings(
-    fieldname,
-    body
-  );
+  fieldname,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -369,79 +442,6 @@ try {
       "versionid": "c0ffa4b5-364e-11e9-a3ee-02420a8c0d14"
     }
   ]
-}
-```
-
-
-# Update Devices Configuration Value
-
-Change configuration values on a device, such as setting how often a device records and reports sensor readings.
-
-```ts
-async updateDevicesConfigurationValue(
-  body: ChangeConfigurationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ChangeConfigurationResponse>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `body` | [`ChangeConfigurationRequest`](../../doc/models/change-configuration-request.md) | Body, Required | The request body changes configuration values on a device. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`ChangeConfigurationResponse`](../../doc/models/change-configuration-response.md)
-
-## Example Usage
-
-```ts
-const body: ChangeConfigurationRequest = {
-  accountidentifier: {
-    billingaccountid: '1223334444-00001',
-  },
-  resourceidentifier: {
-    imei: '864508030147323',
-  },
-  configuration: {
-    frequency: 'Low',
-  },
-};
-
-try {
-  const { result, ...httpResponse } = await cloudConnectorDevicesController.updateDevicesConfigurationValue(body);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "action": "set",
-  "createdon": "2019-02-14T01:41:03.619217664Z",
-  "deviceid": "8461f530-2e31-6e87-e357-6c38251d4d01",
-  "fields": {
-    "configuration": {
-      "frequency": "Low"
-    }
-  },
-  "foreignid": "e1f15861-7de7-69cb-ed7d-b4a92e091bc4",
-  "id": "05c12adc-50c0-6ebb-feb0-b9f9637a1dba",
-  "kind": "ts.event.configuration",
-  "lastupdated": "2019-02-14T01:41:03.619217727Z",
-  "name": "SetConfigurationReq",
-  "state": "pending",
-  "transactionid": "1d38aae7-558d-4cb9-8269-e8d4c0519045",
-  "version": "1.0"
 }
 ```
 

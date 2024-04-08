@@ -17,4 +17,4 @@ export enum CampaignMetaInfoProtocolEnum {
 /**
  * Schema for CampaignMetaInfoProtocolEnum
  */
-export const campaignMetaInfoProtocolEnumSchema: Schema<CampaignMetaInfoProtocolEnum> = stringEnum(CampaignMetaInfoProtocolEnum);
+export const  campaignMetaInfoProtocolEnumSchema: Schema<CampaignMetaInfoProtocolEnum> = stringEnum(CampaignMetaInfoProtocolEnum);

@@ -14,10 +14,29 @@ import {
   DeviceLocationSubscription,
   deviceLocationSubscriptionSchema,
 } from '../models/deviceLocationSubscription';
-import { string, unknown } from '../schema';
+import { optional, string, unknown } from '../schema';
 import { BaseController } from './baseController';
 
 export class DevicesLocationSubscriptionsController extends BaseController {
+  /**
+   * This subscriptions endpoint retrieves an account's current location subscription status.
+   *
+   * @param account Account identifier in "##########-#####".
+   * @return Response from the API call
+   */
+  async getLocationServiceSubscriptionStatus(
+    account: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceLocationSubscription>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Device Location');
+    const mapped = req.prepareArgs({ account: [account, string()] });
+    req.appendTemplatePath`/subscriptions/${mapped.account}`;
+    req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(deviceLocationSubscriptionSchema, requestOptions);
+  }
+
   /**
    * This endpoint allows user to search for billable usage for accounts based on the provided date range.
    *
@@ -34,24 +53,7 @@ export class DevicesLocationSubscriptionsController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
-    return req.callAsJson(unknown(), requestOptions);
-  }
-
-  /**
-   * This subscriptions endpoint retrieves an account's current location subscription status.
-   *
-   * @param account Account identifier in "##########-#####".
-   * @return Response from the API call
-   */
-  async getLocationServiceSubscriptionStatus(
-    account: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceLocationSubscription>> {
-    const req = this.createRequest('GET');
-    req.baseUrl('Device Location');
-    const mapped = req.prepareArgs({ account: [account, string()] });
-    req.appendTemplatePath`/subscriptions/${mapped.account}`;
-    req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
-    return req.callAsJson(deviceLocationSubscriptionSchema, requestOptions);
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(optional(unknown()), requestOptions);
   }
 }

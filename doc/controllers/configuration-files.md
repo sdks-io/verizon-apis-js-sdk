@@ -10,8 +10,61 @@ const configurationFilesController = new ConfigurationFilesController(client);
 
 ## Methods
 
-* [Upload Config File](../../doc/controllers/configuration-files.md#upload-config-file)
 * [Get List of Files](../../doc/controllers/configuration-files.md#get-list-of-files)
+* [Upload Config File](../../doc/controllers/configuration-files.md#upload-config-file)
+
+
+# Get List of Files
+
+You can retrieve a list of configuration or supplementary of files for an account.
+
+```ts
+async getListOfFiles(
+  acc: string,
+  distributionType: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<RetrievesAvailableFilesResponseList>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `acc` | `string` | Template, Required | Account identifier. |
+| `distributionType` | `string` | Query, Required | Filter the distributionType to only retrieve files for a specific distribution type. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`RetrievesAvailableFilesResponseList`](../../doc/models/retrieves-available-files-response-list.md)
+
+## Example Usage
+
+```ts
+const acc = '0402196254-00001';
+
+const distributionType = 'HTTP';
+
+try {
+  const { result, ...httpResponse } = await configurationFilesController.getListOfFiles(
+  acc,
+  distributionType
+);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
 
 
 # Upload Config File
@@ -61,65 +114,13 @@ const localTargetPath = '/VZWFOTA/hello-world.txt';
 
 try {
   const { result, ...httpResponse } = await configurationFilesController.uploadConfigFile(
-    acc,
-    fileVersion,
-    make,
-    model,
-    localTargetPath
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV2ResultError`](../../doc/models/fota-v2-result-error.md) |
-
-
-# Get List of Files
-
-You can retrieve a list of configuration or supplementary of files for an account.
-
-```ts
-async getListOfFiles(
-  acc: string,
-  distributionType: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RetrievesAvailableFilesResponseList>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `acc` | `string` | Template, Required | Account identifier. |
-| `distributionType` | `string` | Query, Required | Filter the distributionType to only retrieve files for a specific distribution type. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`RetrievesAvailableFilesResponseList`](../../doc/models/retrieves-available-files-response-list.md)
-
-## Example Usage
-
-```ts
-const acc = '0402196254-00001';
-
-const distributionType = 'HTTP';
-
-try {
-  const { result, ...httpResponse } = await configurationFilesController.getListOfFiles(
-    acc,
-    distributionType
-  );
+  acc,
+  undefined,
+  fileVersion,
+  make,
+  model,
+  localTargetPath
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

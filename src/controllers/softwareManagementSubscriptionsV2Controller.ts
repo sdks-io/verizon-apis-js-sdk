@@ -29,6 +29,7 @@ export class SoftwareManagementSubscriptionsV2Controller extends BaseController 
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/subscriptions/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(fotaV2SubscriptionSchema, requestOptions);
   }
 }

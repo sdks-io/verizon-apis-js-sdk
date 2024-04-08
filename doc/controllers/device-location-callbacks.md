@@ -112,9 +112,9 @@ const body: DeviceLocationCallback = {
 
 try {
   const { result, ...httpResponse } = await deviceLocationCallbacksController.registerCallback(
-    account,
-    body
-  );
+  account,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -174,9 +174,9 @@ const service = CallbackServiceNameEnum.Location;
 
 try {
   const { result, ...httpResponse } = await deviceLocationCallbacksController.deregisterCallback(
-    account,
-    service
-  );
+  account,
+  service
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

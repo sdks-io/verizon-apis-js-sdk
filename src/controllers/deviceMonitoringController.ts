@@ -19,8 +19,29 @@ import { BaseController } from './baseController';
 
 export class DeviceMonitoringController extends BaseController {
   /**
-   * Stop Device Reachability monitors.
-   *
+   * @param body         Create Reachability Report Request
+   * @return Response from the API call
+   */
+  async deviceReachability(
+    body: NotificationReportRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<RequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/m2m/v1/diagnostics/basic/devicereachability'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({
+      body: [body, notificationReportRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, RestErrorResponseError, 'Error Response');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(requestResponseSchema, requestOptions);
+  }
+
+  /**
    * @param accountName The numeric name of the account.
    * @param monitorIds  The array contains the monitorIDs (UUID) for which the monitor is to be deleted.
    * @return Response from the API call
@@ -32,9 +53,9 @@ export class DeviceMonitoringController extends BaseController {
   ): Promise<ApiResponse<RequestResponse>> {
     const req = this.createRequest(
       'DELETE',
-      '/v1/diagnostics/basic/devicereachability'
+      '/m2m/v1/diagnostics/basic/devicereachability'
     );
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       accountName: [accountName, string()],
       monitorIds: [monitorIds, array(string())],
@@ -42,30 +63,7 @@ export class DeviceMonitoringController extends BaseController {
     req.query('accountName', mapped.accountName);
     req.query('monitorIds', mapped.monitorIds);
     req.throwOn(400, RestErrorResponseError, 'Error Response');
-    return req.callAsJson(requestResponseSchema, requestOptions);
-  }
-
-  /**
-   * Register for notification reports based on the request type.
-   *
-   * @param body         Create Reachability Report Request
-   * @return Response from the API call
-   */
-  async deviceReachability(
-    body: NotificationReportRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<RequestResponse>> {
-    const req = this.createRequest(
-      'POST',
-      '/v1/diagnostics/basic/devicereachability'
-    );
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, notificationReportRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, RestErrorResponseError, 'Error Response');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 }

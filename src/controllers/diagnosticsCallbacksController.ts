@@ -21,30 +21,6 @@ import { BaseController } from './baseController';
 
 export class DiagnosticsCallbacksController extends BaseController {
   /**
-   * This endpoint allows user to delete a registered callback URL and credential.
-   *
-   * @param accountName Account identifier.
-   * @param serviceName Service name for callback notification.
-   * @return Response from the API call
-   */
-  async unregisterDiagnosticsCallback(
-    accountName: string,
-    serviceName: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceDiagnosticsCallback>> {
-    const req = this.createRequest('DELETE', '/callbacks');
-    req.baseUrl('Device Diagnostics');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      serviceName: [serviceName, string()],
-    });
-    req.query('accountName', mapped.accountName);
-    req.query('serviceName', mapped.serviceName);
-    req.throwOn(400, DeviceDiagnosticsResultError, 'Unexpected error.');
-    return req.callAsJson(deviceDiagnosticsCallbackSchema, requestOptions);
-  }
-
-  /**
    * This endpoint allows user to get the registered callback information of an existing diagnostics
    * subscription.
    *
@@ -60,6 +36,7 @@ export class DiagnosticsCallbacksController extends BaseController {
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
     req.query('accountName', mapped.accountName);
     req.throwOn(400, DeviceDiagnosticsResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       array(deviceDiagnosticsCallbackSchema),
       requestOptions
@@ -84,6 +61,32 @@ export class DiagnosticsCallbacksController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.throwOn(400, DeviceDiagnosticsResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(deviceDiagnosticsCallbackSchema, requestOptions);
+  }
+
+  /**
+   * This endpoint allows user to delete a registered callback URL and credential.
+   *
+   * @param accountName Account identifier.
+   * @param serviceName Service name for callback notification.
+   * @return Response from the API call
+   */
+  async unregisterDiagnosticsCallback(
+    accountName: string,
+    serviceName: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceDiagnosticsCallback>> {
+    const req = this.createRequest('DELETE', '/callbacks');
+    req.baseUrl('Device Diagnostics');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      serviceName: [serviceName, string()],
+    });
+    req.query('accountName', mapped.accountName);
+    req.query('serviceName', mapped.serviceName);
+    req.throwOn(400, DeviceDiagnosticsResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deviceDiagnosticsCallbackSchema, requestOptions);
   }
 }

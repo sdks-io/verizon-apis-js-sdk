@@ -17,4 +17,4 @@ export enum AggregatedReportCallbackStatusEnum {
 /**
  * Schema for AggregatedReportCallbackStatusEnum
  */
-export const aggregatedReportCallbackStatusEnumSchema: Schema<AggregatedReportCallbackStatusEnum> = stringEnum(AggregatedReportCallbackStatusEnum);
+export const  aggregatedReportCallbackStatusEnumSchema: Schema<AggregatedReportCallbackStatusEnum> = stringEnum(AggregatedReportCallbackStatusEnum);

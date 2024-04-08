@@ -46,30 +46,8 @@ export class UsageTriggerManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(usageTriggerResponseSchema, requestOptions);
-  }
-
-  /**
-   * eletes the specified usage trigger from the given account
-   *
-   * @param accountName Account name
-   * @param triggerId   Usage trigger ID
-   * @return Response from the API call
-   */
-  async deleteTrigger(
-    accountName: string,
-    triggerId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceLocationSuccessResult>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Subscription Server');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      triggerId: [triggerId, string()],
-    });
-    req.appendTemplatePath`/usage/accounts/${mapped.accountName}/triggers/${mapped.triggerId}`;
-    req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    return req.callAsJson(deviceLocationSuccessResultSchema, requestOptions);
   }
 
   /**
@@ -95,6 +73,31 @@ export class UsageTriggerManagementController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/usage/triggers/${mapped.triggerId}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(usageTriggerResponseSchema, requestOptions);
+  }
+
+  /**
+   * eletes the specified usage trigger from the given account
+   *
+   * @param accountName Account name
+   * @param triggerId   Usage trigger ID
+   * @return Response from the API call
+   */
+  async deleteTrigger(
+    accountName: string,
+    triggerId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceLocationSuccessResult>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Subscription Server');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      triggerId: [triggerId, string()],
+    });
+    req.appendTemplatePath`/usage/accounts/${mapped.accountName}/triggers/${mapped.triggerId}`;
+    req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(deviceLocationSuccessResultSchema, requestOptions);
   }
 }

@@ -10,67 +10,9 @@ const softwareManagementReportsV1Controller = new SoftwareManagementReportsV1Con
 
 ## Methods
 
-* [List Upgrades for Specified Status](../../doc/controllers/software-management-reports-v1.md#list-upgrades-for-specified-status)
 * [List Account Devices](../../doc/controllers/software-management-reports-v1.md#list-account-devices)
+* [List Upgrades for Specified Status](../../doc/controllers/software-management-reports-v1.md#list-upgrades-for-specified-status)
 * [Get Device Firmware Upgrade History](../../doc/controllers/software-management-reports-v1.md#get-device-firmware-upgrade-history)
-
-
-# List Upgrades for Specified Status
-
-Returns a list of all upgrades with a specified status.
-
-```ts
-async listUpgradesForSpecifiedStatus(
-  account: string,
-  upgradeStatus: UpgradeStatusEnum,
-  startIndex: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UpgradeListQueryResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier in "##########-#####". |
-| `upgradeStatus` | [`UpgradeStatusEnum`](../../doc/models/upgrade-status-enum.md) | Template, Required | The status of the upgrades that you want to retrieve. |
-| `startIndex` | `string` | Template, Required | The zero-based number of the first record to return. Set startIndex=0 for the first request. If `hasMoreFlag`=true in the response, use the `lastSeenUpgradeId` value from the response as the startIndex in the next request. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`UpgradeListQueryResult`](../../doc/models/upgrade-list-query-result.md)
-
-## Example Usage
-
-```ts
-const account = '0242078689-00001';
-
-const upgradeStatus = UpgradeStatusEnum.RequestPending;
-
-const startIndex = 'startIndex4';
-
-try {
-  const { result, ...httpResponse } = await softwareManagementReportsV1Controller.listUpgradesForSpecifiedStatus(
-    account,
-    upgradeStatus,
-    startIndex
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`FotaV1ResultError`](../../doc/models/fota-v1-result-error.md) |
 
 
 # List Account Devices
@@ -106,9 +48,9 @@ const startIndex = 'startIndex4';
 
 try {
   const { result, ...httpResponse } = await softwareManagementReportsV1Controller.listAccountDevices(
-    account,
-    startIndex
-  );
+  account,
+  startIndex
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -168,6 +110,64 @@ try {
 | 400 | Unexpected error. | [`FotaV1ResultError`](../../doc/models/fota-v1-result-error.md) |
 
 
+# List Upgrades for Specified Status
+
+Returns a list of all upgrades with a specified status.
+
+```ts
+async listUpgradesForSpecifiedStatus(
+  account: string,
+  upgradeStatus: UpgradeStatusEnum,
+  startIndex: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<UpgradeListQueryResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `account` | `string` | Template, Required | Account identifier in "##########-#####". |
+| `upgradeStatus` | [`UpgradeStatusEnum`](../../doc/models/upgrade-status-enum.md) | Template, Required | The status of the upgrades that you want to retrieve. |
+| `startIndex` | `string` | Template, Required | The zero-based number of the first record to return. Set startIndex=0 for the first request. If `hasMoreFlag`=true in the response, use the `lastSeenUpgradeId` value from the response as the startIndex in the next request. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`UpgradeListQueryResult`](../../doc/models/upgrade-list-query-result.md)
+
+## Example Usage
+
+```ts
+const account = '0242078689-00001';
+
+const upgradeStatus = UpgradeStatusEnum.RequestPending;
+
+const startIndex = 'startIndex4';
+
+try {
+  const { result, ...httpResponse } = await softwareManagementReportsV1Controller.listUpgradesForSpecifiedStatus(
+  account,
+  upgradeStatus,
+  startIndex
+);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`FotaV1ResultError`](../../doc/models/fota-v1-result-error.md) |
+
+
 # Get Device Firmware Upgrade History
 
 Returns the upgrade history of the specified device from the previous six months.
@@ -201,9 +201,9 @@ const deviceId = '900000000000001';
 
 try {
   const { result, ...httpResponse } = await softwareManagementReportsV1Controller.getDeviceFirmwareUpgradeHistory(
-    account,
-    deviceId
-  );
+  account,
+  deviceId
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

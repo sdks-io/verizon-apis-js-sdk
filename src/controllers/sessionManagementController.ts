@@ -24,28 +24,6 @@ import { BaseController } from './baseController';
 
 export class SessionManagementController extends BaseController {
   /**
-   * The new password is effective immediately. Passwords do not expire, but Verizon recommends changing
-   * your password every 90 days.
-   *
-   * @param body         Request with current password that needs to be reset.
-   * @return Response from the API call
-   */
-  async resetConnectivityManagementPassword(
-    body: SessionResetPasswordRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<SessionResetPasswordResult>> {
-    const req = this.createRequest('PUT', '/v1/session/password/actions/reset');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, sessionResetPasswordRequestSchema],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    return req.callAsJson(sessionResetPasswordResultSchema, requestOptions);
-  }
-
-  /**
    * Initiates a Connectivity Management session and returns a VZ-M2M session token that is required in
    * subsequent API requests.
    *
@@ -56,14 +34,15 @@ export class SessionManagementController extends BaseController {
     body?: LogInRequest,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<LogInResult>> {
-    const req = this.createRequest('POST', '/v1/session/login');
-    req.baseUrl('M2M');
+    const req = this.createRequest('POST', '/m2m/v1/session/login');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       body: [body, optional(logInRequestSchema)],
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(logInResultSchema, requestOptions);
   }
 
@@ -75,9 +54,36 @@ export class SessionManagementController extends BaseController {
   async endConnectivityManagementSession(
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<LogOutRequest>> {
-    const req = this.createRequest('POST', '/v1/session/logout');
-    req.baseUrl('M2M');
+    const req = this.createRequest('POST', '/m2m/v1/session/logout');
+    req.baseUrl('Thingspace');
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(logOutRequestSchema, requestOptions);
+  }
+
+  /**
+   * The new password is effective immediately. Passwords do not expire, but Verizon recommends changing
+   * your password every 90 days.
+   *
+   * @param body         Request with current password that needs to be reset.
+   * @return Response from the API call
+   */
+  async resetConnectivityManagementPassword(
+    body: SessionResetPasswordRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<SessionResetPasswordResult>> {
+    const req = this.createRequest(
+      'PUT',
+      '/m2m/v1/session/password/actions/reset'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({
+      body: [body, sessionResetPasswordRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(sessionResetPasswordResultSchema, requestOptions);
   }
 }

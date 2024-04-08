@@ -19,4 +19,4 @@ export enum ErrorResponseCodeEnum {
 /**
  * Schema for ErrorResponseCodeEnum
  */
-export const errorResponseCodeEnumSchema: Schema<ErrorResponseCodeEnum> = stringEnum(ErrorResponseCodeEnum);
+export const  errorResponseCodeEnumSchema: Schema<ErrorResponseCodeEnum> = stringEnum(ErrorResponseCodeEnum);

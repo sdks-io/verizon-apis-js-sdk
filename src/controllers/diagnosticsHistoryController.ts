@@ -35,6 +35,7 @@ export class DiagnosticsHistoryController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.defaultToError(DeviceDiagnosticsResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(historySchema), requestOptions);
   }
 }

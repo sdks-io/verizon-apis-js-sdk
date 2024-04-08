@@ -15,9 +15,9 @@ Request for getting an aggregated session report.
 | `startDate` | `string \| undefined` | Optional | Start date of session to include. If not specified  information will be shown from the earliest available (180 days). Can be either date in ISO 8601 format or predefined constants. |
 | `endDate` | `string \| undefined` | Optional | End date of session to include. If not specified  information will be shown to the latest available. Can be either date in ISO 8601 format or predefined constants. |
 | `imei` | `string[]` | Required | Devices for which return usage info. Could be 0, 1 or more. In case of 0 will return all devices belonging to customer (except of filtered by other parameters). |
-| `deviceGroup` | `string \| undefined` | Optional | User defined group name the devices are a member of. |
-| `deviceLabel` | `string \| undefined` | Optional | Optional filter parameter. |
-| `dataPlan` | `string \| undefined` | Optional | The data plan the devices beign queried belong to. |
+| `deviceGroup` | `string \| null \| undefined` | Optional | User defined group name the devices are a member of. |
+| `deviceLabel` | `string \| null \| undefined` | Optional | Optional filter parameter. |
+| `dataPlan` | `string \| null \| undefined` | Optional | The data plan the devices beign queried belong to. |
 | `noSessionFlag` | `string \| undefined` | Optional | Optional filter parameter which return only devices with no sessions. |
 
 ## Example (as JSON)
@@ -31,9 +31,9 @@ Request for getting an aggregated session report.
     "709312034493372"
   ],
   "deviceGroup": "deviceGroup4",
-  "dataPlan": "dataPlan8",
+  "dataPlan": "dataPlan2",
   "noSessionFlag": "false",
-  "deviceLabel": "deviceLabel6"
+  "deviceLabel": "deviceLabel4"
 }
 ```
 

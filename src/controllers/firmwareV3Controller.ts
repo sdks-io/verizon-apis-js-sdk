@@ -48,33 +48,8 @@ export class FirmwareV3Controller extends BaseController {
     req.query('protocol', mapped.protocol);
     req.appendTemplatePath`/firmware/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(firmwarePackageSchema), requestOptions);
-  }
-
-  /**
-   * Ask a device to report its firmware version asynchronously.
-   *
-   * @param acc      Account identifier.
-   * @param deviceId Device identifier.
-   * @return Response from the API call
-   */
-  async reportDeviceFirmware(
-    acc: string,
-    deviceId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceFirmwareVersionUpdateResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('Software Management V3');
-    const mapped = req.prepareArgs({
-      acc: [acc, string()],
-      deviceId: [deviceId, string()],
-    });
-    req.appendTemplatePath`/firmware/${mapped.acc}/async/${mapped.deviceId}`;
-    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    return req.callAsJson(
-      deviceFirmwareVersionUpdateResultSchema,
-      requestOptions
-    );
   }
 
   /**
@@ -99,6 +74,34 @@ export class FirmwareV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/firmware/${mapped.acc}/devices`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deviceFirmwareListSchema, requestOptions);
+  }
+
+  /**
+   * Ask a device to report its firmware version asynchronously.
+   *
+   * @param acc      Account identifier.
+   * @param deviceId Device identifier.
+   * @return Response from the API call
+   */
+  async reportDeviceFirmware(
+    acc: string,
+    deviceId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceFirmwareVersionUpdateResult>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Software Management V3');
+    const mapped = req.prepareArgs({
+      acc: [acc, string()],
+      deviceId: [deviceId, string()],
+    });
+    req.appendTemplatePath`/firmware/${mapped.acc}/async/${mapped.deviceId}`;
+    req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(
+      deviceFirmwareVersionUpdateResultSchema,
+      requestOptions
+    );
   }
 }

@@ -35,21 +35,6 @@ import { BaseController } from './baseController';
 
 export class ServiceProfilesController extends BaseController {
   /**
-   * List all service profiles registered under your API key.
-   *
-   * @return Response from the API call
-   */
-  async listServiceProfiles(
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ListServiceProfilesResult>> {
-    const req = this.createRequest('GET', '/serviceprofiles');
-    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
-    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
-    return req.callAsJson(listServiceProfilesResultSchema, requestOptions);
-  }
-
-  /**
    * Creates a service profile that describes the resource requirements of a service.
    *
    * @param body         The request body passes all of the needed parameters to
@@ -74,7 +59,46 @@ export class ServiceProfilesController extends BaseController {
     req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
     req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
     req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(createServiceProfileResultSchema, requestOptions);
+  }
+
+  /**
+   * List all service profiles registered under your API key.
+   *
+   * @return Response from the API call
+   */
+  async listServiceProfiles(
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ListServiceProfilesResult>> {
+    const req = this.createRequest('GET', '/serviceprofiles');
+    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
+    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
+    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(listServiceProfilesResultSchema, requestOptions);
+  }
+
+  /**
+   * Returns a specified service profile.
+   *
+   * @param serviceProfileId
+   * @return Response from the API call
+   */
+  async getServiceProfile(
+    serviceProfileId: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ResourcesServiceProfileWithId>> {
+    const req = this.createRequest('GET');
+    const mapped = req.prepareArgs({
+      serviceProfileId: [serviceProfileId, string()],
+    });
+    req.appendTemplatePath`/serviceprofiles/${mapped.serviceProfileId}`;
+    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
+    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
+    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(resourcesServiceProfileWithIdSchema, requestOptions);
   }
 
   /**
@@ -106,28 +130,8 @@ export class ServiceProfilesController extends BaseController {
     req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
     req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
     req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(updateServiceProfileResultSchema, requestOptions);
-  }
-
-  /**
-   * Returns a specified service profile.
-   *
-   * @param serviceProfileId
-   * @return Response from the API call
-   */
-  async getServiceProfile(
-    serviceProfileId: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ResourcesServiceProfileWithId>> {
-    const req = this.createRequest('GET');
-    const mapped = req.prepareArgs({
-      serviceProfileId: [serviceProfileId, string()],
-    });
-    req.appendTemplatePath`/serviceprofiles/${mapped.serviceProfileId}`;
-    req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
-    req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
-    return req.callAsJson(resourcesServiceProfileWithIdSchema, requestOptions);
   }
 
   /**
@@ -148,6 +152,7 @@ export class ServiceProfilesController extends BaseController {
     req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
     req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
     req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deleteServiceProfileResultSchema, requestOptions);
   }
 }

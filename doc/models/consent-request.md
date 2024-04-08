@@ -9,7 +9,7 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `accountName` | `string \| undefined` | Optional | Account identifier in "##########-#####". |
+| `accountName` | `string` | Required | Account identifier in "##########-#####". |
 | `allDevice` | `boolean \| undefined` | Optional | Exclude all devices or not. |
 | `type` | `string \| undefined` | Optional | The change to make: append or replace. |
 | `exclusion` | `string[] \| undefined` | Optional | Device ID list. |

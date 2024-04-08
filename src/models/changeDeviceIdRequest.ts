@@ -22,7 +22,7 @@ export interface ChangeDeviceIdRequest {
   /** The type of change that you want to make for a 4G device. */
   change4gOption?: string;
   /** The device that you want to change, specified by a device identifier. */
-  deviceIds?: DeviceId[];
+  deviceIds: DeviceId[];
   /** The new identifier for the device. Required for all change4GOptions except ChangeMSISDN. */
   deviceIdsTo?: DeviceId[];
   /** The NPA NXX (area code and prefix) from which the MDN and MSISDN will be derived when assignNonGeoMDN is false. Specify the 6-digit NPA NXX of the location where the line of service will primarily be used. This API checks to see if a number starting with the NPA NXX is available. If not, this API uses the zipCode parameter, if specified, to assign a number in the area of the line of service. This parameter is required when you change an MDN/MSISDN for a B2B carrier, such as Verizon Wireless. */
@@ -31,16 +31,18 @@ export interface ChangeDeviceIdRequest {
   servicePlan?: string;
   /** The ZIP code from which the MDN and MSISDN will be derived when assignNonGeoMDN is true. Specify the zip code of the location where the line of service will primarily be used. */
   zipCode?: string;
+  smsrOid?: string;
 }
 
 export const changeDeviceIdRequestSchema: Schema<ChangeDeviceIdRequest> = object(
   {
     assignNonGeoMdn: ['assignNonGeoMdn', optional(boolean())],
     change4gOption: ['change4gOption', optional(string())],
-    deviceIds: ['deviceIds', optional(array(lazy(() => deviceIdSchema)))],
+    deviceIds: ['deviceIds', array(lazy(() => deviceIdSchema))],
     deviceIdsTo: ['deviceIdsTo', optional(array(lazy(() => deviceIdSchema)))],
     npaNxx: ['npaNxx', optional(string())],
     servicePlan: ['servicePlan', optional(string())],
     zipCode: ['zipCode', optional(string())],
+    smsrOid: ['smsrOid', optional(string())],
   }
 );

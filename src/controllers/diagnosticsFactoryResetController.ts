@@ -35,6 +35,7 @@ export class DiagnosticsFactoryResetController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(DeviceDiagnosticsResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(diagnosticsObservationResultSchema, requestOptions);
   }
 }

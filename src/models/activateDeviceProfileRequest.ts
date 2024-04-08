@@ -8,16 +8,16 @@ import { array, lazy, object, optional, Schema, string } from '../schema';
 import { DeviceList, deviceListSchema } from './deviceList';
 
 export interface ActivateDeviceProfileRequest {
-  devices?: DeviceList[];
-  accountName?: string;
+  devices: DeviceList[];
+  accountName: string;
   servicePlan?: string;
   mdnZipCode?: string;
 }
 
 export const activateDeviceProfileRequestSchema: Schema<ActivateDeviceProfileRequest> = object(
   {
-    devices: ['devices', optional(array(lazy(() => deviceListSchema)))],
-    accountName: ['accountName', optional(string())],
+    devices: ['devices', array(lazy(() => deviceListSchema))],
+    accountName: ['accountName', string()],
     servicePlan: ['servicePlan', optional(string())],
     mdnZipCode: ['mdnZipCode', optional(string())],
   }

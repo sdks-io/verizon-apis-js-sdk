@@ -5,15 +5,12 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `vZM2mToken` | `string` | M2M Session Token |
-| `environment` | Environment | The API environment. <br> **Default: `Environment.Production`** |
+| `vZM2mToken` | `string` | M2M Session Token ([How to generate an M2M session token?](page:getting-started/5g-edge-developer-creds-token#obtaining-a-vz-m2m-session-token-programmatically)) |
+| `environment` | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
 | `timeout` | `number` | Timeout for API calls.<br>*Default*: `0` |
 | `httpClientOptions` | `Partial<HttpClientOptions>` | Stable configurable http client options. |
 | `unstableHttpClientOptions` | `any` | Unstable configurable http client options. |
-| `oauthClientId` | `string` | OAuth 2 Client ID |
-| `oauthClientSecret` | `string` | OAuth 2 Client Secret |
-| `oauthToken` | `OauthToken` | Object for storing information about the OAuth token |
-| `oauthScopes` | `OauthScopeEnum[]` |  |
+| `clientCredentialsAuthCredentials` | [`ClientCredentialsAuthCredentials`]($a/oauth-2-client-credentials-grant.md) | The credential object for clientCredentialsAuth |
 
 ## HttpClientOptions
 
@@ -40,15 +37,17 @@ The API client can be initialized as follows:
 
 ```ts
 const client = new Client({
+  clientCredentialsAuthCredentials: {
+    oauthClientId: 'OAuthClientId',
+    oauthClientSecret: 'OAuthClientSecret',
+    oauthScopes: [
+      OauthScopeEnum.Discoveryread,
+      OauthScopeEnum.Serviceprofileread
+    ]
+  },
   vZM2mToken: 'VZ-M2M-Token',
   timeout: 0,
   environment: Environment.Production,
-  oauthClientId: 'OAuthClientId',
-  oauthClientSecret: 'OAuthClientSecret',
-  oauthScopes: [
-  OauthScopeEnum.Discoveryread,
-  OauthScopeEnum.Serviceprofileread
-  ],
 });
 ```
 
@@ -71,9 +70,10 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | connectivityCallbacks | Gets ConnectivityCallbacksController |
 | accountRequests | Gets AccountRequestsController |
 | servicePlans | Gets ServicePlansController |
+| deviceDiagnostics | Gets DeviceDiagnosticsController |
 | deviceProfileManagement | Gets DeviceProfileManagementController |
 | deviceMonitoring | Gets DeviceMonitoringController |
-| uICCDeviceProfileManagement | Gets UICCDeviceProfileManagementController |
+| eUICCDeviceProfileManagement | Gets EUICCDeviceProfileManagementController |
 | devicesLocations | Gets DevicesLocationsController |
 | exclusions | Gets ExclusionsController |
 | devicesLocationSubscriptions | Gets DevicesLocationSubscriptionsController |
@@ -117,15 +117,18 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | hyperPreciseLocationCallbacks | Gets HyperPreciseLocationCallbacksController |
 | anomalySettings | Gets AnomalySettingsController |
 | anomalyTriggers | Gets AnomalyTriggersController |
-| mECSites | Gets MECSitesController |
-| serviceLaunchProfiles | Gets ServiceLaunchProfilesController |
-| serviceLaunchRequests | Gets ServiceLaunchRequestsController |
-| serviceInstances | Gets ServiceInstancesController |
-| serviceInstanceOperations | Gets ServiceInstanceOperationsController |
-| serviceOnboarding | Gets ServiceOnboardingController |
-| serviceMetadata | Gets ServiceMetadataController |
-| repositories | Gets RepositoriesController |
-| cSPProfiles | Gets CSPProfilesController |
-| serviceClaims | Gets ServiceClaimsController |
+| anomalyTriggersV2 | Gets AnomalyTriggersV2Controller |
+| wirelessNetworkPerformance | Gets WirelessNetworkPerformanceController |
+| fixedWirelessQualification | Gets FixedWirelessQualificationController |
+| managingESIMProfiles | Gets ManagingESIMProfilesController |
+| deviceSMSMessaging | Gets DeviceSMSMessagingController |
+| deviceActions | Gets DeviceActionsController |
+| thingSpaceQualityOfServiceAPIActions | Gets ThingSpaceQualityOfServiceAPIActionsController |
+| mEC | Gets MECController |
+| promotionPeriodInformation | Gets PromotionPeriodInformationController |
+| retrieveTheTriggers | Gets RetrieveTheTriggersController |
+| updateTriggers | Gets UpdateTriggersController |
+| sIMActions | Gets SIMActionsController |
+| globalReporting | Gets GlobalReportingController |
 | oauthAuthorization | Gets OauthAuthorizationController |
 

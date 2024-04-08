@@ -24,4 +24,4 @@ export enum ClientTypeEnum {
 /**
  * Schema for ClientTypeEnum
  */
-export const clientTypeEnumSchema: Schema<ClientTypeEnum> = stringEnum(ClientTypeEnum);
+export const  clientTypeEnumSchema: Schema<ClientTypeEnum> = stringEnum(ClientTypeEnum);

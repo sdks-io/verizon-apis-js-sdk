@@ -105,9 +105,9 @@ const startIndex = '0';
 
 try {
   const { result, ...httpResponse } = await softwareManagementSubscriptionsV1Controller.getAccountLicenseStatus(
-    account,
-    startIndex
-  );
+  account,
+  startIndex
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

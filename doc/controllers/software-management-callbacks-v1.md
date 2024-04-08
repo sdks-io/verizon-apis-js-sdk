@@ -109,9 +109,9 @@ const body: FotaV1CallbackRegistrationRequest = {
 
 try {
   const { result, ...httpResponse } = await softwareManagementCallbacksV1Controller.registerCallback(
-    account,
-    body
-  );
+  account,
+  body
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -171,9 +171,9 @@ const service = CallbackServiceEnum.Fota;
 
 try {
   const { result, ...httpResponse } = await softwareManagementCallbacksV1Controller.deregisterCallback(
-    account,
-    service
-  );
+  account,
+  service
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

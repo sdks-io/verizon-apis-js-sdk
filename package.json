@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.3.0",
   "license": "MIT",
   "sideEffects": false,
   "main": "dist/cjs/index.js",
@@ -42,7 +42,8 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@apimatic/axios-client-adapter": "^0.2.0",
+    "@apimatic/authentication-adapters": "^0.5.0",
+    "@apimatic/axios-client-adapter": "^0.3.0",
     "@apimatic/core": "^0.10.0",
     "@apimatic/oauth-adapters": "^0.4.0",
     "@apimatic/schema": "^0.7.0"
@@ -52,13 +53,15 @@
     "url": "https://github.com/sdks-io/verizon-apis-js-sdk.git"
   },
   "bugs": {
-    "email": "support@apimatic.io"
+    "url": "https://github.com/sdks-io/verizon-apis-js-sdk/issues",
+    "email": "developer+sdksio@apimatic.io"
   },
-  "homepage": "https://www.verizon.com",
+  "homepage": "https://app.apimatic.io/",
   "keywords": [
-    "verizon",
-    "5gedge",
-    "thingspace"
+    "Verizon",
+    "SDKS",
+    "APIS",
+    "ThingSpace"
   ],
   "contributors": []
 }

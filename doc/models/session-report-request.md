@@ -15,8 +15,8 @@ Request for obtaining a session report.
 | `imei` | `string` | Required | Device ids. |
 | `startDate` | `string \| undefined` | Optional | Start date of session to include. If not specified  information will be shown from the earliest available (180 days). Can be either date in ISO 8601 format or predefined constants. |
 | `endDate` | `string \| undefined` | Optional | End date of session to include. If not specified  information will be shown to the latest available. Can be either date in ISO 8601 format or predefined constants. |
-| `durationLow` | `number \| undefined` | Optional | The Low value of session duration. |
-| `durationHigh` | `number \| undefined` | Optional | The High value of session duration. |
+| `durationLow` | `number \| null \| undefined` | Optional | The Low value of session duration. |
+| `durationHigh` | `number \| null \| undefined` | Optional | The High value of session duration. |
 
 ## Example (as JSON)
 
@@ -26,8 +26,8 @@ Request for obtaining a session report.
   "startDate": "2022-12-09T22:01:06.217Z",
   "endDate": "2022-12-09T22:01:08.734Z",
   "imei": "709312034493372",
-  "durationLow": 60,
-  "durationHigh": 192
+  "durationLow": 224,
+  "durationHigh": 92
 }
 ```
 

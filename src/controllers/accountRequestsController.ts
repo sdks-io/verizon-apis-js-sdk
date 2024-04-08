@@ -29,13 +29,14 @@ export class AccountRequestsController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<AsynchronousRequestResult>> {
     const req = this.createRequest('GET');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       aname: [aname, string()],
       requestId: [requestId, string()],
     });
-    req.appendTemplatePath`/v1/accounts/${mapped.aname}/requests/${mapped.requestId}/status`;
+    req.appendTemplatePath`/m2m/v1/accounts/${mapped.aname}/requests/${mapped.requestId}/status`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(asynchronousRequestResultSchema, requestOptions);
   }
 }

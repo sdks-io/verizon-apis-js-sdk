@@ -26,6 +26,27 @@ import { BaseController } from './baseController';
 
 export class SMSController extends BaseController {
   /**
+   * The messages are queued on the ThingSpace Platform and sent as soon as possible, but they may be
+   * delayed due to traffic and routing considerations.
+   *
+   * @param body         Request to send SMS.
+   * @return Response from the API call
+   */
+  async sendSMSToDevice(
+    body: SMSSendRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DeviceManagementResult>> {
+    const req = this.createRequest('POST', '/m2m/v1/sms');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, sMSSendRequestSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(deviceManagementResultSchema, requestOptions);
+  }
+
+  /**
    * When HTTP status is 202, a URL will be returned in the Location header of the form
    * /sms/{aname}/history?next={token}. This URL can be used to request the next set of messages.
    *
@@ -39,35 +60,16 @@ export class SMSController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<SMSMessagesQueryResult>> {
     const req = this.createRequest('GET');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       aname: [aname, string()],
       next: [next, optional(bigint())],
     });
     req.query('next', mapped.next);
-    req.appendTemplatePath`/v1/sms/${mapped.aname}/history`;
+    req.appendTemplatePath`/m2m/v1/sms/${mapped.aname}/history`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(sMSMessagesQueryResultSchema, requestOptions);
-  }
-
-  /**
-   * The messages are queued on the ThingSpace Platform and sent as soon as possible, but they may be
-   * delayed due to traffic and routing considerations.
-   *
-   * @param body         Request to send SMS.
-   * @return Response from the API call
-   */
-  async sendSMSToDevice(
-    body: SMSSendRequest,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<DeviceManagementResult>> {
-    const req = this.createRequest('POST', '/v1/sms');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({ body: [body, sMSSendRequestSchema] });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    return req.callAsJson(deviceManagementResultSchema, requestOptions);
   }
 
   /**
@@ -84,10 +86,11 @@ export class SMSController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<ConnectivityManagementSuccessResult>> {
     const req = this.createRequest('PUT');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ aname: [aname, string()] });
-    req.appendTemplatePath`/v1/sms/${mapped.aname}/startCallbacks`;
+    req.appendTemplatePath`/m2m/v1/sms/${mapped.aname}/startCallbacks`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions

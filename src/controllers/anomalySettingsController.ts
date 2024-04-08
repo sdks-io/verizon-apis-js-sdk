@@ -32,32 +32,18 @@ export class AnomalySettingsController extends BaseController {
     body: AnomalyDetectionRequest,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<IntelligenceSuccessResult>> {
-    const req = this.createRequest('PUT', '/v1/intelligence/anomaly/settings');
-    req.baseUrl('M2M');
+    const req = this.createRequest(
+      'POST',
+      '/m2m/v1/intelligence/anomaly/settings'
+    );
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
       body: [body, anomalyDetectionRequestSchema],
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
-  }
-
-  /**
-   * Resets the thresholds to zero.
-   *
-   * @param accountName The name of the subscribed account.
-   * @return Response from the API call
-   */
-  async resetAnomalyDetectionParameters(
-    accountName: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<IntelligenceSuccessResult>> {
-    const req = this.createRequest('PUT');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
-    req.appendTemplatePath`/v1/intelligence/${mapped.accountName}/anomaly/settings/reset`;
-    req.defaultToError(IntelligenceResultError, 'An error occurred.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
   }
 
@@ -72,10 +58,30 @@ export class AnomalySettingsController extends BaseController {
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<AnomalyDetectionSettings>> {
     const req = this.createRequest('GET');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
-    req.appendTemplatePath`/v1/intelligence/${mapped.accountName}/anomaly/settings`;
+    req.appendTemplatePath`/m2m/v1/intelligence/${mapped.accountName}/anomaly/settings`;
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(anomalyDetectionSettingsSchema, requestOptions);
+  }
+
+  /**
+   * Resets the thresholds to zero.
+   *
+   * @param accountName The name of the subscribed account.
+   * @return Response from the API call
+   */
+  async resetAnomalyDetectionParameters(
+    accountName: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<IntelligenceSuccessResult>> {
+    const req = this.createRequest('PUT');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
+    req.appendTemplatePath`/m2m/v1/intelligence/${mapped.accountName}/anomaly/settings/reset`;
+    req.defaultToError(IntelligenceResultError, 'An error occurred.');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
   }
 }

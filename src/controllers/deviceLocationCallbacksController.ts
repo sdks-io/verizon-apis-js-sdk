@@ -41,6 +41,7 @@ export class DeviceLocationCallbacksController extends BaseController {
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/callbacks/${mapped.account}`;
     req.throwOn(400, DeviceLocationResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(array(deviceLocationCallbackSchema), requestOptions);
   }
 
@@ -66,6 +67,7 @@ export class DeviceLocationCallbacksController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/callbacks/${mapped.account}`;
     req.throwOn(400, DeviceLocationResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(callbackRegistrationResultSchema, requestOptions);
   }
 
@@ -89,6 +91,7 @@ export class DeviceLocationCallbacksController extends BaseController {
     });
     req.appendTemplatePath`/callbacks/${mapped.account}/name/${mapped.service}`;
     req.throwOn(400, DeviceLocationResultError, 'Error response.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(deviceLocationSuccessResultSchema, requestOptions);
   }
 }

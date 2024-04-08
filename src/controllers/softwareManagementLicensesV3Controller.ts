@@ -40,6 +40,7 @@ export class SoftwareManagementLicensesV3Controller extends BaseController {
     req.query('lastSeenDeviceId', mapped.lastSeenDeviceId);
     req.appendTemplatePath`/licenses/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v3LicenseSummarySchema, requestOptions);
   }
 
@@ -65,6 +66,7 @@ export class SoftwareManagementLicensesV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/licenses/${mapped.acc}/assign`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v3LicenseAssignedRemovedResultSchema, requestOptions);
   }
 
@@ -90,6 +92,7 @@ export class SoftwareManagementLicensesV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/licenses/${mapped.acc}/remove`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(v3LicenseAssignedRemovedResultSchema, requestOptions);
   }
 }

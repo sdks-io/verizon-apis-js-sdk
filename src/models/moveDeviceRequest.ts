@@ -12,7 +12,7 @@ import { DeviceFilter, deviceFilterSchema } from './deviceFilter';
 /** Request to move active devices from one billing account to another within a customer profile. */
 export interface MoveDeviceRequest {
   /** The name of the billing account that you want to move the devices to. */
-  accountName?: string;
+  accountName: string;
   /** Specify the kind of the device identifier, the type of match, and the string that you want to match. */
   filter?: DeviceFilter;
   /** Custom field names and values, if you want to only include devices that have matching values. */
@@ -28,7 +28,7 @@ export interface MoveDeviceRequest {
 }
 
 export const moveDeviceRequestSchema: Schema<MoveDeviceRequest> = object({
-  accountName: ['accountName', optional(string())],
+  accountName: ['accountName', string()],
   filter: ['filter', optional(lazy(() => deviceFilterSchema))],
   customFields: [
     'customFields',

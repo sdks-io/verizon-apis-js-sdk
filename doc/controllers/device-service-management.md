@@ -47,9 +47,9 @@ const accountNumber = '0844021539-00001';
 
 try {
   const { result, ...httpResponse } = await deviceServiceManagementController.getDeviceHyperPreciseStatus(
-    imei,
-    accountNumber
-  );
+  imei,
+  accountNumber
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

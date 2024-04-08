@@ -105,9 +105,9 @@ const deviceList = 'IMEI';
 
 try {
   const { result, ...httpResponse } = await exclusionsController.removeDevicesFromExclusionList(
-    accountName,
-    deviceList
-  );
+  accountName,
+  deviceList
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -166,9 +166,9 @@ const startIndex = '0';
 
 try {
   const { result, ...httpResponse } = await exclusionsController.listExcludedDevices(
-    account,
-    startIndex
-  );
+  account,
+  startIndex
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

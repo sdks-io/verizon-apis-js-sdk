@@ -11,82 +11,139 @@ import {
   anomalyDetectionTriggerSchema,
 } from '../models/anomalyDetectionTrigger';
 import {
-  AnomalyTriggerResult,
-  anomalyTriggerResultSchema,
-} from '../models/anomalyTriggerResult';
+  CreateTriggerRequest,
+  createTriggerRequestSchema,
+} from '../models/createTriggerRequest';
 import {
-  CreateTriggerRequestOptions,
-  createTriggerRequestOptionsSchema,
-} from '../models/createTriggerRequestOptions';
+  GetTriggerResponseList,
+  getTriggerResponseListSchema,
+} from '../models/getTriggerResponseList';
 import {
-  IntelligenceSuccessResult,
-  intelligenceSuccessResultSchema,
-} from '../models/intelligenceSuccessResult';
-import {
-  UpdateTriggerRequestOptions,
-  updateTriggerRequestOptionsSchema,
-} from '../models/updateTriggerRequestOptions';
+  UpdateTriggerRequest,
+  updateTriggerRequestSchema,
+} from '../models/updateTriggerRequest';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
 
 export class AnomalyTriggersController extends BaseController {
   /**
-   * Updates an existing trigger using the account name.
+   * This corresponds to the M2M-MC SOAP interface, ```GetTriggers```.
    *
-   * @param body         Request to update existing trigger.
    * @return Response from the API call
    */
-  async updateAnomalyDetectionTrigger(
-    body: UpdateTriggerRequestOptions[],
+  async listAnomalyDetectionTriggers(
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<IntelligenceSuccessResult>> {
-    const req = this.createRequest('PUT', '/v2/triggers');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, array(updateTriggerRequestOptionsSchema)],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
+  ): Promise<ApiResponse<GetTriggerResponseList[]>> {
+    const req = this.createRequest('GET', '/m2m/v1/triggers');
+    req.baseUrl('Thingspace');
+    req.throwOn(400, IntelligenceResultError, 'Bad request');
+    req.throwOn(401, IntelligenceResultError, 'Unauthorized');
+    req.throwOn(403, IntelligenceResultError, 'Forbidden');
+    req.throwOn(404, IntelligenceResultError, 'Not Found / Does not exist');
+    req.throwOn(406, IntelligenceResultError, 'Format / Request Unacceptable');
+    req.throwOn(429, IntelligenceResultError, 'Too many requests');
+    req.defaultToError(IntelligenceResultError, 'Error response');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(array(getTriggerResponseListSchema), requestOptions);
   }
 
   /**
-   * Retrieves the values for a specific trigger ID.
+   * This corresponds to the M2M-MC SOAP interface, ```UpdateTriggerRequest```.
    *
-   * @param triggerId The trigger ID of a specific trigger.
+   * @param body         Update Trigger Request
+   * @return Response from the API call
+   */
+  async updateAnomalyDetectionTrigger(
+    body: UpdateTriggerRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AnomalyDetectionTrigger>> {
+    const req = this.createRequest('PUT', '/m2m/v1/triggers');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({
+      body: [body, updateTriggerRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, IntelligenceResultError, 'Bad request');
+    req.throwOn(401, IntelligenceResultError, 'Unauthorized');
+    req.throwOn(403, IntelligenceResultError, 'Forbidden');
+    req.throwOn(404, IntelligenceResultError, 'Not Found / Does not exist');
+    req.throwOn(406, IntelligenceResultError, 'Format / Request Unacceptable');
+    req.throwOn(429, IntelligenceResultError, 'Too many requests');
+    req.defaultToError(IntelligenceResultError, 'Error response');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(anomalyDetectionTriggerSchema, requestOptions);
+  }
+
+  /**
+   * This corresponds to the M2M-MC SOAP interface, ```CreateTrigger```.
+   *
+   * @param body         Create Trigger Request
+   * @return Response from the API call
+   */
+  async createAnomalyDetectionTrigger(
+    body: CreateTriggerRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AnomalyDetectionTrigger>> {
+    const req = this.createRequest('POST', '/m2m/v1/triggers');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({
+      body: [body, createTriggerRequestSchema],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, IntelligenceResultError, 'Bad request');
+    req.throwOn(401, IntelligenceResultError, 'Unauthorized');
+    req.throwOn(403, IntelligenceResultError, 'Forbidden');
+    req.throwOn(404, IntelligenceResultError, 'Not Found / Does not exist');
+    req.throwOn(406, IntelligenceResultError, 'Format / Request Unacceptable');
+    req.throwOn(429, IntelligenceResultError, 'Too many requests');
+    req.defaultToError(IntelligenceResultError, 'Error response');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(anomalyDetectionTriggerSchema, requestOptions);
+  }
+
+  /**
+   * This corresponds to the M2M-MC SOAP interface, ```GetTriggers```.
+   *
+   * @param triggerId trigger ID
    * @return Response from the API call
    */
   async listAnomalyDetectionTriggerSettings(
     triggerId: string,
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<AnomalyTriggerResult>> {
+  ): Promise<ApiResponse<GetTriggerResponseList[]>> {
     const req = this.createRequest('GET');
-    req.baseUrl('M2M');
+    req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ triggerId: [triggerId, string()] });
-    req.appendTemplatePath`/v2/triggers/${mapped.triggerId}`;
-    req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    return req.callAsJson(anomalyTriggerResultSchema, requestOptions);
+    req.appendTemplatePath`/m2m/v1/triggers/${mapped.triggerId}`;
+    req.throwOn(400, IntelligenceResultError, 'Bad request');
+    req.throwOn(401, IntelligenceResultError, 'Unauthorized');
+    req.throwOn(403, IntelligenceResultError, 'Forbidden');
+    req.throwOn(404, IntelligenceResultError, 'Not Found / Does not exist');
+    req.throwOn(406, IntelligenceResultError, 'Format / Request Unacceptable');
+    req.throwOn(429, IntelligenceResultError, 'Too many requests');
+    req.defaultToError(IntelligenceResultError, 'Error response');
+    req.authenticate([{ oauth2: true }]);
+    return req.callAsJson(array(getTriggerResponseListSchema), requestOptions);
   }
 
   /**
-   * Creates the trigger to identify an anomaly.
+   * Deletes a specific trigger ID
    *
-   * @param body         Request to create an anomaly trigger.
+   * @param triggerId The trigger ID to be deleted
    * @return Response from the API call
    */
-  async createAnomalyDetectionTrigger(
-    body: CreateTriggerRequestOptions[],
+  async deleteAnomalyDetectionTrigger(
+    triggerId: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<AnomalyDetectionTrigger>> {
-    const req = this.createRequest('POST', '/v2/triggers');
-    req.baseUrl('M2M');
-    const mapped = req.prepareArgs({
-      body: [body, array(createTriggerRequestOptionsSchema)],
-    });
-    req.header('Content-Type', 'application/json');
-    req.json(mapped.body);
-    req.defaultToError(IntelligenceResultError, 'An error occurred.');
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ triggerId: [triggerId, string()] });
+    req.appendTemplatePath`/m2m/v1/triggers/${mapped.triggerId}`;
+    req.defaultToError(IntelligenceResultError, 'Error response');
+    req.authenticate([{ oauth2: true }]);
     return req.callAsJson(anomalyDetectionTriggerSchema, requestOptions);
   }
 }

@@ -12,79 +12,9 @@ const accountsController = new AccountsController(client);
 
 ## Methods
 
-* [List Account Leads](../../doc/controllers/accounts.md#list-account-leads)
 * [Get Account Information](../../doc/controllers/accounts.md#get-account-information)
 * [List Account States and Services](../../doc/controllers/accounts.md#list-account-states-and-services)
-
-
-# List Account Leads
-
-When HTTP status is 202, a URL will be returned in the Location header of the form /leads/{aname}?next={token}. This URL can be used to request the next set of leads.
-
-```ts
-async listAccountLeads(
-  aname: string,
-  next?: bigint,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AccountLeadsResult>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `aname` | `string` | Template, Required | Account name. |
-| `next` | `bigint \| undefined` | Query, Optional | Continue the previous query from the pageUrl in Location Header. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`AccountLeadsResult`](../../doc/models/account-leads-result.md)
-
-## Example Usage
-
-```ts
-const aname = '0252012345-00001';
-
-try {
-  const { result, ...httpResponse } = await accountsController.listAccountLeads(aname);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "leads": [
-    {
-      "leadId": "L-10001",
-      "leadState": "Qualified",
-      "address": {
-        "addressLine1": "1600 Pennsylvania Avenue",
-        "addressLine2": "",
-        "city": "Washington",
-        "state": "DC",
-        "zip": "20500",
-        "country": "USA"
-      }
-    }
-  ],
-  "hasMoreData": false
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Error response. | [`ConnectivityManagementResultError`](../../doc/models/connectivity-management-result-error.md) |
+* [List Account Leads](../../doc/controllers/accounts.md#list-account-leads)
 
 
 # Get Account Information
@@ -295,6 +225,76 @@ try {
       ]
     }
   ]
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Error response. | [`ConnectivityManagementResultError`](../../doc/models/connectivity-management-result-error.md) |
+
+
+# List Account Leads
+
+When HTTP status is 202, a URL will be returned in the Location header of the form /leads/{aname}?next={token}. This URL can be used to request the next set of leads.
+
+```ts
+async listAccountLeads(
+  aname: string,
+  next?: bigint,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<AccountLeadsResult>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `aname` | `string` | Template, Required | Account name. |
+| `next` | `bigint \| undefined` | Query, Optional | Continue the previous query from the pageUrl in Location Header. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`AccountLeadsResult`](../../doc/models/account-leads-result.md)
+
+## Example Usage
+
+```ts
+const aname = '0252012345-00001';
+
+try {
+  const { result, ...httpResponse } = await accountsController.listAccountLeads(aname);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "leads": [
+    {
+      "leadId": "L-10001",
+      "leadState": "Qualified",
+      "address": {
+        "addressLine1": "1600 Pennsylvania Avenue",
+        "addressLine2": "",
+        "city": "Washington",
+        "state": "DC",
+        "zip": "20500",
+        "country": "USA"
+      }
+    }
+  ],
+  "hasMoreData": false
 }
 ```
 

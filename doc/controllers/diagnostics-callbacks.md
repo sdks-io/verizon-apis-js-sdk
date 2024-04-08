@@ -10,74 +10,9 @@ const diagnosticsCallbacksController = new DiagnosticsCallbacksController(client
 
 ## Methods
 
-* [Unregister Diagnostics Callback](../../doc/controllers/diagnostics-callbacks.md#unregister-diagnostics-callback)
 * [Get Diagnostics Subscription Callback Info](../../doc/controllers/diagnostics-callbacks.md#get-diagnostics-subscription-callback-info)
 * [Register Diagnostics Callback URL](../../doc/controllers/diagnostics-callbacks.md#register-diagnostics-callback-url)
-
-
-# Unregister Diagnostics Callback
-
-This endpoint allows user to delete a registered callback URL and credential.
-
-```ts
-async unregisterDiagnosticsCallback(
-  accountName: string,
-  serviceName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceDiagnosticsCallback>>
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `accountName` | `string` | Query, Required | Account identifier. |
-| `serviceName` | `string` | Query, Required | Service name for callback notification. |
-| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
-
-## Response Type
-
-[`DeviceDiagnosticsCallback`](../../doc/models/device-diagnostics-callback.md)
-
-## Example Usage
-
-```ts
-const accountName = '0000123456-00001';
-
-const serviceName = 'string';
-
-try {
-  const { result, ...httpResponse } = await diagnosticsCallbacksController.unregisterDiagnosticsCallback(
-    accountName,
-    serviceName
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
-} catch (error) {
-  if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
-  }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "accountName": "TestQAAccount",
-  "serviceName": "string",
-  "endpoint": "https://yourwebsite.com",
-  "httpHeaders": {},
-  "createdOn": "2019-09-07T23:57:53.292Z"
-}
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | Unexpected error. | [`DeviceDiagnosticsResultError`](../../doc/models/device-diagnostics-result-error.md) |
+* [Unregister Diagnostics Callback](../../doc/controllers/diagnostics-callbacks.md#unregister-diagnostics-callback)
 
 
 # Get Diagnostics Subscription Callback Info
@@ -174,6 +109,71 @@ const body: CallbackRegistrationRequest = {
 
 try {
   const { result, ...httpResponse } = await diagnosticsCallbacksController.registerDiagnosticsCallbackURL(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "accountName": "TestQAAccount",
+  "serviceName": "string",
+  "endpoint": "https://yourwebsite.com",
+  "httpHeaders": {},
+  "createdOn": "2019-09-07T23:57:53.292Z"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| 400 | Unexpected error. | [`DeviceDiagnosticsResultError`](../../doc/models/device-diagnostics-result-error.md) |
+
+
+# Unregister Diagnostics Callback
+
+This endpoint allows user to delete a registered callback URL and credential.
+
+```ts
+async unregisterDiagnosticsCallback(
+  accountName: string,
+  serviceName: string,
+  requestOptions?: RequestOptions
+): Promise<ApiResponse<DeviceDiagnosticsCallback>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Query, Required | Account identifier. |
+| `serviceName` | `string` | Query, Required | Service name for callback notification. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`DeviceDiagnosticsCallback`](../../doc/models/device-diagnostics-callback.md)
+
+## Example Usage
+
+```ts
+const accountName = '0000123456-00001';
+
+const serviceName = 'string';
+
+try {
+  const { result, ...httpResponse } = await diagnosticsCallbacksController.unregisterDiagnosticsCallback(
+  accountName,
+  serviceName
+);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

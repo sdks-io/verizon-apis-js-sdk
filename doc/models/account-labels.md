@@ -11,7 +11,7 @@ Maximum of 2,000 objects are allowed in the array.
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `devices` | [`DeviceList[] \| undefined`](../../doc/models/device-list.md) | Optional | - |
+| `devices` | [`DeviceList[]`](../../doc/models/device-list.md) | Required | - |
 | `label` | [`DeviceLabels[] \| undefined`](../../doc/models/device-labels.md) | Optional | - |
 
 ## Example (as JSON)
@@ -22,36 +22,24 @@ Maximum of 2,000 objects are allowed in the array.
     {
       "deviceIds": [
         {
-          "id": "id6",
-          "kind": "imei"
-        },
-        {
-          "id": "id7",
-          "kind": "eid"
-        },
-        {
-          "id": "id8",
-          "kind": "esn"
-        }
-      ]
-    },
-    {
-      "deviceIds": [
-        {
-          "id": "id7",
-          "kind": "eid"
+          "id": "id0",
+          "kind": "kind8"
         }
       ]
     }
   ],
   "label": [
     {
-      "name": "name5",
-      "value": "value7"
+      "name": "name0",
+      "value": "value2"
     },
     {
-      "name": "name6",
-      "value": "value8"
+      "name": "name0",
+      "value": "value2"
+    },
+    {
+      "name": "name0",
+      "value": "value2"
     }
   ]
 }
