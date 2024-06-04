@@ -13,6 +13,8 @@ Documentation for accessing and setting credentials for oAuth2.
 | OAuthClientSecret | `string` | OAuth 2 Client Secret | `oauthClientSecret` |
 | OAuthToken | `OauthToken` | Object for storing information about the OAuth token | `oauthToken` |
 | OAuthScopes | `OauthScopeEnum[]` | List of scopes that apply to the OAuth token | `oauthScopes` |
+| OAuthTokenProvider | `(lastOAuthToken: OauthToken \| undefined, authManager: ClientCredentialsAuthManager) => Promise<OauthToken>` | Registers a callback for oAuth Token Provider used for automatic token fetching/refreshing. | `oauthTokenProvider` |
+| OAuthOnTokenUpdate | `(token: OauthToken) => void` | Registers a callback for token update event. | `oauthOnTokenUpdate` |
 
 
 
@@ -22,7 +24,7 @@ Documentation for accessing and setting credentials for oAuth2.
 
 ### Client Initialization
 
-You must initialize the client with *OAuth 2.0 Client Credentials Grant* credentials as shown in the following code snippet.
+You must initialize the client with *OAuth 2.0 Client Credentials Grant* credentials as shown in the following code snippet. This will fetch the OAuth token automatically when any of the endpoints, requiring *OAuth 2.0 Client Credentials Grant* autentication, are called.
 
 ```ts
 const client = new Client({
@@ -39,29 +41,9 @@ const client = new Client({
 
 
 
-Your application must obtain user authorization before it can execute an endpoint call in case this SDK chooses to use *OAuth 2.0 Client Credentials Grant*. This authorization includes the following steps.
-
-The `fetchToken` method will exchange the OAuth client credentials for an *access token*. The access token is an object containing information for authorizing client requests and refreshing the token itself.
+Your application can also manually provide an OAuthToken using the setter `oauthToken` in `clientCredentialsAuthCredentials` object. This function takes in an instance of OAuthToken containing information for authorizing client requests and refreshing the token itself.
 
 You must have initialized the client with scopes for which you need permission to access.
-
-```ts
-try {
-  const token = await client.clientCredentialsAuthManager?.fetchToken();
-  if (token) {
-    client.withConfiguration({
-      clientCredentialsAuthCredentials: {
-        ...config.clientCredentialsAuthCredentials,
-        oauthToken: token
-      }
-    });
-  }
-} catch(error) {
-  // handle ApiError or OAuthProviderError if needed
-}
-```
-
-The client can now make authorized endpoint calls.
 
 ### Scopes
 
@@ -80,44 +62,11 @@ Scopes enable your application to only request access to the resources it needs 
 | `Read` | read access |
 | `Write` | read/write access |
 
-### Storing an access token for reuse
+### Adding OAuth Token Update Callback
 
-It is recommended that you store the access token for reuse.
-
-```ts
-Store the token in session storage or local storage.
-```
-
-### Creating a client from a stored token
-
-To authorize a client from a stored access token, just set the access token in Configuration along with the other configuration parameters before creating the client:
+Whenever the OAuth Token gets updated, the provided callback implementation will be executed. For instance, you may use it store your access token whenever it gets updated.
 
 ```ts
-const newClient = client.withConfiguration({
-  clientCredentialsAuthCredentials: {
-    ...config.clientCredentialsAuthCredentials,
-    oauthToken: token
-  }
-});
-```
-
-### Complete example
-
-
-
-```ts
-// function for storing token to database
-async function saveTokenToDatabase(token: OAuthToken) {
-  // Code to save the token to the database
-}
-
-// function for loading token from database
-async function loadTokenFromDatabase(): Promise<OAuthToken | undefined> {
-  // Load token from the database and return it (return undefined if no token exists)
-  return undefined;
-}
-
-// create a new client from configuration
 const client = new Client({
   clientCredentialsAuthCredentials: {
     oauthClientId: 'OAuthClientId',
@@ -125,42 +74,40 @@ const client = new Client({
     oauthScopes: [
       OauthScopeEnum.Discoveryread,
       OauthScopeEnum.Serviceprofileread
-    ]
+    ],
+    oauthOnTokenUpdate: (token: OauthToken) => {
+      // Add the callback handler to perform operations like save to DB or file etc.
+      // It will be triggered whenever the token gets updated
+      console.log(token);
+    }
   },
-  vZM2mToken: 'VZ-M2M-Token',
-  timeout: 0,
-  environment: Environment.Production,
 });
+```
 
-// obtain access token, needed for client to be authorized
-const previousToken = await loadTokenFromDatabase();
-if (previousToken) {
-  // restore previous access token and update the cloned configuration with the token
-  client.withConfiguration({
-    clientCredentialsAuthCredentials: {
-      ...config.clientCredentialsAuthCredentials,
-      oauthToken: previousToken
+### Adding Custom OAuth Token Provider
+
+To authorize a client from a stored access token, set up the `oauthTokenProvider` in `clientCredentialsAuthCredentials` along with the other auth parameters before creating the client:
+
+```ts
+const client = new Client({
+  clientCredentialsAuthCredentials: {
+    oauthClientId: 'OAuthClientId',
+    oauthClientSecret: 'OAuthClientSecret',
+    oauthScopes: [
+      OauthScopeEnum.Discoveryread,
+      OauthScopeEnum.Serviceprofileread
+    ],
+    oauthTokenProvider: (lastOAuthToken: OauthToken | undefined, authManager: ClientCredentialsAuthManager) => {
+      // Add the callback handler to provide a new OAuth token
+      // It will be triggered whenever the lastOAuthToken is undefined or expired
+      return Promise.resolve({
+        ...lastOAuthToken,
+        accessToken: 'new accessToken',
+        expiry: BigInt(Date.now())
+      });
     }
-  });
-} else {
-  // obtain a new access token
-  try {
-    const token = await client.clientCredentialsAuthManager?.fetchToken();
-    if (token) {
-        await saveTokenToDatabase(token);
-        client.withConfiguration({
-          clientCredentialsAuthCredentials: {
-            ...config.clientCredentialsAuthCredentials,
-            oauthToken: token
-          }
-        });
-    }
-  } catch (error) {
-      if (error instanceof OAuthProviderError) {
-          // handle OAuthProviderError if needed
-      }
-    }
-}
+  },
+});
 ```
 
 

@@ -5,6 +5,7 @@
  */
 
 import { HttpClientOptions } from './clientAdapter';
+import { ClientCredentialsAuthManager } from './clientCredentialsAuthManager';
 import { OauthScopeEnum } from './models/oauthScopeEnum';
 import { OauthToken } from './models/oauthToken';
 
@@ -26,6 +27,9 @@ export interface Configuration {
     oauthClientSecret: string;
     oauthToken?: OauthToken;
     oauthScopes?: OauthScopeEnum[];
+    oauthTokenProvider?: (lastOAuthToken: OauthToken | undefined,
+      authManager: ClientCredentialsAuthManager) => Promise<OauthToken>;
+    oauthOnTokenUpdate?: (token: OauthToken) => void;
   };
   httpClientOptions?: Partial<HttpClientOptions>;
   unstable_httpClientOptions?: any;

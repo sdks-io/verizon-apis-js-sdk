@@ -8,14 +8,21 @@ import {
   compositeAuthenticationProvider,
   requestAuthenticationProvider,
 } from './authentication';
+import { ClientCredentialsAuthManager } from './clientCredentialsAuthManager';
 import { Configuration } from './configuration';
+import { OauthToken } from './models/oauthToken';
 
-export function createAuthProviderFromConfig(config: Partial<Configuration>) {
+export function createAuthProviderFromConfig(
+  config: Partial<Configuration>,
+  oauth2: () => ClientCredentialsAuthManager
+) {
   const authConfig = {
     oauth2:
       config.clientCredentialsAuthCredentials &&
       requestAuthenticationProvider (
-        config.clientCredentialsAuthCredentials.oauthToken
+        config.clientCredentialsAuthCredentials.oauthToken,
+        oauth2TokenProvider(oauth2, config.clientCredentialsAuthCredentials.oauthTokenProvider),
+        config.clientCredentialsAuthCredentials.oauthOnTokenUpdate
     ),
   };
 
@@ -23,5 +30,19 @@ export function createAuthProviderFromConfig(config: Partial<Configuration>) {
     keyof typeof authConfig,
     typeof authConfig
   > (authConfig);
+}
+
+function oauth2TokenProvider(
+  oauth2: () => ClientCredentialsAuthManager,
+  defaultProvider: ((lastOAuthToken: OauthToken | undefined,
+    authManager: ClientCredentialsAuthManager) => Promise<OauthToken>) | undefined
+): ((token: OauthToken | undefined) => Promise<OauthToken>) | undefined {
+  return (token: OauthToken | undefined) => {
+    const manager = oauth2();
+    if (defaultProvider === undefined) {
+      return manager.updateToken(token);
+    }
+    return defaultProvider(token, manager);
+  };
 }
 

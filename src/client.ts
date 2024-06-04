@@ -63,7 +63,10 @@ export class Client implements ClientInterface {
 
     this._requestBuilderFactory = createRequestHandlerFactory(
       server => getBaseUri(server, this._config),
-      createAuthProviderFromConfig(clonedConfig),
+      createAuthProviderFromConfig(
+        clonedConfig,
+        () => this.clientCredentialsAuthManager
+      ),
       new HttpClient(AbortError, {
         timeout: this._timeout,
         clientConfigOverrides: this._config.unstable_httpClientOptions,

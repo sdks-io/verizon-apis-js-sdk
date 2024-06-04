@@ -30,6 +30,24 @@ export class ClientCredentialsAuthManager {
     this._oAuthController = new OauthAuthorizationController(client);
   }
 
+  public async updateToken(oAuthToken?: OauthToken): Promise<OauthToken> {
+    if (!this.isValid(oAuthToken) || this.isExpired(oAuthToken)) {
+      oAuthToken = await this.fetchToken();
+    }
+    return oAuthToken;
+  }
+
+  public isValid(oAuthToken: OauthToken | undefined): oAuthToken is OauthToken {
+    return typeof oAuthToken !== 'undefined';
+  }
+
+  public isExpired(oAuthToken: OauthToken) {
+    return (
+      typeof oAuthToken.expiry !== 'undefined' &&
+      oAuthToken.expiry < Date.now() / 1000
+    );
+  }
+
   public async fetchToken(
     additionalParams?: Record<string, unknown>
   ): Promise<OauthToken> {
@@ -44,7 +62,7 @@ export class ClientCredentialsAuthManager {
     );
     return this.setExpiry(result);
   }
-  
+
   private getClientBasicAuth(clientId: string, clientSecret: string): string {
     return `Basic ${Buffer.from(clientId + ':' + clientSecret,).toString(
       'base64'
