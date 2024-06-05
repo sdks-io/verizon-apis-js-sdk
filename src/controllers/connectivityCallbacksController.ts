@@ -39,7 +39,7 @@ export class ConnectivityCallbacksController extends BaseController {
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/callbacks/${mapped.aname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       array(connectivityManagementCallbackSchema),
       requestOptions
@@ -68,7 +68,7 @@ export class ConnectivityCallbacksController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/m2m/v1/callbacks/${mapped.aname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(callbackActionResultSchema, requestOptions);
   }
 
@@ -92,7 +92,7 @@ export class ConnectivityCallbacksController extends BaseController {
     });
     req.appendTemplatePath`/m2m/v1/callbacks/${mapped.aname}/name/${mapped.sname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(callbackActionResultSchema, requestOptions);
   }
 }

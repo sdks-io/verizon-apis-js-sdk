@@ -9,14 +9,14 @@ const oauthAuthorizationController = new OauthAuthorizationController(client);
 `OauthAuthorizationController`
 
 
-# Request Token
+# Request Token Thingspace Oauth
 
 Create a new OAuth 2 token.
 
 :information_source: **Note** This endpoint does not require authentication.
 
 ```ts
-async requestToken(
+async requestTokenThingspaceOauth(
   authorization: string,
   scope?: string,
   fieldParameters?: Record<string, unknown>,
@@ -47,7 +47,7 @@ const fieldParameters: Record<string, string> = {
 };
 
 try {
-  const { result, ...httpResponse } = await oauthAuthorizationController.requestToken(
+  const { result, ...httpResponse } = await oauthAuthorizationController.requestTokenThingspaceOauth(
   authorization,
   undefined,
   fieldParameters

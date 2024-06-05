@@ -1,8 +1,6 @@
 
 # Notification
 
-The notification details of the trigger.
-
 ## Structure
 
 `Notification`
@@ -11,38 +9,27 @@ The notification details of the trigger.
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `notificationType` | `string \| undefined` | Optional | The type of notification, i.e. 'DailySummary'. |
-| `callback` | `boolean \| undefined` | Optional | Whether or not the notification should be sent via callback.<br />true<br />false. |
-| `emailNotification` | `boolean \| undefined` | Optional | Whether or not the notification should be sent via e-mail.<br />true<br />false. |
-| `notificationGroupName` | `string \| undefined` | Optional | Name for the notification group. |
-| `notificationFrequencyFactor` | `number \| undefined` | Optional | Frequency factor for notification. |
-| `notificationFrequencyInterval` | `string \| undefined` | Optional | Frequency interval for notification. |
-| `externalEmailRecipients` | `string \| undefined` | Optional | E-mail address(es) where the notification should be delivered. |
-| `smsNotification` | `boolean \| undefined` | Optional | SMS notification. |
-| `smsNumbers` | [`SMSNumber[] \| undefined`](../../doc/models/sms-number.md) | Optional | List of SMS numbers.<br>**Constraints**: *Maximum Items*: `10` |
+| `notificationType` | `string \| undefined` | Optional | - |
+| `callback` | `boolean \| undefined` | Optional | - |
+| `emailNotification` | `boolean \| undefined` | Optional | - |
+| `notificationGroupName` | `string \| undefined` | Optional | - |
+| `notificationFrequencyFactor` | `number \| undefined` | Optional | - |
+| `notificationFrequencyInterval` | `string \| undefined` | Optional | - |
+| `externalEmailRecipients` | `string \| undefined` | Optional | - |
+| `smsNotification` | `boolean \| undefined` | Optional | - |
+| `smsNumbers` | [`SmsNumbers[] \| undefined`](../../doc/models/sms-numbers.md) | Optional | - |
 | `reminder` | `boolean \| undefined` | Optional | - |
-| `severity` | `string \| undefined` | Optional | Severity level associated with the notification. Examples would be:<br />Major<br />Minor<br />Critical<br />NotApplicable. |
+| `severity` | `string \| undefined` | Optional | - |
 
 ## Example (as JSON)
 
 ```json
 {
-  "notificationType": "DailySummary",
-  "callback": true,
+  "notificationType": "notificationType2",
+  "callback": false,
   "emailNotification": false,
-  "notificationGroupName": "Anomaly Test API",
-  "notificationFrequencyFactor": 3,
-  "notificationFrequencyInterval": "Hourly",
-  "externalEmailRecipients": "placeholder@verizon.com",
-  "smsNotification": true,
-  "smsNumbers": [
-    {
-      "carrier": "US Cellular",
-      "number": "9299280711"
-    }
-  ],
-  "reminder": true,
-  "severity": "Critical"
+  "notificationGroupName": "notificationGroupName2",
+  "notificationFrequencyFactor": 214
 }
 ```
 

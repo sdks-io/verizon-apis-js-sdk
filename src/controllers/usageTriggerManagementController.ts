@@ -46,7 +46,7 @@ export class UsageTriggerManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(usageTriggerResponseSchema, requestOptions);
   }
 
@@ -73,7 +73,7 @@ export class UsageTriggerManagementController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/usage/triggers/${mapped.triggerId}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(usageTriggerResponseSchema, requestOptions);
   }
 
@@ -97,7 +97,7 @@ export class UsageTriggerManagementController extends BaseController {
     });
     req.appendTemplatePath`/usage/accounts/${mapped.accountName}/triggers/${mapped.triggerId}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceLocationSuccessResultSchema, requestOptions);
   }
 }

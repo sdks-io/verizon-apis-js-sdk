@@ -57,7 +57,7 @@ export class BillingController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(managedAccountsAddResponseSchema, requestOptions);
   }
 
@@ -82,7 +82,7 @@ export class BillingController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       managedAccountsProvisionResponseSchema,
       requestOptions
@@ -108,7 +108,7 @@ export class BillingController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(managedAccountCancelResponseSchema, requestOptions);
   }
 
@@ -132,7 +132,7 @@ export class BillingController extends BaseController {
     });
     req.appendTemplatePath`/managedaccounts/${mapped.accountName}/service/${mapped.serviceName}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(managedAccountsGetAllResponseSchema, requestOptions);
   }
 }

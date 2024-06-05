@@ -45,7 +45,7 @@ export class EUICCDeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceManagementResultSchema, requestOptions);
   }
 
@@ -70,7 +70,7 @@ export class EUICCDeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceManagementResultSchema, requestOptions);
   }
 
@@ -95,7 +95,7 @@ export class EUICCDeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Error Response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
@@ -121,7 +121,7 @@ export class EUICCDeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Error Response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
@@ -147,7 +147,7 @@ export class EUICCDeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Error Response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 }

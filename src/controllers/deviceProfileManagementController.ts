@@ -47,7 +47,7 @@ export class DeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
@@ -70,7 +70,7 @@ export class DeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
@@ -95,7 +95,7 @@ export class DeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
@@ -120,7 +120,7 @@ export class DeviceProfileManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Bad request');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 }

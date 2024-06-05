@@ -9,7 +9,10 @@ import {
   AnomalyTriggerRequest,
   anomalyTriggerRequestSchema,
 } from './anomalyTriggerRequest';
-import { Notification, notificationSchema } from './notification';
+import {
+  TriggerNotification,
+  triggerNotificationSchema,
+} from './triggerNotification';
 
 export interface CreateTriggerRequestOptions {
   /** Trigger name. */
@@ -21,7 +24,7 @@ export interface CreateTriggerRequestOptions {
   /** The details of the UsageAnomaly trigger. */
   anomalyTriggerRequest?: AnomalyTriggerRequest;
   /** The notification details of the trigger. */
-  notification?: Notification;
+  notification?: TriggerNotification;
   /** Indicates anomaly detection is active<br />True - Anomaly detection is active.<br />False - Anomaly detection is not active. */
   active?: boolean;
 }
@@ -35,7 +38,10 @@ export const createTriggerRequestOptionsSchema: Schema<CreateTriggerRequestOptio
       'anomalyTriggerRequest',
       optional(lazy(() => anomalyTriggerRequestSchema)),
     ],
-    notification: ['notification', optional(lazy(() => notificationSchema))],
+    notification: [
+      'notification',
+      optional(lazy(() => triggerNotificationSchema)),
+    ],
     active: ['active', optional(boolean())],
   }
 );

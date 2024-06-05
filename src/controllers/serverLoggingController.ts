@@ -35,7 +35,7 @@ export class ServerLoggingController extends BaseController {
     });
     req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}/checkInHistory`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(checkInHistoryItemSchema), requestOptions);
   }
 }

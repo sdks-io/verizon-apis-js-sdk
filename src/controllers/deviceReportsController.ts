@@ -52,7 +52,7 @@ export class DeviceReportsController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(aggregateSessionReportSchema, requestOptions);
   }
 
@@ -80,7 +80,7 @@ export class DeviceReportsController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(aggregatedReportCallbackResultSchema, requestOptions);
   }
 
@@ -107,7 +107,7 @@ export class DeviceReportsController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(sessionReportSchema, requestOptions);
   }
 }

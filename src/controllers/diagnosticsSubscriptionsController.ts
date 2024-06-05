@@ -31,7 +31,7 @@ export class DiagnosticsSubscriptionsController extends BaseController {
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
     req.query('accountName', mapped.accountName);
     req.defaultToError(DeviceDiagnosticsResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(diagnosticsSubscriptionSchema, requestOptions);
   }
 }

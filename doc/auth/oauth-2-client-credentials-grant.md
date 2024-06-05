@@ -3,7 +3,7 @@
 
 
 
-Documentation for accessing and setting credentials for oAuth2.
+Documentation for accessing and setting credentials for thingspace_oauth.
 
 ## Auth Credentials
 
@@ -12,13 +12,13 @@ Documentation for accessing and setting credentials for oAuth2.
 | OAuthClientId | `string` | OAuth 2 Client ID | `oauthClientId` |
 | OAuthClientSecret | `string` | OAuth 2 Client Secret | `oauthClientSecret` |
 | OAuthToken | `OauthToken` | Object for storing information about the OAuth token | `oauthToken` |
-| OAuthScopes | `OauthScopeEnum[]` | List of scopes that apply to the OAuth token | `oauthScopes` |
-| OAuthTokenProvider | `(lastOAuthToken: OauthToken \| undefined, authManager: ClientCredentialsAuthManager) => Promise<OauthToken>` | Registers a callback for oAuth Token Provider used for automatic token fetching/refreshing. | `oauthTokenProvider` |
+| OAuthScopes | `OauthScopeThingspaceOauthEnum[]` | List of scopes that apply to the OAuth token | `oauthScopes` |
+| OAuthTokenProvider | `(lastOAuthToken: OauthToken \| undefined, authManager: ThingspaceOauthManager) => Promise<OauthToken>` | Registers a callback for oAuth Token Provider used for automatic token fetching/refreshing. | `oauthTokenProvider` |
 | OAuthOnTokenUpdate | `(token: OauthToken) => void` | Registers a callback for token update event. | `oauthOnTokenUpdate` |
 
 
 
-**Note:** Auth credentials can be set using `clientCredentialsAuthCredentials` object in the client.
+**Note:** Auth credentials can be set using `thingspaceOauthCredentials` object in the client.
 
 ## Usage Example
 
@@ -28,12 +28,12 @@ You must initialize the client with *OAuth 2.0 Client Credentials Grant* credent
 
 ```ts
 const client = new Client({
-  clientCredentialsAuthCredentials: {
+  thingspaceOauthCredentials: {
     oauthClientId: 'OAuthClientId',
     oauthClientSecret: 'OAuthClientSecret',
     oauthScopes: [
-      OauthScopeEnum.Discoveryread,
-      OauthScopeEnum.Serviceprofileread
+      OauthScopeThingspaceOauthEnum.Discoveryread,
+      OauthScopeThingspaceOauthEnum.Serviceprofileread
     ]
   },
 });
@@ -41,13 +41,13 @@ const client = new Client({
 
 
 
-Your application can also manually provide an OAuthToken using the setter `oauthToken` in `clientCredentialsAuthCredentials` object. This function takes in an instance of OAuthToken containing information for authorizing client requests and refreshing the token itself.
+Your application can also manually provide an OAuthToken using the setter `oauthToken` in `thingspaceOauthCredentials` object. This function takes in an instance of OAuthToken containing information for authorizing client requests and refreshing the token itself.
 
 You must have initialized the client with scopes for which you need permission to access.
 
 ### Scopes
 
-Scopes enable your application to only request access to the resources it needs while enabling users to control the amount of access they grant to your application. Available scopes are defined in the [`OauthScopeEnum`](../../doc/models/oauth-scope-enum.md) enumeration.
+Scopes enable your application to only request access to the resources it needs while enabling users to control the amount of access they grant to your application. Available scopes are defined in the [`OauthScopeThingspaceOauthEnum`](../../doc/models/oauth-scope-thingspace-oauth-enum.md) enumeration.
 
 | Scope Name | Description |
 |  --- | --- |
@@ -59,6 +59,11 @@ Scopes enable your application to only request access to the resources it needs 
 | `TsMecFullaccess` | Full access for /serviceprofiles and /serviceendpoints. |
 | `TsMecLimitaccess` | Limited access. Will not allow use of /serviceprofiles and /serviceendpoints but will allow discovery. |
 | `TsApplicationRo` |  |
+| `Edgediscoveryread` |  |
+| `Edgeserviceprofileread` |  |
+| `Edgeserviceprofilewrite` |  |
+| `Edgeserviceregistryread` |  |
+| `Edgeserviceregistrywrite` |  |
 | `Read` | read access |
 | `Write` | read/write access |
 
@@ -68,12 +73,12 @@ Whenever the OAuth Token gets updated, the provided callback implementation will
 
 ```ts
 const client = new Client({
-  clientCredentialsAuthCredentials: {
+  thingspaceOauthCredentials: {
     oauthClientId: 'OAuthClientId',
     oauthClientSecret: 'OAuthClientSecret',
     oauthScopes: [
-      OauthScopeEnum.Discoveryread,
-      OauthScopeEnum.Serviceprofileread
+      OauthScopeThingspaceOauthEnum.Discoveryread,
+      OauthScopeThingspaceOauthEnum.Serviceprofileread
     ],
     oauthOnTokenUpdate: (token: OauthToken) => {
       // Add the callback handler to perform operations like save to DB or file etc.
@@ -86,18 +91,18 @@ const client = new Client({
 
 ### Adding Custom OAuth Token Provider
 
-To authorize a client from a stored access token, set up the `oauthTokenProvider` in `clientCredentialsAuthCredentials` along with the other auth parameters before creating the client:
+To authorize a client from a stored access token, set up the `oauthTokenProvider` in `thingspaceOauthCredentials` along with the other auth parameters before creating the client:
 
 ```ts
 const client = new Client({
-  clientCredentialsAuthCredentials: {
+  thingspaceOauthCredentials: {
     oauthClientId: 'OAuthClientId',
     oauthClientSecret: 'OAuthClientSecret',
     oauthScopes: [
-      OauthScopeEnum.Discoveryread,
-      OauthScopeEnum.Serviceprofileread
+      OauthScopeThingspaceOauthEnum.Discoveryread,
+      OauthScopeThingspaceOauthEnum.Serviceprofileread
     ],
-    oauthTokenProvider: (lastOAuthToken: OauthToken | undefined, authManager: ClientCredentialsAuthManager) => {
+    oauthTokenProvider: (lastOAuthToken: OauthToken | undefined, authManager: ThingspaceOauthManager) => {
       // Add the callback handler to provide a new OAuth token
       // It will be triggered whenever the lastOAuthToken is undefined or expired
       return Promise.resolve({

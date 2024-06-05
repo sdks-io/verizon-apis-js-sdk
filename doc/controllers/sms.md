@@ -43,9 +43,14 @@ async sendSMSToDevice(
 
 ```ts
 const body: SMSSendRequest = {
-  accountName: 'accountName0',
-  smsMessage: 'The rain in Spain stays mainly in the plain.',
-  servicePlan: 'T Plan 2',
+  accountName: '0000123456-00001',
+  smsMessage: 'Can you hear me now?',
+  deviceIds: [
+    {
+      id: '89148000000800139708',
+      kind: 'iccid',
+    }
+  ],
 };
 
 try {

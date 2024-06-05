@@ -12,7 +12,7 @@ Trigger details.
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `anomalyattributes` | [`UsageAnomalyAttributes \| undefined`](../../doc/models/usage-anomaly-attributes.md) | Optional | The details of the UsageAnomaly trigger. |
-| `notification` | [`Notification \| undefined`](../../doc/models/notification.md) | Optional | The notification details of the trigger. |
+| `notification` | [`TriggerNotification \| undefined`](../../doc/models/trigger-notification.md) | Optional | The notification details of the trigger. |
 
 ## Example (as JSON)
 

@@ -39,7 +39,7 @@ export class DiagnosticsObservationsController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.defaultToError(DeviceDiagnosticsResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(diagnosticsObservationResultSchema, requestOptions);
   }
 
@@ -67,7 +67,7 @@ export class DiagnosticsObservationsController extends BaseController {
     req.query('transactionId', mapped.transactionId);
     req.query('accountName', mapped.accountName);
     req.defaultToError(DeviceDiagnosticsResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(diagnosticsObservationResultSchema, requestOptions);
   }
 }

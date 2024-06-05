@@ -18,6 +18,7 @@ interface HyperPreciseLocationResult {
   message?: string;
   /** Fault occurred while responding. */
   fault?: HyperPreciseLocationFault;
+  example?: unknown;
 }
 
 export class HyperPreciseLocationResultError extends ApiError<HyperPreciseLocationResult> {}

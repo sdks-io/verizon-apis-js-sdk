@@ -48,7 +48,7 @@ export class AnomalyTriggersV2Controller extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(anomalyDetectionTriggerSchema, requestOptions);
   }
 
@@ -70,7 +70,7 @@ export class AnomalyTriggersV2Controller extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
   }
 
@@ -89,7 +89,7 @@ export class AnomalyTriggersV2Controller extends BaseController {
     const mapped = req.prepareArgs({ triggerId: [triggerId, string()] });
     req.appendTemplatePath`/m2m/v2/triggers/${mapped.triggerId}`;
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(anomalyTriggerResultSchema, requestOptions);
   }
 }

@@ -36,7 +36,7 @@ export class AccountsController extends BaseController {
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/accounts/${mapped.aname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(accountSchema, requestOptions);
   }
 
@@ -55,7 +55,7 @@ export class AccountsController extends BaseController {
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/accounts/${mapped.aname}/statesandservices`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(accountStatesAndServicesSchema, requestOptions);
   }
 
@@ -81,7 +81,7 @@ export class AccountsController extends BaseController {
     req.query('next', mapped.next);
     req.appendTemplatePath`/m2m/v1/leads/${mapped.aname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(accountLeadsResultSchema, requestOptions);
   }
 }

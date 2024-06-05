@@ -9,7 +9,10 @@ import {
   AnomalyTriggerRequest,
   anomalyTriggerRequestSchema,
 } from './anomalyTriggerRequest';
-import { Notification, notificationSchema } from './notification';
+import {
+  TriggerNotification,
+  triggerNotificationSchema,
+} from './triggerNotification';
 
 /** Trigger details. */
 export interface TriggerType1 {
@@ -22,7 +25,7 @@ export interface TriggerType1 {
   /** The details of the UsageAnomaly trigger. */
   anomalyTriggerRequest?: AnomalyTriggerRequest;
   /** The notification details of the trigger. */
-  notification?: Notification;
+  notification?: TriggerNotification;
 }
 
 export const triggerType1Schema: Schema<TriggerType1> = object({
@@ -33,5 +36,8 @@ export const triggerType1Schema: Schema<TriggerType1> = object({
     'anomalyTriggerRequest',
     optional(lazy(() => anomalyTriggerRequestSchema)),
   ],
-  notification: ['notification', optional(lazy(() => notificationSchema))],
+  notification: [
+    'notification',
+    optional(lazy(() => triggerNotificationSchema)),
+  ],
 });

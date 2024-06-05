@@ -101,34 +101,17 @@ async retrieveActiveMonitorsUsingPOST(
 
 ```ts
 const body: RetrieveMonitorsRequest = {
-  accountName: '0868924207-00001',
+  accountName: '0242123520-00001',
   devices: [
     {
       deviceIds: [
         {
-          id: '990013907835573',
-          kind: 'imei',
-        },
-        {
-          id: '89141390780800784259',
-          kind: 'iccid',
-        }
-      ],
-    },
-    {
-      deviceIds: [
-        {
-          id: '990013907884259',
-          kind: 'imei',
-        },
-        {
-          id: '89141390780800735573',
-          kind: 'iccid',
+          id: '12016560696',
+          kind: 'msisdn',
         }
       ],
     }
   ],
-  monitorType: 'monitorType',
 };
 
 try {

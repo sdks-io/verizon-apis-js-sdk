@@ -7,9 +7,9 @@
 import { Schema, stringEnum } from '../schema';
 
 /**
- * Enum for OauthScopeEnum
+ * Enum for OauthScopeThingspaceOauthEnum
  */
-export enum OauthScopeEnum {
+export enum OauthScopeThingspaceOauthEnum {
   Discoveryread = 'discovery:read',
   Serviceprofileread = 'serviceprofile:read',
   Serviceprofilewrite = 'serviceprofile:write',
@@ -18,11 +18,16 @@ export enum OauthScopeEnum {
   TsMecFullaccess = 'ts.mec.fullaccess',
   TsMecLimitaccess = 'ts.mec.limitaccess',
   TsApplicationRo = 'ts.application.ro',
+  Edgediscoveryread = 'edge:discovery:read',
+  Edgeserviceprofileread = 'edge:serviceprofile:read',
+  Edgeserviceprofilewrite = 'edge:serviceprofile:write',
+  Edgeserviceregistryread = 'edge:serviceregistry:read',
+  Edgeserviceregistrywrite = 'edge:serviceregistry:write',
   Read = 'read',
   Write = 'write',
 }
 
 /**
- * Schema for OauthScopeEnum
+ * Schema for OauthScopeThingspaceOauthEnum
  */
-export const  oauthScopeEnumSchema: Schema<OauthScopeEnum> = stringEnum(OauthScopeEnum);
+export const  oauthScopeThingspaceOauthEnumSchema: Schema<OauthScopeThingspaceOauthEnum> = stringEnum(OauthScopeThingspaceOauthEnum);

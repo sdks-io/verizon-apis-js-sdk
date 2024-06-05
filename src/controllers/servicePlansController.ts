@@ -30,7 +30,7 @@ export class ServicePlansController extends BaseController {
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/plans/${mapped.aname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(servicePlanSchema), requestOptions);
   }
 }

@@ -33,7 +33,7 @@ export class DevicesLocationSubscriptionsController extends BaseController {
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/subscriptions/${mapped.account}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceLocationSubscriptionSchema, requestOptions);
   }
 
@@ -53,7 +53,7 @@ export class DevicesLocationSubscriptionsController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(optional(unknown()), requestOptions);
   }
 }

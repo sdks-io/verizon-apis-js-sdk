@@ -5,12 +5,12 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `vZM2mToken` | `string` | M2M Session Token ([How to generate an M2M session token?](page:getting-started/5g-edge-developer-creds-token#obtaining-a-vz-m2m-session-token-programmatically)) |
 | `environment` | `Environment` | The API environment. <br> **Default: `Environment.Production`** |
 | `timeout` | `number` | Timeout for API calls.<br>*Default*: `0` |
 | `httpClientOptions` | `Partial<HttpClientOptions>` | Stable configurable http client options. |
 | `unstableHttpClientOptions` | `any` | Unstable configurable http client options. |
-| `clientCredentialsAuthCredentials` | [`ClientCredentialsAuthCredentials`]($a/oauth-2-client-credentials-grant.md) | The credential object for clientCredentialsAuth |
+| `thingspaceOauthCredentials` | [`ThingspaceOauthCredentials`]($a/oauth-2-client-credentials-grant.md) | The credential object for thingspaceOauth |
+| `vZM2mTokenCredentials` | [`VZM2MTokenCredentials`]($a/custom-header-signature.md) | The credential object for vZM2mToken |
 
 ## HttpClientOptions
 
@@ -37,15 +37,15 @@ The API client can be initialized as follows:
 
 ```ts
 const client = new Client({
-  clientCredentialsAuthCredentials: {
+  thingspaceOauthCredentials: {
     oauthClientId: 'OAuthClientId',
     oauthClientSecret: 'OAuthClientSecret',
     oauthScopes: [
-      OauthScopeEnum.Discoveryread,
-      OauthScopeEnum.Serviceprofileread
+      OauthScopeThingspaceOauthEnum.Discoveryread,
+      OauthScopeThingspaceOauthEnum.Serviceprofileread
     ]
   },
-  vZM2mToken: 'VZ-M2M-Token',
+  vZM2mTokenCredentials: {  },
   timeout: 0,
   environment: Environment.Production,
 });
@@ -130,5 +130,6 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | updateTriggers | Gets UpdateTriggersController |
 | sIMActions | Gets SIMActionsController |
 | globalReporting | Gets GlobalReportingController |
+| mV2Triggers | Gets MV2TriggersController |
 | oauthAuthorization | Gets OauthAuthorizationController |
 

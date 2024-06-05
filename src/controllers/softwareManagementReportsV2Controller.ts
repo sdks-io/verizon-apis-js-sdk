@@ -52,7 +52,7 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.query('distributionType', mapped.distributionType);
     req.appendTemplatePath`/software/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(softwarePackageSchema), requestOptions);
   }
 
@@ -82,7 +82,7 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.query('distributionType', mapped.distributionType);
     req.appendTemplatePath`/devices/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v2AccountDeviceListSchema, requestOptions);
   }
 
@@ -106,7 +106,7 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     });
     req.appendTemplatePath`/reports/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceSoftwareUpgradeSchema), requestOptions);
   }
 
@@ -135,7 +135,7 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.query('lastSeenCampaignId', mapped.lastSeenCampaignId);
     req.appendTemplatePath`/reports/${mapped.account}/campaigns`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v2CampaignHistorySchema, requestOptions);
   }
 
@@ -163,7 +163,7 @@ export class SoftwareManagementReportsV2Controller extends BaseController {
     req.query('lastSeenDeviceId', mapped.lastSeenDeviceId);
     req.appendTemplatePath`/reports/${mapped.account}/campaigns/${mapped.campaignId}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v2CampaignDeviceSchema, requestOptions);
   }
 }

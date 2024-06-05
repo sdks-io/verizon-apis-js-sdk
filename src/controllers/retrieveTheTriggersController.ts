@@ -31,7 +31,7 @@ export class RetrieveTheTriggersController extends BaseController {
     const req = this.createRequest('GET', '/m2m/v2/triggers');
     req.baseUrl('Thingspace');
     req.defaultToError(ReadySimRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(triggerValueResponseSchema, requestOptions);
   }
 
@@ -50,7 +50,7 @@ export class RetrieveTheTriggersController extends BaseController {
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
     req.appendTemplatePath`/m2m/v2/triggers/accounts/${mapped.accountName}`;
     req.defaultToError(ReadySimRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(triggerValueResponseSchema, requestOptions);
   }
 
@@ -68,7 +68,7 @@ export class RetrieveTheTriggersController extends BaseController {
     );
     req.baseUrl('Thingspace');
     req.defaultToError(ReadySimRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(triggerValueResponse2Schema, requestOptions);
   }
 
@@ -87,7 +87,7 @@ export class RetrieveTheTriggersController extends BaseController {
     const mapped = req.prepareArgs({ triggerId: [triggerId, string()] });
     req.appendTemplatePath`/m2m/v2/triggers/${mapped.triggerId}`;
     req.defaultToError(ReadySimRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(triggerValueResponse2Schema, requestOptions);
   }
 }

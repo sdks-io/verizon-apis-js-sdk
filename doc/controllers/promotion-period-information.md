@@ -20,7 +20,7 @@ Retrieves the usage history of a device during the promotion period.
 
 ```ts
 async getPromoDeviceUsageHistory(
-  body: RequestBodyForUsage,
+  body: RequestBodyForUsage1,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<ResponseToUsageQuery>>
 ```
@@ -29,7 +29,7 @@ async getPromoDeviceUsageHistory(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`RequestBodyForUsage`](../../doc/models/request-body-for-usage.md) | Body, Required | Retrieve Aggregate Usage |
+| `body` | [`RequestBodyForUsage1`](../../doc/models/request-body-for-usage-1.md) | Body, Required | Retrieve Aggregate Usage |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -39,7 +39,7 @@ async getPromoDeviceUsageHistory(
 ## Example Usage
 
 ```ts
-const body: RequestBodyForUsage = {
+const body: RequestBodyForUsage1 = {
   startTime: '08/15/2021 00:00:00',
   endTime: '08/16/2021 00:00:00',
 };
@@ -92,7 +92,7 @@ Retrieves the aggregate usage for an account using pseudo-MDN during the promoti
 
 ```ts
 async getPromoDeviceAggregateUsageHistory(
-  body: UsageRequestBody,
+  body: RequestBodyForUsage,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<UsageRequestResponse>>
 ```
@@ -101,7 +101,7 @@ async getPromoDeviceAggregateUsageHistory(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`UsageRequestBody`](../../doc/models/usage-request-body.md) | Body, Required | Retrieve Aggregate Usage |
+| `body` | [`RequestBodyForUsage`](../../doc/models/request-body-for-usage.md) | Body, Required | Retrieve Aggregate Usage |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -111,7 +111,7 @@ async getPromoDeviceAggregateUsageHistory(
 ## Example Usage
 
 ```ts
-const body: UsageRequestBody = {
+const body: RequestBodyForUsage = {
   accountId: '0000123456-000001',
   startTime: '08/15/2021 00:00:00',
   endTime: '08/16/2021 00:00:00',

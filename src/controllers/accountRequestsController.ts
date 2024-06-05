@@ -36,7 +36,7 @@ export class AccountRequestsController extends BaseController {
     });
     req.appendTemplatePath`/m2m/v1/accounts/${mapped.aname}/requests/${mapped.requestId}/status`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(asynchronousRequestResultSchema, requestOptions);
   }
 }

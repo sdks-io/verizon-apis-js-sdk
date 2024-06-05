@@ -34,7 +34,7 @@ export class ClientLoggingController extends BaseController {
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/logging/${mapped.account}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceLoggingStatusSchema), requestOptions);
   }
 
@@ -60,7 +60,7 @@ export class ClientLoggingController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/logging/${mapped.account}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceLoggingStatusSchema), requestOptions);
   }
 
@@ -85,7 +85,7 @@ export class ClientLoggingController extends BaseController {
     req.query('deviceIds', mapped.deviceIds);
     req.appendTemplatePath`/logging/${mapped.account}/devices`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.call(requestOptions);
   }
 
@@ -109,7 +109,7 @@ export class ClientLoggingController extends BaseController {
     });
     req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceLoggingStatusSchema, requestOptions);
   }
 
@@ -133,7 +133,7 @@ export class ClientLoggingController extends BaseController {
     });
     req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.call(requestOptions);
   }
 
@@ -157,7 +157,7 @@ export class ClientLoggingController extends BaseController {
     });
     req.appendTemplatePath`/logging/${mapped.account}/devices/${mapped.deviceId}/logs`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceLogSchema), requestOptions);
   }
 }

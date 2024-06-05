@@ -47,7 +47,7 @@ export class PerformanceMetricsController extends BaseController {
     req.throwOn(404, EdgePerformanceResultError, 'Resource Not Found.');
     req.throwOn(405, EdgePerformanceResultError, 'Method Not Allowed.');
     req.throwOn(503, EdgePerformanceResultError, 'Service Unavailable.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(mECPerformanceMetricsSchema, requestOptions);
   }
 }

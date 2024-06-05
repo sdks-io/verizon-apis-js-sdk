@@ -45,7 +45,7 @@ export class DevicesLocationsController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(locationSchema), requestOptions);
   }
 
@@ -67,7 +67,7 @@ export class DevicesLocationsController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       synchronousLocationRequestResultSchema,
       requestOptions
@@ -96,7 +96,7 @@ export class DevicesLocationsController extends BaseController {
     req.query('accountName', mapped.accountName);
     req.appendTemplatePath`/devicelocations/${mapped.txid}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(transactionIDSchema, requestOptions);
   }
 
@@ -116,7 +116,7 @@ export class DevicesLocationsController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       asynchronousLocationRequestResultSchema,
       requestOptions
@@ -146,7 +146,7 @@ export class DevicesLocationsController extends BaseController {
     });
     req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}/index/${mapped.startindex}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(locationReportSchema, requestOptions);
   }
 
@@ -170,7 +170,7 @@ export class DevicesLocationsController extends BaseController {
     });
     req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}/status`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(locationReportStatusSchema, requestOptions);
   }
 
@@ -194,7 +194,7 @@ export class DevicesLocationsController extends BaseController {
     });
     req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(transactionIDSchema, requestOptions);
   }
 }

@@ -48,7 +48,7 @@ export class SIMActionsController extends BaseController {
     req.throwOn(406, ESIMRestErrorResponseError, 'Format / Request Unacceptable');
     req.throwOn(429, ESIMRestErrorResponseError, 'Too many requests');
     req.defaultToError(ESIMRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(eSIMRequestResponseSchema, requestOptions);
   }
 
@@ -77,7 +77,7 @@ export class SIMActionsController extends BaseController {
     req.throwOn(406, ESIMRestErrorResponseError, 'Format / Request Unacceptable');
     req.throwOn(429, ESIMRestErrorResponseError, 'Too many requests');
     req.defaultToError(ESIMRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(eSIMRequestResponseSchema, requestOptions);
   }
 }

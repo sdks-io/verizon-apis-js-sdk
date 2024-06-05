@@ -5,31 +5,27 @@
  */
 
 import { HttpClientOptions } from './clientAdapter';
-import { ClientCredentialsAuthManager } from './clientCredentialsAuthManager';
-import { OauthScopeEnum } from './models/oauthScopeEnum';
+import {
+  OauthScopeThingspaceOauthEnum,
+} from './models/oauthScopeThingspaceOauthEnum';
 import { OauthToken } from './models/oauthToken';
+import { ThingspaceOauthManager } from './thingspaceOauthManager';
 
 /** An interface for all configuration parameters required by the SDK. */
 export interface Configuration {
   timeout: number;
-  vZM2mToken: string;
   environment: Environment;
-  /** @deprecated use clientCredentialsAuthCredentials field instead */
-  oauthClientId?: string;
-  /** @deprecated use clientCredentialsAuthCredentials field instead */
-  oauthClientSecret?: string;
-  /** @deprecated use clientCredentialsAuthCredentials field instead */
-  oauthToken?: OauthToken;
-  /** @deprecated use clientCredentialsAuthCredentials field instead */
-  oauthScopes?: OauthScopeEnum[];
-  clientCredentialsAuthCredentials?: {
+  thingspaceOauthCredentials?: {
     oauthClientId: string;
     oauthClientSecret: string;
     oauthToken?: OauthToken;
-    oauthScopes?: OauthScopeEnum[];
+    oauthScopes?: OauthScopeThingspaceOauthEnum[];
     oauthTokenProvider?: (lastOAuthToken: OauthToken | undefined,
-      authManager: ClientCredentialsAuthManager) => Promise<OauthToken>;
+      authManager: ThingspaceOauthManager) => Promise<OauthToken>;
     oauthOnTokenUpdate?: (token: OauthToken) => void;
+  };
+  vZM2mTokenCredentials?: {
+    'VZ-M2M-Token': string;
   };
   httpClientOptions?: Partial<HttpClientOptions>;
   unstable_httpClientOptions?: any;
@@ -38,4 +34,5 @@ export interface Configuration {
 /** Environments available for API */
 export enum Environment {
   Production = 'Production',
+  MockServerForLimitedAvailabilitySeeQuickStart = 'Mock server for limited availability, see quick start',
 }

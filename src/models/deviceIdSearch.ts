@@ -9,7 +9,7 @@ import { object, optional, Schema, string } from '../schema';
 /** Search by device id. */
 export interface DeviceIdSearch {
   /** The string appears anywhere in the identifer. */
-  contains?: string;
+  contains: string;
   /** The identifer must start with the specified string. */
   startswith?: string;
   /** The identifier must end with the specified string. */
@@ -19,7 +19,7 @@ export interface DeviceIdSearch {
 }
 
 export const deviceIdSearchSchema: Schema<DeviceIdSearch> = object({
-  contains: ['contains', optional(string())],
+  contains: ['contains', string()],
   startswith: ['startswith', optional(string())],
   endswith: ['endswith', optional(string())],
   kind: ['kind', string()],

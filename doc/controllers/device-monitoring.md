@@ -80,8 +80,7 @@ try {
 
 ```ts
 async stopDeviceReachability(
-  accountName: string,
-  monitorIds: string[],
+  body?: StopMonitorRequest,
   requestOptions?: RequestOptions
 ): Promise<ApiResponse<RequestResponse>>
 ```
@@ -90,8 +89,7 @@ async stopDeviceReachability(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `accountName` | `string` | Query, Required | The numeric name of the account. |
-| `monitorIds` | `string[]` | Query, Required | The array contains the monitorIDs (UUID) for which the monitor is to be deleted. |
+| `body` | [`StopMonitorRequest \| undefined`](../../doc/models/stop-monitor-request.md) | Body, Optional | - |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -101,18 +99,15 @@ async stopDeviceReachability(
 ## Example Usage
 
 ```ts
-const accountName = '0242123520-00001';
-
-const monitorIds: string[] = [
-  '35596ca6-bab4-4333-a914-42b4fc2da54c',
-  '35596ca6-bab4-4333-a914-42b4fc2da54b'
-];
+const body: StopMonitorRequest = {
+  accountName: '0242123520-00001',
+  monitorIds: [
+    '35596ca6-bab4-4333-a914-42b4fc2da54c'
+  ],
+};
 
 try {
-  const { result, ...httpResponse } = await deviceMonitoringController.stopDeviceReachability(
-  accountName,
-  monitorIds
-);
+  const { result, ...httpResponse } = await deviceMonitoringController.stopDeviceReachability(body);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {

@@ -6,23 +6,29 @@
 
 import {
   compositeAuthenticationProvider,
+  customHeaderAuthenticationProvider,
   requestAuthenticationProvider,
 } from './authentication';
-import { ClientCredentialsAuthManager } from './clientCredentialsAuthManager';
 import { Configuration } from './configuration';
 import { OauthToken } from './models/oauthToken';
+import { ThingspaceOauthManager } from './thingspaceOauthManager';
 
 export function createAuthProviderFromConfig(
   config: Partial<Configuration>,
-  oauth2: () => ClientCredentialsAuthManager
+  thingspaceOauth: () => ThingspaceOauthManager | undefined
 ) {
   const authConfig = {
-    oauth2:
-      config.clientCredentialsAuthCredentials &&
+    thingspaceOauth:
+      config.thingspaceOauthCredentials &&
       requestAuthenticationProvider (
-        config.clientCredentialsAuthCredentials.oauthToken,
-        oauth2TokenProvider(oauth2, config.clientCredentialsAuthCredentials.oauthTokenProvider),
-        config.clientCredentialsAuthCredentials.oauthOnTokenUpdate
+        config.thingspaceOauthCredentials.oauthToken,
+        thingspaceOauthTokenProvider(thingspaceOauth, config.thingspaceOauthCredentials.oauthTokenProvider),
+        config.thingspaceOauthCredentials.oauthOnTokenUpdate
+    ),
+    vZM2mToken:
+      config.vZM2mTokenCredentials &&
+      customHeaderAuthenticationProvider (
+        config.vZM2mTokenCredentials
     ),
   };
 
@@ -32,13 +38,16 @@ export function createAuthProviderFromConfig(
   > (authConfig);
 }
 
-function oauth2TokenProvider(
-  oauth2: () => ClientCredentialsAuthManager,
+function thingspaceOauthTokenProvider(
+  thingspaceOauth: () => ThingspaceOauthManager | undefined,
   defaultProvider: ((lastOAuthToken: OauthToken | undefined,
-    authManager: ClientCredentialsAuthManager) => Promise<OauthToken>) | undefined
+    authManager: ThingspaceOauthManager) => Promise<OauthToken>) | undefined
 ): ((token: OauthToken | undefined) => Promise<OauthToken>) | undefined {
   return (token: OauthToken | undefined) => {
-    const manager = oauth2();
+    const manager = thingspaceOauth();
+    if (manager === undefined) {
+      throw Error('Unable to find the OAuthManager instance');
+    }
     if (defaultProvider === undefined) {
       return manager.updateToken(token);
     }

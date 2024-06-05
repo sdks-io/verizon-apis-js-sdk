@@ -41,7 +41,7 @@ export class SoftwareManagementCallbacksV2Controller extends BaseController {
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/callbacks/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(callbackSummarySchema, requestOptions);
   }
 
@@ -67,7 +67,7 @@ export class SoftwareManagementCallbacksV2Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/callbacks/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       fotaV2CallbackRegistrationResultSchema,
       requestOptions
@@ -96,7 +96,7 @@ export class SoftwareManagementCallbacksV2Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/callbacks/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       fotaV2CallbackRegistrationResultSchema,
       requestOptions
@@ -118,7 +118,7 @@ export class SoftwareManagementCallbacksV2Controller extends BaseController {
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/callbacks/${mapped.account}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV2SuccessResultSchema, requestOptions);
   }
 }

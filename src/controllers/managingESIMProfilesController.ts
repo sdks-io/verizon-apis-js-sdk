@@ -44,7 +44,7 @@ export class ManagingESIMProfilesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 
@@ -69,7 +69,7 @@ export class ManagingESIMProfilesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 
@@ -95,7 +95,7 @@ export class ManagingESIMProfilesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 
@@ -120,7 +120,7 @@ export class ManagingESIMProfilesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 
@@ -145,7 +145,7 @@ export class ManagingESIMProfilesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 
@@ -171,7 +171,7 @@ export class ManagingESIMProfilesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 }

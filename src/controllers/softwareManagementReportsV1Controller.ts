@@ -50,7 +50,7 @@ export class SoftwareManagementReportsV1Controller extends BaseController {
     });
     req.appendTemplatePath`/devices/${mapped.account}/index/${mapped.startIndex}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceListQueryResultSchema, requestOptions);
   }
 
@@ -80,7 +80,7 @@ export class SoftwareManagementReportsV1Controller extends BaseController {
     });
     req.appendTemplatePath`/reports/${mapped.account}/status/${mapped.upgradeStatus}/index/${mapped.startIndex}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(upgradeListQueryResultSchema, requestOptions);
   }
 
@@ -104,7 +104,7 @@ export class SoftwareManagementReportsV1Controller extends BaseController {
     });
     req.appendTemplatePath`/reports/${mapped.account}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceUpgradeHistorySchema), requestOptions);
   }
 }

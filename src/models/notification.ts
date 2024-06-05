@@ -14,30 +14,19 @@ import {
   Schema,
   string,
 } from '../schema';
-import { SMSNumber, sMSNumberSchema } from './sMSNumber';
+import { SmsNumbers, smsNumbersSchema } from './smsNumbers';
 
-/** The notification details of the trigger. */
 export interface Notification {
-  /** The type of notification, i.e. 'DailySummary'. */
   notificationType?: string;
-  /** Whether or not the notification should be sent via callback.<br />true<br />false. */
   callback?: boolean;
-  /** Whether or not the notification should be sent via e-mail.<br />true<br />false. */
   emailNotification?: boolean;
-  /** Name for the notification group. */
   notificationGroupName?: string;
-  /** Frequency factor for notification. */
   notificationFrequencyFactor?: number;
-  /** Frequency interval for notification. */
   notificationFrequencyInterval?: string;
-  /** E-mail address(es) where the notification should be delivered. */
   externalEmailRecipients?: string;
-  /** SMS notification. */
   smsNotification?: boolean;
-  /** List of SMS numbers. */
-  smsNumbers?: SMSNumber[];
+  smsNumbers?: SmsNumbers[];
   reminder?: boolean;
-  /** Severity level associated with the notification. Examples would be:<br />Major<br />Minor<br />Critical<br />NotApplicable. */
   severity?: string;
 }
 
@@ -56,7 +45,7 @@ export const notificationSchema: Schema<Notification> = object({
   ],
   externalEmailRecipients: ['externalEmailRecipients', optional(string())],
   smsNotification: ['smsNotification', optional(boolean())],
-  smsNumbers: ['smsNumbers', optional(array(lazy(() => sMSNumberSchema)))],
+  smsNumbers: ['smsNumbers', optional(array(lazy(() => smsNumbersSchema)))],
   reminder: ['reminder', optional(boolean())],
   severity: ['severity', optional(string())],
 });

@@ -42,7 +42,7 @@ export class SMSController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceManagementResultSchema, requestOptions);
   }
 
@@ -68,7 +68,7 @@ export class SMSController extends BaseController {
     req.query('next', mapped.next);
     req.appendTemplatePath`/m2m/v1/sms/${mapped.aname}/history`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(sMSMessagesQueryResultSchema, requestOptions);
   }
 
@@ -90,7 +90,7 @@ export class SMSController extends BaseController {
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/sms/${mapped.aname}/startCallbacks`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions

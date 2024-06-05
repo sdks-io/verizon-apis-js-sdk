@@ -18,7 +18,7 @@ export class OauthAuthorizationController extends BaseController {
    * @param scope         Requested scopes as a space-delimited list.
    * @return Response from the API call
    */
-  async requestToken(
+  async requestTokenThingspaceOauth(
     authorization: string,
     scope?: string,
     fieldParameters?: Record<string, unknown>,

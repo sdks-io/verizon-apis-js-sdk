@@ -46,7 +46,7 @@ export class HyperPreciseLocationCallbacksController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(callbackCreatedSchema), requestOptions);
   }
 
@@ -80,7 +80,7 @@ export class HyperPreciseLocationCallbacksController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(callbackRegisteredSchema, requestOptions);
   }
 
@@ -110,7 +110,7 @@ export class HyperPreciseLocationCallbacksController extends BaseController {
     req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
     req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.call(requestOptions);
   }
 }

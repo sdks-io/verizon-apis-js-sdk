@@ -51,7 +51,7 @@ export class MECController extends BaseController {
     req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/devices/mec/kpi/list/${mapped.aname}`;
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(kPIInfoListSchema, requestOptions);
   }
 
@@ -67,7 +67,7 @@ export class MECController extends BaseController {
     req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/devices/mec/profiles/list/${mapped.aname}`;
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(mECProfileListSchema, requestOptions);
   }
 
@@ -89,7 +89,7 @@ export class MECController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(changeMecDeviceStateResponseSchema, requestOptions);
   }
 
@@ -111,7 +111,7 @@ export class MECController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(changeMecDeviceStateResponseSchema, requestOptions);
   }
 
@@ -133,7 +133,7 @@ export class MECController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(changeMecDeviceProfileResponseSchema, requestOptions);
   }
 
@@ -155,7 +155,7 @@ export class MECController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       changeMecDeviceIPAddressResponseSchema,
       requestOptions
@@ -174,7 +174,7 @@ export class MECController extends BaseController {
     req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/devices/mec/performance/consent/${mapped.aname}`;
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       getMECPerformanceConsentResponseSchema,
       requestOptions

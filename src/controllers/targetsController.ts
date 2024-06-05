@@ -53,7 +53,7 @@ export class TargetsController extends BaseController {
     const mapped = req.prepareArgs({ body: [body, queryTargetRequestSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(targetSchema), requestOptions);
   }
 
@@ -72,7 +72,7 @@ export class TargetsController extends BaseController {
     const mapped = req.prepareArgs({ body: [body, deleteTargetRequestSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.call(requestOptions);
   }
 
@@ -93,7 +93,7 @@ export class TargetsController extends BaseController {
     const mapped = req.prepareArgs({ body: [body, createTargetRequestSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(targetSchema, requestOptions);
   }
 
@@ -143,7 +143,7 @@ export class TargetsController extends BaseController {
     req.header('BillingaccountID', mapped.billingaccountID);
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(createIoTApplicationResponseSchema, requestOptions);
   }
 }

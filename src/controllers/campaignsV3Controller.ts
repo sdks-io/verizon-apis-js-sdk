@@ -57,7 +57,7 @@ export class CampaignsV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/campaigns/firmware/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareCampaignSchema, requestOptions);
   }
 
@@ -86,7 +86,7 @@ export class CampaignsV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/campaigns/firmware/${mapped.acc}/${mapped.campaignId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v3AddOrRemoveDeviceResultSchema, requestOptions);
   }
 
@@ -116,7 +116,7 @@ export class CampaignsV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/campaigns/firmware/${mapped.acc}/${mapped.campaignId}/dates`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareCampaignSchema, requestOptions);
   }
 
@@ -140,7 +140,7 @@ export class CampaignsV3Controller extends BaseController {
     });
     req.appendTemplatePath`/campaigns/${mapped.acc}/${mapped.campaignId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(campaignSchema, requestOptions);
   }
 
@@ -165,7 +165,7 @@ export class CampaignsV3Controller extends BaseController {
     });
     req.appendTemplatePath`/campaigns/${mapped.acc}/${mapped.campaignId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV3SuccessResultSchema, requestOptions);
   }
 }

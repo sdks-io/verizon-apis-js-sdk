@@ -47,7 +47,7 @@ export class DeviceSMSMessagingController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 
@@ -72,7 +72,7 @@ export class DeviceSMSMessagingController extends BaseController {
     req.query('next', mapped.next);
     req.appendTemplatePath`/m2m/v1/sms/${mapped.accountName}/history`;
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(smsMessagesResponseSchema, requestOptions);
   }
 
@@ -91,7 +91,7 @@ export class DeviceSMSMessagingController extends BaseController {
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
     req.appendTemplatePath`/m2m/v1/sms/${mapped.accountName}/startCallbacks`;
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(successResponseSchema, requestOptions);
   }
 
@@ -116,7 +116,7 @@ export class DeviceSMSMessagingController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(GIORestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(gIORequestResponseSchema, requestOptions);
   }
 }

@@ -14,7 +14,11 @@ import {
   RequestResponse,
   requestResponseSchema,
 } from '../models/requestResponse';
-import { array, string } from '../schema';
+import {
+  StopMonitorRequest,
+  stopMonitorRequestSchema,
+} from '../models/stopMonitorRequest';
+import { optional } from '../schema';
 import { BaseController } from './baseController';
 
 export class DeviceMonitoringController extends BaseController {
@@ -37,18 +41,16 @@ export class DeviceMonitoringController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Error Response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 
   /**
-   * @param accountName The numeric name of the account.
-   * @param monitorIds  The array contains the monitorIDs (UUID) for which the monitor is to be deleted.
+   * @param body
    * @return Response from the API call
    */
   async stopDeviceReachability(
-    accountName: string,
-    monitorIds: string[],
+    body?: StopMonitorRequest,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<RequestResponse>> {
     const req = this.createRequest(
@@ -57,13 +59,12 @@ export class DeviceMonitoringController extends BaseController {
     );
     req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      monitorIds: [monitorIds, array(string())],
+      body: [body, optional(stopMonitorRequestSchema)],
     });
-    req.query('accountName', mapped.accountName);
-    req.query('monitorIds', mapped.monitorIds);
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
     req.throwOn(400, RestErrorResponseError, 'Error Response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(requestResponseSchema, requestOptions);
   }
 }

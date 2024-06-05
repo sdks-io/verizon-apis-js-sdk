@@ -7,12 +7,12 @@
 import { OauthToken } from './models/oauthToken';
 import { ClientInterface } from "./clientInterface";
 import { OauthAuthorizationController} from './controllers/oauthAuthorizationController';
-import { OauthScopeEnum } from './models/oauthScopeEnum';
+import { OauthScopeThingspaceOauthEnum } from './models/oauthScopeThingspaceOauthEnum';
 
-export class ClientCredentialsAuthManager {
+export class ThingspaceOauthManager {
   private _oauthClientId: string;
   private _oauthClientSecret: string;
-  private _oauthScopes?: OauthScopeEnum[];
+  private _oauthScopes?: OauthScopeThingspaceOauthEnum[];
   private _oAuthController: OauthAuthorizationController;
 
   constructor({
@@ -22,7 +22,7 @@ export class ClientCredentialsAuthManager {
   }:{
     oauthClientId: string,
     oauthClientSecret: string,
-    oauthScopes?: OauthScopeEnum[],
+    oauthScopes?: OauthScopeThingspaceOauthEnum[],
   }, client: ClientInterface) {
     this._oauthClientId = oauthClientId;
     this._oauthClientSecret = oauthClientSecret;
@@ -55,7 +55,7 @@ export class ClientCredentialsAuthManager {
       this._oauthClientId,
       this._oauthClientSecret
     );
-    const { result } = await this._oAuthController.requestToken(
+    const { result } = await this._oAuthController.requestTokenThingspaceOauth(
       authorization,
       this._oauthScopes?.join(' '),
       additionalParams

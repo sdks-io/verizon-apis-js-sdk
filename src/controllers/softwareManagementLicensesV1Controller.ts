@@ -59,7 +59,7 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.appendTemplatePath`/licenses/${mapped.account}/assign`;
     req.deprecated('SoftwareManagementLicensesV1Controller.assignLicensesToDevices');
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       v1LicensesAssignedRemovedResultSchema,
       requestOptions
@@ -90,7 +90,7 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.appendTemplatePath`/licenses/${mapped.account}/remove`;
     req.deprecated('SoftwareManagementLicensesV1Controller.removeLicensesFromDevices');
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       v1LicensesAssignedRemovedResultSchema,
       requestOptions
@@ -122,7 +122,7 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
     req.deprecated('SoftwareManagementLicensesV1Controller.createListOfLicensesToRemove');
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v1ListOfLicensesToRemoveResultSchema, requestOptions);
   }
 
@@ -143,7 +143,7 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
     req.deprecated('SoftwareManagementLicensesV1Controller.deleteListOfLicensesToRemove');
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV1SuccessResultSchema, requestOptions);
   }
 
@@ -172,7 +172,7 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.appendTemplatePath`/licenses/${mapped.account}/cancel/index/${mapped.startIndex}`;
     req.deprecated('SoftwareManagementLicensesV1Controller.listLicensesToRemove');
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v1ListOfLicensesToRemoveSchema, requestOptions);
   }
 }

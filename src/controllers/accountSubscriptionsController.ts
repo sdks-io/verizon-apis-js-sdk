@@ -50,7 +50,7 @@ export class AccountSubscriptionsController extends BaseController {
     req.throwOn(406, SecurityResultError, 'Format / Request Unacceptable.');
     req.throwOn(429, SecurityResultError, 'Too many requests.');
     req.defaultToError(SecurityResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(securitySubscriptionResultSchema, requestOptions);
   }
 }

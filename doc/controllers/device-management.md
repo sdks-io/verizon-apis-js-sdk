@@ -79,6 +79,7 @@ const body: CarrierActivateRequest = {
           kind: 'iccid',
         }
       ],
+      ipAddress: '1.2.3.456',
     },
     {
       deviceIds: [
@@ -91,9 +92,10 @@ const body: CarrierActivateRequest = {
           kind: 'iccid',
         }
       ],
+      ipAddress: '1.2.3.456',
     }
   ],
-  servicePlan: 'm2m_4G',
+  servicePlan: 'the service plan name',
   mdnZipCode: '98801',
   accountName: '0868924207-00001',
   customFields: [
@@ -445,18 +447,11 @@ const body: CarrierDeactivateRequest = {
           kind: 'iccid',
         }
       ],
-    },
-    {
-      deviceIds: [
-        {
-          id: '20-digit ICCID',
-          kind: 'iccid',
-        }
-      ],
     }
   ],
   reasonCode: 'FF',
   etfWaiver: true,
+  deleteAfterDeactivation: true,
 };
 
 try {
@@ -963,7 +958,7 @@ async changeDevicesServicePlan(
 
 ```ts
 const body: ServicePlanUpdateRequest = {
-  servicePlan: 'new_service_plan_code',
+  servicePlan: 'Tablet5GB',
   devices: [
     {
       deviceIds: [
@@ -974,6 +969,7 @@ const body: ServicePlanUpdateRequest = {
       ],
     }
   ],
+  carrierIpPoolName: 'IPPool',
 };
 
 try {
@@ -1029,26 +1025,16 @@ async suspendServiceForDevices(
 
 ```ts
 const body: CarrierActionsRequest = {
-  accountName: '0000123456-00001',
-  customFields: [
-    {
-      key: 'customField1',
-      value: 'key value',
-    }
-  ],
   devices: [
     {
       deviceIds: [
         {
-          id: '20-digit ICCID',
+          id: '89148000000800139708',
           kind: 'iccid',
         }
       ],
     }
   ],
-  withBilling: true,
-  groupName: 'name of the group',
-  servicePlan: 'service plan name',
 };
 
 try {
@@ -1104,25 +1090,16 @@ async restoreServiceForSuspendedDevices(
 
 ```ts
 const body: CarrierActionsRequest = {
-  accountName: '0000123456-00001',
-  customFields: [
-    {
-      key: 'customField1',
-      value: 'key value',
-    }
-  ],
   devices: [
     {
       deviceIds: [
         {
-          id: '20-digit ICCID',
+          id: '89148000000800139708',
           kind: 'iccid',
         }
       ],
     }
   ],
-  groupName: 'name of the group',
-  servicePlan: 'service plan name',
 };
 
 try {
@@ -1552,9 +1529,16 @@ async listCurrentDevicesPRLVersion(
 
 ```ts
 const body: DevicePrlListRequest = {
-  accountName: '101234-0001',
-  groupName: 'West Region',
-  servicePlan: '3G 2MB',
+  deviceIds: [
+    {
+      id: 'A10085E5003861',
+      kind: 'meid',
+    },
+    {
+      id: 'A10085E5003186',
+      kind: 'meid',
+    }
+  ],
 };
 
 try {
@@ -1610,10 +1594,16 @@ async getDeviceServiceSuspensionStatus(
 
 ```ts
 const body: DeviceSuspensionStatusRequest = {
-  filter: {
-    groupName: 'suspended devices',
-  },
-  accountName: '1223334444-00001',
+  deviceIds: [
+    {
+      id: 'A10085E5003861',
+      kind: 'meid',
+    },
+    {
+      id: 'A10085E5003186',
+      kind: 'meid',
+    }
+  ],
 };
 
 try {
@@ -1671,6 +1661,10 @@ async listDevicesUsageHistory(
 const body: DeviceUsageListRequest = {
   earliest: '2018-03-20T00:00:01Z',
   latest: '2020-12-31T00:00:01Z',
+  deviceId: {
+    id: '50684915885088839315521399821675',
+    kind: 'eid',
+  },
 };
 
 try {
@@ -1887,7 +1881,7 @@ const body: DeviceUploadRequest = {
       deviceIds: [
         {
           id: '15-digit IMEI',
-          kind: 'imei',
+          kind: 'IMEI',
         }
       ],
     },
@@ -1895,7 +1889,15 @@ const body: DeviceUploadRequest = {
       deviceIds: [
         {
           id: '15-digit IMEI',
-          kind: 'imei',
+          kind: 'IMEI',
+        }
+      ],
+    },
+    {
+      deviceIds: [
+        {
+          id: '15-digit IMEI',
+          kind: 'IMEI',
         }
       ],
     }

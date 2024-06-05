@@ -48,7 +48,7 @@ export class DeviceGroupsController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions
@@ -70,7 +70,7 @@ export class DeviceGroupsController extends BaseController {
     const mapped = req.prepareArgs({ aname: [aname, string()] });
     req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceGroupSchema), requestOptions);
   }
 
@@ -99,7 +99,7 @@ export class DeviceGroupsController extends BaseController {
     req.query('next', mapped.next);
     req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}/name/${mapped.gname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceGroupDevicesDataSchema, requestOptions);
   }
 
@@ -129,7 +129,7 @@ export class DeviceGroupsController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}/name/${mapped.gname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions
@@ -157,7 +157,7 @@ export class DeviceGroupsController extends BaseController {
     });
     req.appendTemplatePath`/m2m/v1/groups/${mapped.aname}/name/${mapped.gname}`;
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       connectivityManagementSuccessResultSchema,
       requestOptions

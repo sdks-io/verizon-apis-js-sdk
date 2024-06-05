@@ -51,7 +51,7 @@ export class SoftwareManagementReportsV3Controller extends BaseController {
     req.query('lastSeenCampaignId', mapped.lastSeenCampaignId);
     req.appendTemplatePath`/reports/${mapped.acc}/firmware/campaigns`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v3CampaignHistorySchema, requestOptions);
   }
 
@@ -75,7 +75,7 @@ export class SoftwareManagementReportsV3Controller extends BaseController {
     });
     req.appendTemplatePath`/reports/${mapped.acc}/devices/${mapped.deviceId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceFirmwareUpgradeSchema), requestOptions);
   }
 
@@ -103,7 +103,7 @@ export class SoftwareManagementReportsV3Controller extends BaseController {
     req.query('lastSeenDeviceId', mapped.lastSeenDeviceId);
     req.appendTemplatePath`/reports/${mapped.acc}/campaigns/${mapped.campaignId}/devices`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v3CampaignDeviceSchema, requestOptions);
   }
 }

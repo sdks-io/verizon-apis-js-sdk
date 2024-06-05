@@ -42,7 +42,7 @@ export class SessionManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(logInResultSchema, requestOptions);
   }
 
@@ -57,7 +57,7 @@ export class SessionManagementController extends BaseController {
     const req = this.createRequest('POST', '/m2m/v1/session/logout');
     req.baseUrl('Thingspace');
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(logOutRequestSchema, requestOptions);
   }
 
@@ -83,7 +83,7 @@ export class SessionManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, ConnectivityManagementResultError, 'Error response.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(sessionResetPasswordResultSchema, requestOptions);
   }
 }

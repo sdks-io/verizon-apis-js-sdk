@@ -5,11 +5,14 @@
  */
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
-import { Notification, notificationSchema } from './notification';
 import {
   TriggerAttributesOptions,
   triggerAttributesOptionsSchema,
 } from './triggerAttributesOptions';
+import {
+  TriggerNotification,
+  triggerNotificationSchema,
+} from './triggerNotification';
 import {
   UsageAnomalyAttributes,
   usageAnomalyAttributesSchema,
@@ -33,7 +36,7 @@ export interface TriggersListOptions {
   /** The details of the UsageAnomaly trigger. */
   anomalyattributes?: UsageAnomalyAttributes;
   /** The notification details of the trigger. */
-  notification?: Notification;
+  notification?: TriggerNotification;
 }
 
 export const triggersListOptionsSchema: Schema<TriggersListOptions> = object({
@@ -51,5 +54,8 @@ export const triggersListOptionsSchema: Schema<TriggersListOptions> = object({
     'anomalyattributes',
     optional(lazy(() => usageAnomalyAttributesSchema)),
   ],
-  notification: ['notification', optional(lazy(() => notificationSchema))],
+  notification: [
+    'notification',
+    optional(lazy(() => triggerNotificationSchema)),
+  ],
 });

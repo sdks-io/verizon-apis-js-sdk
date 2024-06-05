@@ -5,7 +5,7 @@
  */
 
 import { createAuthProviderFromConfig } from './authProvider';
-import { ClientCredentialsAuthManager } from './clientCredentialsAuthManager';
+import { ThingspaceOauthManager } from './thingspaceOauthManager';
 import {
   AuthParams,
   ClientInterface,
@@ -19,7 +19,6 @@ import {
   DEFAULT_RETRY_CONFIG,
 } from './defaultConfiguration';
 import { ApiError } from './core';
-import { setHeader } from './core';
 import {
   AbortError,
   AuthenticatorInterface,
@@ -36,7 +35,7 @@ export class Client implements ClientInterface {
   private _timeout: number;
   private _retryConfig: RetryConfiguration;
   private _requestBuilderFactory: SdkRequestBuilderFactory;
-  public clientCredentialsAuthManager: ClientCredentialsAuthManager;
+  public thingspaceOauthManager?: ThingspaceOauthManager;
 
   constructor(config?: Partial<Configuration>) {
     this._config = {
@@ -51,21 +50,11 @@ export class Client implements ClientInterface {
       typeof this._config.httpClientOptions?.timeout != 'undefined'
         ? this._config.httpClientOptions.timeout
         : this._config.timeout;
-    let clonedConfig = {
-      ...this._config,
-      clientCredentialsAuthCredentials: this._config.clientCredentialsAuthCredentials || {
-        oauthClientId: this._config.oauthClientId || '', 
-        oauthClientSecret: this._config.oauthClientSecret || '', 
-        oauthToken: this._config.oauthToken, 
-        oauthScopes: this._config.oauthScopes, 
-      }
-    }
-
     this._requestBuilderFactory = createRequestHandlerFactory(
       server => getBaseUri(server, this._config),
       createAuthProviderFromConfig(
-        clonedConfig,
-        () => this.clientCredentialsAuthManager
+        this._config,
+        () => this.thingspaceOauthManager
       ),
       new HttpClient(AbortError, {
         timeout: this._timeout,
@@ -77,14 +66,15 @@ export class Client implements ClientInterface {
         withErrorHandlers,
         withUserAgent,
         withAuthenticationByDefault,
-        withVZM2mToken(this._config),
       ],
       this._retryConfig
     );
-    this.clientCredentialsAuthManager = new ClientCredentialsAuthManager(
-      clonedConfig.clientCredentialsAuthCredentials,
-      this
-    );
+    if (this._config.thingspaceOauthCredentials) {
+      this.thingspaceOauthManager = new ThingspaceOauthManager(
+        this._config.thingspaceOauthCredentials,
+        this
+      );
+    }
   }
 
   public getRequestBuilderFactory(): SdkRequestBuilderFactory {
@@ -153,6 +143,53 @@ function getBaseUri(server: Server = 'Edge Discovery', config: Configuration): s
       return 'https://thingspace.verizon.com/api/m2m/v1/devices';
     }
   }
+  if (config.environment === Environment.MockServerForLimitedAvailabilitySeeQuickStart) {
+    if (server === 'Edge Discovery') {
+      return 'https://mock.thingspace.verizon.com/api/mec/eds';
+    }
+    if (server === 'Thingspace') {
+      return 'https://mock.thingspace.verizon.com/api';
+    }
+    if (server === 'OAuth Server') {
+      return 'https://mock.thingspace.verizon.com/api/ts/v1';
+    }
+    if (server === 'M2M') {
+      return 'https://mock.thingspace.verizon.com/api/m2m';
+    }
+    if (server === 'Device Location') {
+      return 'https://mock.thingspace.verizon.com/api/loc/v1';
+    }
+    if (server === 'Subscription Server') {
+      return 'https://mock.thingspace.verizon.com/api/subsc/v1';
+    }
+    if (server === 'Software Management V1') {
+      return 'https://mock.thingspace.verizon.com/api/fota/v1';
+    }
+    if (server === 'Software Management V2') {
+      return 'https://mock.thingspace.verizon.com/api/fota/v2';
+    }
+    if (server === 'Software Management V3') {
+      return 'https://mock.thingspace.verizon.com/api/fota/v3';
+    }
+    if (server === 'Performance') {
+      return 'https://mock.thingspace.verizon.com/api/mec';
+    }
+    if (server === 'Device Diagnostics') {
+      return 'https://mock.thingspace.verizon.com/api/diagnostics/v1';
+    }
+    if (server === 'Cloud Connector') {
+      return 'https://mock.thingspace.verizon.com/api/cc/v1';
+    }
+    if (server === 'Hyper Precise Location') {
+      return 'https://mock.thingspace.verizon.com/api/hyper-precise/v1';
+    }
+    if (server === 'Services') {
+      return 'https://mock.thingspace.verizon.com/api/mec/services';
+    }
+    if (server === 'Quality Of Service') {
+      return 'https://mock.thingspace.verizon.com/api/m2m/v1/devices';
+    }
+  }
   throw new Error('Could not get Base URL. Invalid environment or server.');
 }
 
@@ -193,16 +230,6 @@ function withUserAgent(rb: SdkRequestBuilder) {
   rb.header('user-agent', USER_AGENT);
 }
 
-function withVZM2mToken({ vZM2mToken }: { vZM2mToken: string }) {
-  return (rb: SdkRequestBuilder) => {
-    rb.interceptRequest(request => {
-      const headers = request.headers ?? {};
-      setHeader(headers, 'VZ-M2M-Token', vZM2mToken);
-      return { ...request, headers };
-    });
-  };
-}
-
 function withAuthenticationByDefault(rb: SdkRequestBuilder) {
-  rb.authenticate([{ oauth2: true }]); 
+  rb.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]); 
 }

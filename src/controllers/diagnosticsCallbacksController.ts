@@ -36,7 +36,7 @@ export class DiagnosticsCallbacksController extends BaseController {
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
     req.query('accountName', mapped.accountName);
     req.throwOn(400, DeviceDiagnosticsResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       array(deviceDiagnosticsCallbackSchema),
       requestOptions
@@ -61,7 +61,7 @@ export class DiagnosticsCallbacksController extends BaseController {
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
     req.throwOn(400, DeviceDiagnosticsResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceDiagnosticsCallbackSchema, requestOptions);
   }
 
@@ -86,7 +86,7 @@ export class DiagnosticsCallbacksController extends BaseController {
     req.query('accountName', mapped.accountName);
     req.query('serviceName', mapped.serviceName);
     req.throwOn(400, DeviceDiagnosticsResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceDiagnosticsCallbackSchema, requestOptions);
   }
 }

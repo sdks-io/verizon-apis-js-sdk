@@ -43,7 +43,7 @@ export class AnomalySettingsController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
   }
 
@@ -62,7 +62,7 @@ export class AnomalySettingsController extends BaseController {
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
     req.appendTemplatePath`/m2m/v1/intelligence/${mapped.accountName}/anomaly/settings`;
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(anomalyDetectionSettingsSchema, requestOptions);
   }
 
@@ -81,7 +81,7 @@ export class AnomalySettingsController extends BaseController {
     const mapped = req.prepareArgs({ accountName: [accountName, string()] });
     req.appendTemplatePath`/m2m/v1/intelligence/${mapped.accountName}/anomaly/settings/reset`;
     req.defaultToError(IntelligenceResultError, 'An error occurred.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(intelligenceSuccessResultSchema, requestOptions);
   }
 }

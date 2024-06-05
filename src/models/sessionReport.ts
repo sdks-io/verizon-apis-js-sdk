@@ -12,6 +12,7 @@ import {
   optional,
   Schema,
   string,
+  unknown,
 } from '../schema';
 import { DailyUsageItem, dailyUsageItemSchema } from './dailyUsageItem';
 
@@ -23,10 +24,12 @@ export interface SessionReport {
   id: string;
   /** A unique string that associates the request with the location report information that is sent in asynchronous callback message.ThingSpace will send a separate callback message for each device that was in the request. All of the callback messages will have the same txid. */
   txid: string | null;
+  example?: unknown;
 }
 
 export const sessionReportSchema: Schema<SessionReport> = object({
   sessions: ['sessions', optional(array(lazy(() => dailyUsageItemSchema)))],
   id: ['id', string()],
   txid: ['txid', nullable(string())],
+  example: ['example', optional(unknown())],
 });

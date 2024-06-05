@@ -29,7 +29,7 @@ export class SoftwareManagementSubscriptionsV3Controller extends BaseController 
     const mapped = req.prepareArgs({ acc: [acc, string()] });
     req.appendTemplatePath`/subscriptions/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV3SubscriptionSchema, requestOptions);
   }
 }

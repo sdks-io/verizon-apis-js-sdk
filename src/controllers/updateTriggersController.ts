@@ -32,7 +32,7 @@ export class UpdateTriggersController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(ReadySimRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(successSchema, requestOptions);
   }
 }

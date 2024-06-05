@@ -13,13 +13,13 @@ import {
   requestBodyForUsageSchema,
 } from '../models/requestBodyForUsage';
 import {
+  RequestBodyForUsage1,
+  requestBodyForUsage1Schema,
+} from '../models/requestBodyForUsage1';
+import {
   ResponseToUsageQuery,
   responseToUsageQuerySchema,
 } from '../models/responseToUsageQuery';
-import {
-  UsageRequestBody,
-  usageRequestBodySchema,
-} from '../models/usageRequestBody';
 import {
   UsageRequestResponse,
   usageRequestResponseSchema,
@@ -34,7 +34,7 @@ export class PromotionPeriodInformationController extends BaseController {
    * @return Response from the API call
    */
   async getPromoDeviceUsageHistory(
-    body: RequestBodyForUsage,
+    body: RequestBodyForUsage1,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<ResponseToUsageQuery>> {
     const req = this.createRequest(
@@ -42,11 +42,13 @@ export class PromotionPeriodInformationController extends BaseController {
       '/m2m/v1/devices/usage/actions/promodeviceusage'
     );
     req.baseUrl('Thingspace');
-    const mapped = req.prepareArgs({ body: [body, requestBodyForUsageSchema] });
+    const mapped = req.prepareArgs({
+      body: [body, requestBodyForUsage1Schema],
+    });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(ReadySimRestErrorResponseError, 'All error responses will be in this format');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(responseToUsageQuerySchema, requestOptions);
   }
 
@@ -58,7 +60,7 @@ export class PromotionPeriodInformationController extends BaseController {
    * @return Response from the API call
    */
   async getPromoDeviceAggregateUsageHistory(
-    body: UsageRequestBody,
+    body: RequestBodyForUsage,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<UsageRequestResponse>> {
     const req = this.createRequest(
@@ -66,11 +68,11 @@ export class PromotionPeriodInformationController extends BaseController {
       '/m2m/v1/devices/usage/actions/promoaggregateusage'
     );
     req.baseUrl('Thingspace');
-    const mapped = req.prepareArgs({ body: [body, usageRequestBodySchema] });
+    const mapped = req.prepareArgs({ body: [body, requestBodyForUsageSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(ReadySimRestErrorResponseError, 'Error response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(usageRequestResponseSchema, requestOptions);
   }
 }

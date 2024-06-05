@@ -48,7 +48,7 @@ export class AccountDevicesController extends BaseController {
     req.query('protocol', mapped.protocol);
     req.appendTemplatePath`/devices/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v3AccountDeviceListSchema, requestOptions);
   }
 
@@ -74,7 +74,7 @@ export class AccountDevicesController extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/devices/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceListResultSchema, requestOptions);
   }
 }

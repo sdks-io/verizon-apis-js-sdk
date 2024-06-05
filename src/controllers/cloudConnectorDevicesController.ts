@@ -71,7 +71,7 @@ export class CloudConnectorDevicesController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(changeConfigurationResponseSchema, requestOptions);
   }
 
@@ -92,7 +92,7 @@ export class CloudConnectorDevicesController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       findDeviceByPropertyResponseListSchema,
       requestOptions
@@ -116,7 +116,7 @@ export class CloudConnectorDevicesController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       searchDeviceByPropertyResponseListSchema,
       requestOptions
@@ -145,7 +145,7 @@ export class CloudConnectorDevicesController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       searchDeviceEventHistoryResponseListSchema,
       requestOptions
@@ -174,7 +174,7 @@ export class CloudConnectorDevicesController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.appendTemplatePath`/devices/fields/${mapped.fieldname}/actions/history`;
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       searchSensorHistoryResponseListSchema,
       requestOptions
@@ -196,7 +196,7 @@ export class CloudConnectorDevicesController extends BaseController {
     const mapped = req.prepareArgs({ body: [body, removeDeviceRequestSchema] });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.call(requestOptions);
   }
 }

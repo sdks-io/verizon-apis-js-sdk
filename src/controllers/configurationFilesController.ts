@@ -40,7 +40,7 @@ export class ConfigurationFilesController extends BaseController {
     req.query('distributionType', mapped.distributionType);
     req.appendTemplatePath`/files/${mapped.acc}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       retrievesAvailableFilesResponseListSchema,
       requestOptions
@@ -86,7 +86,7 @@ export class ConfigurationFilesController extends BaseController {
     });
     req.appendTemplatePath`/files/${mapped.acc}`;
     req.throwOn(400, FotaV2ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       uploadConfigurationFilesResponseSchema,
       requestOptions

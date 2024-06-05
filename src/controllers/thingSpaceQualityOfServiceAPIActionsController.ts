@@ -35,7 +35,7 @@ export class ThingSpaceQualityOfServiceAPIActionsController extends BaseControll
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.defaultToError(DefaultResponseError, 'Error Response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(m201successSchema, requestOptions);
   }
 
@@ -64,7 +64,7 @@ export class ThingSpaceQualityOfServiceAPIActionsController extends BaseControll
     req.query('accountName', mapped.accountName);
     req.query('qosSubscriptionId', mapped.qosSubscriptionId);
     req.defaultToError(DefaultResponseError, 'Error Response');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(m201successSchema, requestOptions);
   }
 }

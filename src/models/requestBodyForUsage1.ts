@@ -7,15 +7,13 @@
 import { array, lazy, object, optional, Schema, string } from '../schema';
 import { ReadySimDeviceId, readySimDeviceIdSchema } from './readySimDeviceId';
 
-export interface UsageRequestBody {
-  accountId?: string;
+export interface RequestBodyForUsage1 {
   deviceId?: ReadySimDeviceId[];
   startTime?: string;
   endTime?: string;
 }
 
-export const usageRequestBodySchema: Schema<UsageRequestBody> = object({
-  accountId: ['accountId', optional(string())],
+export const requestBodyForUsage1Schema: Schema<RequestBodyForUsage1> = object({
   deviceId: ['deviceId', optional(array(lazy(() => readySimDeviceIdSchema)))],
   startTime: ['startTime', optional(string())],
   endTime: ['endTime', optional(string())],

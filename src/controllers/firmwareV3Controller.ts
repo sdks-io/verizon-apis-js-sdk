@@ -48,7 +48,7 @@ export class FirmwareV3Controller extends BaseController {
     req.query('protocol', mapped.protocol);
     req.appendTemplatePath`/firmware/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(firmwarePackageSchema), requestOptions);
   }
 
@@ -74,7 +74,7 @@ export class FirmwareV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/firmware/${mapped.acc}/devices`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceFirmwareListSchema, requestOptions);
   }
 
@@ -98,7 +98,7 @@ export class FirmwareV3Controller extends BaseController {
     });
     req.appendTemplatePath`/firmware/${mapped.acc}/async/${mapped.deviceId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       deviceFirmwareVersionUpdateResultSchema,
       requestOptions

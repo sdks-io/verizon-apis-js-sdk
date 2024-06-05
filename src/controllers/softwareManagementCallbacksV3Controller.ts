@@ -41,7 +41,7 @@ export class SoftwareManagementCallbacksV3Controller extends BaseController {
     const mapped = req.prepareArgs({ acc: [acc, string()] });
     req.appendTemplatePath`/callbacks/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV3CallbackSummarySchema, requestOptions);
   }
 
@@ -67,7 +67,7 @@ export class SoftwareManagementCallbacksV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/callbacks/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       fotaV3CallbackRegistrationResultSchema,
       requestOptions
@@ -96,7 +96,7 @@ export class SoftwareManagementCallbacksV3Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/callbacks/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
       fotaV3CallbackRegistrationResultSchema,
       requestOptions
@@ -118,7 +118,7 @@ export class SoftwareManagementCallbacksV3Controller extends BaseController {
     const mapped = req.prepareArgs({ acc: [acc, string()] });
     req.appendTemplatePath`/callbacks/${mapped.acc}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV3SuccessResultSchema, requestOptions);
   }
 }

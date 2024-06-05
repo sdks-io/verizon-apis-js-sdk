@@ -47,7 +47,7 @@ export class FirmwareV1Controller extends BaseController {
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/firmware/${mapped.account}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(firmwareSchema), requestOptions);
   }
 
@@ -69,7 +69,7 @@ export class FirmwareV1Controller extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareUpgradeSchema, requestOptions);
   }
 
@@ -94,7 +94,7 @@ export class FirmwareV1Controller extends BaseController {
     });
     req.appendTemplatePath`/upgrades/${mapped.account}/upgrade/${mapped.upgradeId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareUpgradeSchema, requestOptions);
   }
 
@@ -124,7 +124,7 @@ export class FirmwareV1Controller extends BaseController {
     req.json(mapped.body);
     req.appendTemplatePath`/upgrades/${mapped.account}/upgrade/${mapped.upgradeId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareUpgradeChangeResultSchema, requestOptions);
   }
 
@@ -148,7 +148,7 @@ export class FirmwareV1Controller extends BaseController {
     });
     req.appendTemplatePath`/upgrades/${mapped.account}/upgrade/${mapped.upgradeId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
-    req.authenticate([{ oauth2: true }]);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV1SuccessResultSchema, requestOptions);
   }
 }
