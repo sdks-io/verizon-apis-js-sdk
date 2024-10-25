@@ -11,7 +11,7 @@ Accurary, currently only 0-coarse supported.
 
 | Name |
 |  --- |
-| `enum0` |
+| `Enum0` |
 
 ## Example
 

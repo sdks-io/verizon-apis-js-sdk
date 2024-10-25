@@ -24,11 +24,9 @@ const campaignsV2Controller = new CampaignsV2Controller(client);
 This endpoint allows user to schedule a software upgrade.
 
 ```ts
-async scheduleCampaignFirmwareUpgrade(
-  account: string,
+async scheduleCampaignFirmwareUpgrade(  account: string,
   body: CampaignSoftwareUpgrade,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CampaignSoftware>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CampaignSoftware>>
 ```
 
 ## Parameters
@@ -136,11 +134,9 @@ try {
 This endpoint allows user to get information of a software upgrade.
 
 ```ts
-async getCampaignInformation(
-  account: string,
+async getCampaignInformation(  account: string,
   campaignId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CampaignSoftware>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CampaignSoftware>>
 ```
 
 ## Parameters
@@ -222,12 +218,10 @@ try {
 This endpoint allows user to Add or Remove devices to an existing software upgrade.
 
 ```ts
-async updateCampaignFirmwareDevices(
-  account: string,
+async updateCampaignFirmwareDevices(  account: string,
   campaignId: string,
   body: V2AddOrRemoveDeviceRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2AddOrRemoveDeviceResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2AddOrRemoveDeviceResult>>
 ```
 
 ## Parameters
@@ -287,11 +281,9 @@ try {
 This endpoint allows user to cancel software upgrade. A software upgrade already started can not be cancelled.
 
 ```ts
-async cancelCampaign(
-  account: string,
+async cancelCampaign(  account: string,
   campaignId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2SuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV2SuccessResult>>
 ```
 
 ## Parameters
@@ -348,12 +340,10 @@ try {
 This endpoint allows user to change campaign dates and time windows. Fields which need to remain unchanged should be also provided.
 
 ```ts
-async updateCampaignDates(
-  account: string,
+async updateCampaignDates(  account: string,
   campaignId: string,
   body: V2ChangeCampaignDatesRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CampaignSoftware>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CampaignSoftware>>
 ```
 
 ## Parameters
@@ -464,11 +454,9 @@ try {
 You can upload configuration files and schedule them in a campaign to devices.
 
 ```ts
-async scheduleFileUpgrade(
-  acc: string,
+async scheduleFileUpgrade(  acc: string,
   body: UploadAndScheduleFileRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UploadAndScheduleFileResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<UploadAndScheduleFileResponse>>
 ```
 
 ## Parameters
@@ -525,11 +513,9 @@ try {
 Campaign time windows for downloading and installing software are available as long as the device OEM supports this.
 
 ```ts
-async scheduleSWUpgradeHttpDevices(
-  acc: string,
+async scheduleSWUpgradeHttpDevices(  acc: string,
   body: SchedulesSoftwareUpgradeRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UploadAndScheduleFileResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<UploadAndScheduleFileResponse>>
 ```
 
 ## Parameters

@@ -13,7 +13,10 @@ import {
   string,
   unknown,
 } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 import { CustomFields, customFieldsSchema } from './customFields';
 import { DeviceFilter, deviceFilterSchema } from './deviceFilter';
 import { PlaceOfUse, placeOfUseSchema } from './placeOfUse';
@@ -43,7 +46,7 @@ export interface GoToStateRequest {
   /** This is an array that associates an IP address with a device identifier. This variable is only relevant for Business Internet/Fixed Wireless Access */
   devicesWithServiceAddress?: unknown[];
   /** The IP address of the device. */
-  ipAddress?: string;
+  ipaddress?: string;
   /** The name of a device group that the devices should be added to. */
   groupName?: string;
   /** The customer name and the address of the device's primary place of use. Leave these fields empty to use the account profile address as the primary place of use. These values will be applied to all devices in the request.If the account is enabled for non-geographic MDNs and the device supports it, the primaryPlaceOfUse address will also be used to derive the MDN for the device. */
@@ -68,7 +71,7 @@ export const goToStateRequestSchema: Schema<GoToStateRequest> = object({
     'devicesWithServiceAddress',
     optional(array(unknown())),
   ],
-  ipAddress: ['ipAddress', optional(string())],
+  ipaddress: ['ipAddress', optional(string())],
   groupName: ['groupName', optional(string())],
   primaryPlaceOfUse: [
     'primaryPlaceOfUse',

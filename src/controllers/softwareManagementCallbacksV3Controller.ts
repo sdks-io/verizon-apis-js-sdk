@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 import {
   FotaV3CallbackRegistrationRequest,
   fotaV3CallbackRegistrationRequestSchema,
@@ -24,6 +23,7 @@ import {
 } from '../models/fotaV3SuccessResult';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 
 export class SoftwareManagementCallbacksV3Controller extends BaseController {
   /**

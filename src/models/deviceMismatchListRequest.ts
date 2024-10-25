@@ -5,7 +5,10 @@
  */
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 import { DateFilter, dateFilterSchema } from './dateFilter';
 
 /** Request to list of all 4G devices with an ICCID (SIM) that was not activated with the expected IMEI (hardware) during a specified time frame. */

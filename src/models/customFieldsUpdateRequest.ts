@@ -5,7 +5,10 @@
  */
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 import { CustomFields, customFieldsSchema } from './customFields';
 
 /** Request to assign or change custom field values for one or more devices. */

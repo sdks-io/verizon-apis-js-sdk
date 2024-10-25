@@ -18,4 +18,6 @@ export enum DevicesProtocolEnum {
 /**
  * Schema for DevicesProtocolEnum
  */
-export const  devicesProtocolEnumSchema: Schema<DevicesProtocolEnum> = stringEnum(DevicesProtocolEnum);
+export const devicesProtocolEnumSchema: Schema<DevicesProtocolEnum> = stringEnum(
+  DevicesProtocolEnum
+);

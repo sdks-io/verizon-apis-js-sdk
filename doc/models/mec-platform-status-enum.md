@@ -11,7 +11,7 @@ Status of the MEC Platform (default is 'unknown')
 
 | Name |
 |  --- |
-| `active` |
-| `inactive` |
-| `unknown` |
+| `Active` |
+| `Inactive` |
+| `Unknown` |
 

@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
-import {
   DeviceManagementResult,
   deviceManagementResultSchema,
 } from '../models/deviceManagementResult';
@@ -21,6 +18,7 @@ import {
   retrieveMonitorsRequestSchema,
 } from '../models/retrieveMonitorsRequest';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class DeviceDiagnosticsController extends BaseController {
   /**

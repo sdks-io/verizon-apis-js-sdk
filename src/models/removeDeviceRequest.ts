@@ -5,7 +5,10 @@
  */
 
 import { lazy, object, Schema } from '../schema';
-import { AccountIdentifier, accountIdentifierSchema } from './accountIdentifier';
+import {
+  AccountIdentifier,
+  accountIdentifierSchema,
+} from './accountIdentifier';
 import {
   ResourceIdentifier,
   resourceIdentifierSchema,

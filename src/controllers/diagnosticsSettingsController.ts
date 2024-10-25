@@ -6,14 +6,12 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  DeviceDiagnosticsResultError,
-} from '../errors/deviceDiagnosticsResultError';
-import {
   DiagnosticObservationSetting,
   diagnosticObservationSettingSchema,
 } from '../models/diagnosticObservationSetting';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceDiagnosticsResultError } from '../errors/deviceDiagnosticsResultError';
 
 export class DiagnosticsSettingsController extends BaseController {
   /**

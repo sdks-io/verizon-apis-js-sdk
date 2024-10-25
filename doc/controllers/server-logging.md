@@ -14,11 +14,9 @@ const serverLoggingController = new ServerLoggingController(client);
 Check-in history can be retrieved for any device belonging to the account, not necessarily with logging enabled.
 
 ```ts
-async getDeviceCheckInHistory(
-  account: string,
+async getDeviceCheckInHistory(  account: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CheckInHistoryItem[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CheckInHistoryItem[]>>
 ```
 
 ## Parameters

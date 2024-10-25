@@ -21,10 +21,8 @@ const deviceSMSMessagingController = new DeviceSMSMessagingController(client);
 Sends an SMS message to one device. Messages are queued on the M2M MC Platform and sent as soon as possible, but they may be delayed due to traffic and routing considerations.
 
 ```ts
-async sendAnSmsMessage(
-  body: GIOSMSSendRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<GIORequestResponse>>
+async sendAnSmsMessage(  body: GIOSMSSendRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<GIORequestResponse>>
 ```
 
 ## Parameters
@@ -75,19 +73,17 @@ try {
 Retrieves queued SMS messages sent by all M2M MC devices associated with an account.
 
 ```ts
-async getSmsMessages(
-  accountName: string,
+async getSmsMessages(  accountName: string,
   next?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SmsMessagesResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<SmsMessagesResponse>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `accountName` | `string` | Template, Required | Numeric account name |
-| `next` | `string \| undefined` | Query, Optional | Continue the previous query from the pageUrl in Location Header |
+| `accountName` | `string` | Template, Required | Numeric account name<br>**Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[A-Za-z0-9\-]{3,32}$` |
+| `next` | `string \| undefined` | Query, Optional | Continue the previous query from the pageUrl in Location Header<br>**Constraints**: *Minimum Length*: `3`, *Maximum Length*: `64`, *Pattern*: `^[A-Za-z0-9]{3,32}$` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -128,17 +124,15 @@ try {
 Starts delivery of SMS messages for the specified account.
 
 ```ts
-async startSmsMessageDelivery(
-  accountName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SuccessResponse>>
+async startSmsMessageDelivery(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<SuccessResponse>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `accountName` | `string` | Template, Required | Numeric account name |
+| `accountName` | `string` | Template, Required | Numeric account name<br>**Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[A-Za-z0-9\-]{3,32}$` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -174,10 +168,8 @@ try {
 Returns a list of sms history for a given device during a specified time frame.
 
 ```ts
-async listSmsMessageHistory(
-  body: SMSEventHistoryRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<GIORequestResponse>>
+async listSmsMessageHistory(  body: SMSEventHistoryRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<GIORequestResponse>>
 ```
 
 ## Parameters

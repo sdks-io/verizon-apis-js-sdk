@@ -6,14 +6,12 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
-import {
   AsynchronousRequestResult,
   asynchronousRequestResultSchema,
 } from '../models/asynchronousRequestResult';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class AccountRequestsController extends BaseController {
   /**

@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, FileWrapper, RequestOptions } from '../core';
-import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 import {
   RetrievesAvailableFilesResponseList,
   retrievesAvailableFilesResponseListSchema,
@@ -16,6 +15,7 @@ import {
 } from '../models/uploadConfigurationFilesResponse';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 
 export class ConfigurationFilesController extends BaseController {
   /**

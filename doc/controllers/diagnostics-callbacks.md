@@ -20,10 +20,8 @@ const diagnosticsCallbacksController = new DiagnosticsCallbacksController(client
 This endpoint allows user to get the registered callback information of an existing diagnostics subscription.
 
 ```ts
-async getDiagnosticsSubscriptionCallbackInfo(
-  accountName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceDiagnosticsCallback[]>>
+async getDiagnosticsSubscriptionCallbackInfo(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceDiagnosticsCallback[]>>
 ```
 
 ## Parameters
@@ -80,10 +78,8 @@ try {
 This endpoint allows user update the callback HTTPS address of an existing diagnostics subscription.
 
 ```ts
-async registerDiagnosticsCallbackURL(
-  body: CallbackRegistrationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceDiagnosticsCallback>>
+async registerDiagnosticsCallbackURL(  body: CallbackRegistrationRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceDiagnosticsCallback>>
 ```
 
 ## Parameters
@@ -143,11 +139,9 @@ try {
 This endpoint allows user to delete a registered callback URL and credential.
 
 ```ts
-async unregisterDiagnosticsCallback(
-  accountName: string,
+async unregisterDiagnosticsCallback(  accountName: string,
   serviceName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceDiagnosticsCallback>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceDiagnosticsCallback>>
 ```
 
 ## Parameters

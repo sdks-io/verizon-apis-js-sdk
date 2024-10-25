@@ -21,10 +21,8 @@ const deviceProfileManagementController = new DeviceProfileManagementController(
 Uses the profile to bring the device under management.
 
 ```ts
-async activateDeviceThroughProfile(
-  body: ActivateDeviceProfileRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async activateDeviceThroughProfile(  body: ActivateDeviceProfileRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters
@@ -85,10 +83,8 @@ try {
 Uses the profile to activate the device.
 
 ```ts
-async profileToActivateDevice(
-  body: ProfileRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async profileToActivateDevice(  body: ProfileRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters
@@ -139,10 +135,8 @@ try {
 Uses the profile to deactivate the device.
 
 ```ts
-async profileToDeactivateDevice(
-  body: DeactivateDeviceProfileRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async profileToDeactivateDevice(  body: DeactivateDeviceProfileRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters
@@ -191,10 +185,8 @@ try {
 Allows the profile to set the fallback attribute to the device.
 
 ```ts
-async profileToSetFallbackAttribute(
-  body: SetFallbackAttributeRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async profileToSetFallbackAttribute(  body: SetFallbackAttributeRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters

@@ -23,10 +23,8 @@ const cloudConnectorDevicesController = new CloudConnectorDevicesController(clie
 Change configuration values on a device, such as setting how often a device records and reports sensor readings.
 
 ```ts
-async updateDevicesConfigurationValue(
-  body: ChangeConfigurationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ChangeConfigurationResponse>>
+async updateDevicesConfigurationValue(  body: ChangeConfigurationRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<ChangeConfigurationResponse>>
 ```
 
 ## Parameters
@@ -96,10 +94,8 @@ try {
 Find devices by property values. Returns an array of all matching device resources.
 
 ```ts
-async findDeviceByPropertyValues(
-  body: QuerySubscriptionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FindDeviceByPropertyResponseList>>
+async findDeviceByPropertyValues(  body: QuerySubscriptionRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<FindDeviceByPropertyResponseList>>
 ```
 
 ## Parameters
@@ -184,10 +180,8 @@ try {
 Search for devices by property values. Returns an array of all matching device resources.
 
 ```ts
-async searchDevicesResourcesByPropertyValues(
-  body: QuerySubscriptionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SearchDeviceByPropertyResponseList>>
+async searchDevicesResourcesByPropertyValues(  body: QuerySubscriptionRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<SearchDeviceByPropertyResponseList>>
 ```
 
 ## Parameters
@@ -256,10 +250,8 @@ try {
 Search device event history to find events that match criteria.Sensor readings, configuration changes, and other device data are all stored as events.
 
 ```ts
-async searchDeviceEventHistory(
-  body: SearchDeviceEventHistoryRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SearchDeviceEventHistoryResponseList>>
+async searchDeviceEventHistory(  body: SearchDeviceEventHistoryRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<SearchDeviceEventHistoryResponseList>>
 ```
 
 ## Parameters
@@ -349,11 +341,9 @@ try {
 Returns the readings of a specified sensor, with the most recent reading first. Sensor readings are stored as events; this request an array of events.
 
 ```ts
-async searchSensorReadings(
-  fieldname: string,
+async searchSensorReadings(  fieldname: string,
   body: SearchSensorHistoryRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SearchSensorHistoryResponseList>>
+requestOptions?: RequestOptions): Promise<ApiResponse<SearchSensorHistoryResponseList>>
 ```
 
 ## Parameters
@@ -451,10 +441,8 @@ try {
 Remove a device from a ThingSpace account.
 
 ```ts
-async deleteDeviceFromAccount(
-  body: RemoveDeviceRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
+async deleteDeviceFromAccount(  body: RemoveDeviceRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<void>>
 ```
 
 ## Parameters

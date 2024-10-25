@@ -14,4 +14,6 @@ interface ESIMRestErrorResponse {
   errorMessage?: string;
 }
 
-export class ESIMRestErrorResponseError extends ApiError<ESIMRestErrorResponse> {}
+export class ESIMRestErrorResponseError extends ApiError<
+  ESIMRestErrorResponse
+> {}

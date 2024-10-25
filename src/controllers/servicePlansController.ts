@@ -5,12 +5,10 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
 import { ServicePlan, servicePlanSchema } from '../models/servicePlan';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class ServicePlansController extends BaseController {
   /**

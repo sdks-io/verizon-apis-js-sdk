@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 import {
   DeviceListQueryResult,
   deviceListQueryResultSchema,
@@ -24,6 +23,7 @@ import {
 } from '../models/upgradeStatusEnum';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 
 export class SoftwareManagementReportsV1Controller extends BaseController {
   /**

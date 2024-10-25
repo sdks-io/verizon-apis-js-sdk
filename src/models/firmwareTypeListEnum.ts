@@ -17,4 +17,6 @@ export enum FirmwareTypeListEnum {
 /**
  * Schema for FirmwareTypeListEnum
  */
-export const  firmwareTypeListEnumSchema: Schema<FirmwareTypeListEnum> = stringEnum(FirmwareTypeListEnum);
+export const firmwareTypeListEnumSchema: Schema<FirmwareTypeListEnum> = stringEnum(
+  FirmwareTypeListEnum
+);

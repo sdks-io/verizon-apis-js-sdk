@@ -5,7 +5,10 @@
  */
 
 import { object, optional, Schema, string } from '../schema';
-import { RequestStatusEnum, requestStatusEnumSchema } from './requestStatusEnum';
+import {
+  RequestStatusEnum,
+  requestStatusEnumSchema,
+} from './requestStatusEnum';
 
 /** A successful request returns the request ID and the current status. */
 export interface AsynchronousRequestResult {

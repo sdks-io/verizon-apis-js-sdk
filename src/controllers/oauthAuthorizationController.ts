@@ -5,10 +5,10 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { OauthProviderError } from '../errors/oauthProviderError';
 import { OauthToken, oauthTokenSchema } from '../models/oauthToken';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { OauthProviderError } from '../errors/oauthProviderError';
 
 export class OauthAuthorizationController extends BaseController {
   /**
@@ -34,10 +34,14 @@ export class OauthAuthorizationController extends BaseController {
     req.form({
       grant_type: 'client_credentials',
       scope: mapped.scope,
-      ...fieldParameters
+      ...fieldParameters,
     });
     req.throwOn(400, OauthProviderError, 'OAuth 2 provider returned an error.');
-    req.throwOn(401, OauthProviderError, 'OAuth 2 provider says client authentication failed.');
+    req.throwOn(
+      401,
+      OauthProviderError,
+      'OAuth 2 provider says client authentication failed.'
+    );
     req.authenticate(false);
     return req.callAsJson(oauthTokenSchema, requestOptions);
   }

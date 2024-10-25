@@ -19,10 +19,8 @@ const softwareManagementSubscriptionsV1Controller = new SoftwareManagementSubscr
 This subscriptions endpoint retrieves an account's current Software Management Service subscription status.
 
 ```ts
-async getAccountSubscriptionStatus(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V1AccountSubscription>>
+async getAccountSubscriptionStatus(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<V1AccountSubscription>>
 ```
 
 ## Parameters
@@ -77,11 +75,9 @@ try {
 Returns information about an account's Software Management Services licenses and a list of licensed devices.
 
 ```ts
-async getAccountLicenseStatus(
-  account: string,
+async getAccountLicenseStatus(  account: string,
   startIndex: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AccountLicenseInfo>>
+requestOptions?: RequestOptions): Promise<ApiResponse<AccountLicenseInfo>>
 ```
 
 ## Parameters

@@ -20,11 +20,9 @@ const firmwareV3Controller = new FirmwareV3Controller(client);
 This endpoint allows user to list the firmware of an account.
 
 ```ts
-async listAvailableFirmware(
-  acc: string,
+async listAvailableFirmware(  acc: string,
   protocol: FirmwareProtocolEnum,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FirmwarePackage[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FirmwarePackage[]>>
 ```
 
 ## Parameters
@@ -90,11 +88,9 @@ try {
 Synchronize ThingSpace with the FOTA server for up to 100 devices.
 
 ```ts
-async synchronizeDeviceFirmware(
-  acc: string,
+async synchronizeDeviceFirmware(  acc: string,
   body: FirmwareIMEI,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceFirmwareList>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceFirmwareList>>
 ```
 
 ## Parameters
@@ -162,11 +158,9 @@ try {
 Ask a device to report its firmware version asynchronously.
 
 ```ts
-async reportDeviceFirmware(
-  acc: string,
+async reportDeviceFirmware(  acc: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceFirmwareVersionUpdateResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceFirmwareVersionUpdateResult>>
 ```
 
 ## Parameters

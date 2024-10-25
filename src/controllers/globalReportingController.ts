@@ -6,8 +6,9 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ESIMRestErrorResponseError,
-} from '../errors/eSIMRestErrorResponseError';
+  ESIMGlobalDeviceList,
+  eSIMGlobalDeviceListSchema,
+} from '../models/eSIMGlobalDeviceList';
 import {
   ESIMProvhistoryRequest,
   eSIMProvhistoryRequestSchema,
@@ -16,16 +17,12 @@ import {
   ESIMRequestResponse,
   eSIMRequestResponseSchema,
 } from '../models/eSIMRequestResponse';
-import {
-  ESIMStatusResponse,
-  eSIMStatusResponseSchema,
-} from '../models/eSIMStatusResponse';
-import { string } from '../schema';
 import { BaseController } from './baseController';
+import { ESIMRestErrorResponseError } from '../errors/eSIMRestErrorResponseError';
 
 export class GlobalReportingController extends BaseController {
   /**
-   * Retreive the provisioning history of a specific device or devices.
+   * Retrieve the provisioning history of a specific device or devices.
    *
    * @param body         Device Provisioning History
    * @return Response from the API call
@@ -48,7 +45,11 @@ export class GlobalReportingController extends BaseController {
     req.throwOn(401, ESIMRestErrorResponseError, 'Unauthorized');
     req.throwOn(403, ESIMRestErrorResponseError, 'Forbidden');
     req.throwOn(404, ESIMRestErrorResponseError, 'Not Found / Does not exist');
-    req.throwOn(406, ESIMRestErrorResponseError, 'Format / Request Unacceptable');
+    req.throwOn(
+      406,
+      ESIMRestErrorResponseError,
+      'Format / Request Unacceptable'
+    );
     req.throwOn(429, ESIMRestErrorResponseError, 'Too many requests');
     req.defaultToError(ESIMRestErrorResponseError, 'Error response');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
@@ -56,32 +57,34 @@ export class GlobalReportingController extends BaseController {
   }
 
   /**
-   * Get the status of a request made with the Device Actions.
+   * Retrieve a list of all devices associated with an account.
    *
-   * @param accountname
-   * @param requestID
+   * @param body         Device List
    * @return Response from the API call
    */
-  async requeststatususingGET(
-    accountname: string,
-    requestID: string,
+  async retrieveGlobalList(
+    body: ESIMGlobalDeviceList,
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<ESIMStatusResponse>> {
-    const req = this.createRequest('GET');
+  ): Promise<ApiResponse<ESIMRequestResponse>> {
+    const req = this.createRequest('POST', '/m2m/v2/devices/actions/list');
     req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
-      accountname: [accountname, string()],
-      requestID: [requestID, string()],
+      body: [body, eSIMGlobalDeviceListSchema],
     });
-    req.appendTemplatePath`/m2m/v2/accounts/${mapped.accountname}/requests/${mapped.requestID}/status`;
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
     req.throwOn(400, ESIMRestErrorResponseError, 'Bad request');
     req.throwOn(401, ESIMRestErrorResponseError, 'Unauthorized');
     req.throwOn(403, ESIMRestErrorResponseError, 'Forbidden');
     req.throwOn(404, ESIMRestErrorResponseError, 'Not Found / Does not exist');
-    req.throwOn(406, ESIMRestErrorResponseError, 'Format / Request Unacceptable');
+    req.throwOn(
+      406,
+      ESIMRestErrorResponseError,
+      'Format / Request Unacceptable'
+    );
     req.throwOn(429, ESIMRestErrorResponseError, 'Too many requests');
     req.defaultToError(ESIMRestErrorResponseError, 'Error response');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
-    return req.callAsJson(eSIMStatusResponseSchema, requestOptions);
+    return req.callAsJson(eSIMRequestResponseSchema, requestOptions);
   }
 }

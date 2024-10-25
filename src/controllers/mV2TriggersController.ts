@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  RulesEngineRestErrorResponseError,
-} from '../errors/rulesEngineRestErrorResponseError';
-import {
   CreateTriggerV2Request,
   createTriggerV2RequestSchema,
 } from '../models/createTriggerV2Request';
@@ -22,6 +19,7 @@ import {
 } from '../models/updateTriggerV2Request';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { RulesEngineRestErrorResponseError } from '../errors/rulesEngineRestErrorResponseError';
 
 export class MV2TriggersController extends BaseController {
   /**

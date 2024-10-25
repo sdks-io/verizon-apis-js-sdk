@@ -16,4 +16,6 @@ interface EdgePerformanceResult {
   message?: string;
 }
 
-export class EdgePerformanceResultError extends ApiError<EdgePerformanceResult> {}
+export class EdgePerformanceResultError extends ApiError<
+  EdgePerformanceResult
+> {}

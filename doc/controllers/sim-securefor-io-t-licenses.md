@@ -19,11 +19,9 @@ const sIMSecureforIoTLicensesController = new SIMSecureforIoTLicensesController(
 Assigns SIM-Secure for IoT licenses to SIMs.
 
 ```ts
-async assignLicenseToDevices(
-  body: AssignLicenseRequest,
+async assignLicenseToDevices(  body: AssignLicenseRequest,
   xRequestID?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SecuritySuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<SecuritySuccessResult>>
 ```
 
 ## Parameters
@@ -31,7 +29,7 @@ async assignLicenseToDevices(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `body` | [`AssignLicenseRequest`](../../doc/models/assign-license-request.md) | Body, Required | Request to assign license to devices. |
-| `xRequestID` | `string \| undefined` | Header, Optional | Transaction Id. |
+| `xRequestID` | `string \| undefined` | Header, Optional | Transaction Id.<br>**Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[0-9]-[0-9]{3,32}$` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -94,17 +92,15 @@ try {
 Unassigns SIM-Secure for IoT Flexible and Flexible Bundle license from SIMs.
 
 ```ts
-async unassignLicenseToDevices(
-  xRequestID: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SecuritySuccessResult>>
+async unassignLicenseToDevices(  xRequestID: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<SecuritySuccessResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `xRequestID` | `string` | Header, Required | Transaction Id. |
+| `xRequestID` | `string` | Header, Required | Transaction Id.<br>**Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[0-9]-[0-9]{3,32}$` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type

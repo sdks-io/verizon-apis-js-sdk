@@ -18,4 +18,6 @@ export enum CacheModeEnum {
 /**
  * Schema for CacheModeEnum
  */
-export const  cacheModeEnumSchema: Schema<CacheModeEnum> = stringEnum(CacheModeEnum);
+export const cacheModeEnumSchema: Schema<CacheModeEnum> = stringEnum(
+  CacheModeEnum
+);

@@ -20,10 +20,8 @@ const connectivityCallbacksController = new ConnectivityCallbacksController(clie
 Returns the name and endpoint URL of the callback listening services registered for a given account.
 
 ```ts
-async listRegisteredCallbacks(
-  aname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ConnectivityManagementCallback[]>>
+async listRegisteredCallbacks(  aname: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<ConnectivityManagementCallback[]>>
 ```
 
 ## Parameters
@@ -85,11 +83,9 @@ try {
 You are responsible for creating and running a listening process on your server at that URL.
 
 ```ts
-async registerCallback(
-  aname: string,
+async registerCallback(  aname: string,
   body: RegisterCallbackRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CallbackActionResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CallbackActionResult>>
 ```
 
 ## Parameters
@@ -150,11 +146,9 @@ try {
 Stops ThingSpace from sending callback messages for the specified account and service.
 
 ```ts
-async deregisterCallback(
-  aname: string,
+async deregisterCallback(  aname: string,
   sname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CallbackActionResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CallbackActionResult>>
 ```
 
 ## Parameters

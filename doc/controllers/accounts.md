@@ -22,10 +22,8 @@ const accountsController = new AccountsController(client);
 Returns information about a specified account.
 
 ```ts
-async getAccountInformation(
-  aname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Account>>
+async getAccountInformation(  aname: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<Account>>
 ```
 
 ## Parameters
@@ -115,10 +113,8 @@ try {
 Returns a list and details of all custom services and states defined for a specified account.
 
 ```ts
-async listAccountStatesAndServices(
-  aname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AccountStatesAndServices>>
+async listAccountStatesAndServices(  aname: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<AccountStatesAndServices>>
 ```
 
 ## Parameters
@@ -240,11 +236,9 @@ try {
 When HTTP status is 202, a URL will be returned in the Location header of the form /leads/{aname}?next={token}. This URL can be used to request the next set of leads.
 
 ```ts
-async listAccountLeads(
-  aname: string,
+async listAccountLeads(  aname: string,
   next?: bigint,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AccountLeadsResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<AccountLeadsResult>>
 ```
 
 ## Parameters

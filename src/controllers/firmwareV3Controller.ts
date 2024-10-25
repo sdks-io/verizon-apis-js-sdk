@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 import {
   DeviceFirmwareList,
   deviceFirmwareListSchema,
@@ -25,6 +24,7 @@ import {
 } from '../models/firmwareProtocolEnum';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 
 export class FirmwareV3Controller extends BaseController {
   /**

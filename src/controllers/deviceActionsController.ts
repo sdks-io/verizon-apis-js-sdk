@@ -5,7 +5,13 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { GIORestErrorResponseError } from '../errors/gIORestErrorResponseError';
+import { AccountDetails, accountDetailsSchema } from '../models/accountDetails';
+import { AggregateUsage, aggregateUsageSchema } from '../models/aggregateUsage';
+import { DailyUsage, dailyUsageSchema } from '../models/dailyUsage';
+import {
+  DailyUsageResponse,
+  dailyUsageResponseSchema,
+} from '../models/dailyUsageResponse';
 import {
   GetDeviceListWithProfilesRequest,
   getDeviceListWithProfilesRequestSchema,
@@ -21,8 +27,90 @@ import {
 import { StatusResponse, statusResponseSchema } from '../models/statusResponse';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { GIORestErrorResponseError } from '../errors/gIORestErrorResponseError';
 
 export class DeviceActionsController extends BaseController {
+  /**
+   * Retrieve the aggregate usage for a device or a number of devices.
+   *
+   * @param body
+   * @return Response from the API call
+   */
+  async aggregateUsage(
+    body: AggregateUsage,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<GIORequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/v1/devices/usage/actions/list/aggregate'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, aggregateUsageSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(gIORequestResponseSchema, requestOptions);
+  }
+
+  /**
+   * Retrieve the daily usage for a device, for a specified period of time, segmented by day
+   *
+   * @param body
+   * @return Response from the API call
+   */
+  async dailyUsage(
+    body: DailyUsage,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<DailyUsageResponse>> {
+    const req = this.createRequest('POST', '/v1/devices/usage/actions/list');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, dailyUsageSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(dailyUsageResponseSchema, requestOptions);
+  }
+
+  /**
+   * Retrieve all of the service plans, features and carriers associated with the account specified.
+   *
+   * @param accountName
+   * @return Response from the API call
+   */
+  async servicePlanList(
+    accountName: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AccountDetails>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
+    req.appendTemplatePath`/v1/plans/${mapped.accountName}`;
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(accountDetailsSchema, requestOptions);
+  }
+
+  /**
+   * Retrieve all of the service plans, features and carriers associated with the account specified.
+   *
+   * @param accountName
+   * @return Response from the API call
+   */
+  async accountInformation(
+    accountName: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<AccountDetails>> {
+    const req = this.createRequest('GET');
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
+    req.appendTemplatePath`/v1/accounts/${mapped.accountName}`;
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(accountDetailsSchema, requestOptions);
+  }
+
   /**
    * Allows the profile to fetch the complete device list. This works with Verizon US and Global profiles.
    *
@@ -46,7 +134,7 @@ export class DeviceActionsController extends BaseController {
   }
 
   /**
-   * Retreive the provisioning history of a specific device or devices.
+   * Retrieve the provisioning history of a specific device or devices.
    *
    * @param body         Device Provisioning History
    * @return Response from the API call

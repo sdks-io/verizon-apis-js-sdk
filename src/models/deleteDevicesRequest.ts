@@ -5,7 +5,10 @@
  */
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 
 /** Request to delete a device request. */
 export interface DeleteDevicesRequest {

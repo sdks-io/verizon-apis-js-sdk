@@ -5,13 +5,11 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import {
-  ReadySimRestErrorResponseError,
-} from '../errors/readySimRestErrorResponseError';
 import { RequestTrigger, requestTriggerSchema } from '../models/requestTrigger';
 import { Success, successSchema } from '../models/success';
 import { optional } from '../schema';
 import { BaseController } from './baseController';
+import { ReadySimRestErrorResponseError } from '../errors/readySimRestErrorResponseError';
 
 export class UpdateTriggersController extends BaseController {
   /**

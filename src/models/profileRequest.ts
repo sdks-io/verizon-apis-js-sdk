@@ -6,7 +6,10 @@
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
 import { DeviceList, deviceListSchema } from './deviceList';
-import { PrimaryPlaceOfUse, primaryPlaceOfUseSchema } from './primaryPlaceOfUse';
+import {
+  PrimaryPlaceOfUse,
+  primaryPlaceOfUseSchema,
+} from './primaryPlaceOfUse';
 
 export interface ProfileRequest {
   accountName: string;

@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 import {
   CallbackServiceEnum,
   callbackServiceEnumSchema,
@@ -28,6 +27,7 @@ import {
 } from '../models/registeredCallbacks';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 
 export class SoftwareManagementCallbacksV1Controller extends BaseController {
   /**

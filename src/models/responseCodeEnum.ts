@@ -19,4 +19,6 @@ export enum ResponseCodeEnum {
 /**
  * Schema for ResponseCodeEnum
  */
-export const  responseCodeEnumSchema: Schema<ResponseCodeEnum> = stringEnum(ResponseCodeEnum);
+export const responseCodeEnumSchema: Schema<ResponseCodeEnum> = stringEnum(
+  ResponseCodeEnum
+);

@@ -22,9 +22,7 @@ const anomalyTriggersController = new AnomalyTriggersController(client);
 This corresponds to the M2M-MC SOAP interface, `GetTriggers`.
 
 ```ts
-async listAnomalyDetectionTriggers(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<GetTriggerResponseList[]>>
+async listAnomalyDetectionTriggers(requestOptions?: RequestOptions): Promise<ApiResponse<GetTriggerResponseList[]>>
 ```
 
 ## Parameters
@@ -70,10 +68,8 @@ try {
 This corresponds to the M2M-MC SOAP interface, `UpdateTriggerRequest`.
 
 ```ts
-async updateAnomalyDetectionTrigger(
-  body: UpdateTriggerRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AnomalyDetectionTrigger>>
+async updateAnomalyDetectionTrigger(  body: UpdateTriggerRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<AnomalyDetectionTrigger>>
 ```
 
 ## Parameters
@@ -130,10 +126,8 @@ try {
 This corresponds to the M2M-MC SOAP interface, `CreateTrigger`.
 
 ```ts
-async createAnomalyDetectionTrigger(
-  body: CreateTriggerRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AnomalyDetectionTrigger>>
+async createAnomalyDetectionTrigger(  body: CreateTriggerRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<AnomalyDetectionTrigger>>
 ```
 
 ## Parameters
@@ -190,10 +184,8 @@ try {
 This corresponds to the M2M-MC SOAP interface, `GetTriggers`.
 
 ```ts
-async listAnomalyDetectionTriggerSettings(
-  triggerId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<GetTriggerResponseList[]>>
+async listAnomalyDetectionTriggerSettings(  triggerId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<GetTriggerResponseList[]>>
 ```
 
 ## Parameters
@@ -242,10 +234,8 @@ try {
 Deletes a specific trigger ID
 
 ```ts
-async deleteAnomalyDetectionTrigger(
-  triggerId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AnomalyDetectionTrigger>>
+async deleteAnomalyDetectionTrigger(  triggerId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<AnomalyDetectionTrigger>>
 ```
 
 ## Parameters

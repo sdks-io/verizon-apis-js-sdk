@@ -22,10 +22,8 @@ const serviceProfilesController = new ServiceProfilesController(client);
 Creates a service profile that describes the resource requirements of a service.
 
 ```ts
-async createServiceProfile(
-  body: ResourcesServiceProfile,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CreateServiceProfileResult>>
+async createServiceProfile(  body: ResourcesServiceProfile,
+requestOptions?: RequestOptions): Promise<ApiResponse<CreateServiceProfileResult>>
 ```
 
 ## Parameters
@@ -98,9 +96,7 @@ try {
 List all service profiles registered under your API key.
 
 ```ts
-async listServiceProfiles(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ListServiceProfilesResult>>
+async listServiceProfiles(requestOptions?: RequestOptions): Promise<ApiResponse<ListServiceProfilesResult>>
 ```
 
 ## Parameters
@@ -159,17 +155,15 @@ try {
 Returns a specified service profile.
 
 ```ts
-async getServiceProfile(
-  serviceProfileId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ResourcesServiceProfileWithId>>
+async getServiceProfile(  serviceProfileId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<ResourcesServiceProfileWithId>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `serviceProfileId` | `string` | Template, Required | - |
+| `serviceProfileId` | `string` | Template, Required | **Constraints**: *Maximum Length*: `36`, *Pattern*: ``^[a-zA-Z0-9!@#$&()\-`.+,/"]{3,36}$`` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Requires scope
@@ -242,18 +236,16 @@ try {
 Update the definition of a Service Profile.
 
 ```ts
-async updateServiceProfile(
-  serviceProfileId: string,
+async updateServiceProfile(  serviceProfileId: string,
   body: ResourcesServiceProfile,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UpdateServiceProfileResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<UpdateServiceProfileResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `serviceProfileId` | `string` | Template, Required | - |
+| `serviceProfileId` | `string` | Template, Required | **Constraints**: *Maximum Length*: `36`, *Pattern*: ``^[a-zA-Z0-9!@#$&()\-`.+,/"]{3,36}$`` |
 | `body` | [`ResourcesServiceProfile`](../../doc/models/resources-service-profile.md) | Body, Required | The request body passes the rest of the needed parameters to create a service profile. The `maxLatencyMs` and `clientType` parameters are both required in the request body. **Note:** The `maxLatencyMs` value must be submitted in multiples of 5. Additionally, "GPU" is future functionality and the values are not captured. Default values to use are shown. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -331,17 +323,15 @@ try {
 Delete Service Profile based on unique service profile ID.
 
 ```ts
-async deleteServiceProfile(
-  serviceProfileId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeleteServiceProfileResult>>
+async deleteServiceProfile(  serviceProfileId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeleteServiceProfileResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `serviceProfileId` | `string` | Template, Required | - |
+| `serviceProfileId` | `string` | Template, Required | **Constraints**: *Maximum Length*: `36`, *Pattern*: ``^[a-zA-Z0-9!@#$&()\-`.+,/"]{3,36}$`` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Requires scope

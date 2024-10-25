@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 import {
   CallbackSummary,
   callbackSummarySchema,
@@ -24,6 +23,7 @@ import {
 } from '../models/fotaV2SuccessResult';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 
 export class SoftwareManagementCallbacksV2Controller extends BaseController {
   /**

@@ -5,7 +5,10 @@
  */
 
 import { lazy, object, optional, Schema } from '../schema';
-import { AccountIdentifier, accountIdentifierSchema } from './accountIdentifier';
+import {
+  AccountIdentifier,
+  accountIdentifierSchema,
+} from './accountIdentifier';
 
 /** Authenticating account ID. */
 export interface GenerateExternalIDRequest {

@@ -13,7 +13,10 @@ import {
   Schema,
   string,
 } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 
 /** Returns the name, description, and list of devices in a device group. */
 export interface DeviceGroupDevicesData {

@@ -6,10 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
-import { RestErrorResponseError } from '../errors/restErrorResponseError';
-import {
   DeviceManagementResult,
   deviceManagementResultSchema,
 } from '../models/deviceManagementResult';
@@ -22,6 +18,8 @@ import {
   requestResponseSchema,
 } from '../models/requestResponse';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
+import { RestErrorResponseError } from '../errors/restErrorResponseError';
 
 export class EUICCDeviceProfileManagementController extends BaseController {
   /**

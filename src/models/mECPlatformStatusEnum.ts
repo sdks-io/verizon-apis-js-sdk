@@ -18,4 +18,6 @@ export enum MECPlatformStatusEnum {
 /**
  * Schema for MECPlatformStatusEnum
  */
-export const  mECPlatformStatusEnumSchema: Schema<MECPlatformStatusEnum> = stringEnum(MECPlatformStatusEnum);
+export const mECPlatformStatusEnumSchema: Schema<MECPlatformStatusEnum> = stringEnum(
+  MECPlatformStatusEnum
+);

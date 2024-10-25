@@ -14,10 +14,8 @@ const servicePlansController = new ServicePlansController(client);
 Returns a list of all data service plans that are associated with a specified billing account. When you send a request to /devices/actions/activate to activate a line of service you must specify the code for one of the service plans associated with your account.
 
 ```ts
-async listAccountServicePlans(
-  aname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ServicePlan[]>>
+async listAccountServicePlans(  aname: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<ServicePlan[]>>
 ```
 
 ## Parameters

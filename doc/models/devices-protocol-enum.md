@@ -11,9 +11,9 @@ Firmware protocol. Valid values include: LWM2M, OMADM, HTTP.
 
 | Name |
 |  --- |
-| `lWM2m` |
-| `oMDADM` |
-| `hTTP` |
+| `LWM2m` |
+| `OMDADM` |
+| `HTTP` |
 
 ## Example
 

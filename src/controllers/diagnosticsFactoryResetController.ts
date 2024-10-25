@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  DeviceDiagnosticsResultError,
-} from '../errors/deviceDiagnosticsResultError';
-import {
   DeviceResetRequest,
   deviceResetRequestSchema,
 } from '../models/deviceResetRequest';
@@ -17,6 +14,7 @@ import {
   diagnosticsObservationResultSchema,
 } from '../models/diagnosticsObservationResult';
 import { BaseController } from './baseController';
+import { DeviceDiagnosticsResultError } from '../errors/deviceDiagnosticsResultError';
 
 export class DiagnosticsFactoryResetController extends BaseController {
   /**

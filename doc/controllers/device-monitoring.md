@@ -17,10 +17,8 @@ const deviceMonitoringController = new DeviceMonitoringController(client);
 # Device Reachability
 
 ```ts
-async deviceReachability(
-  body: NotificationReportRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async deviceReachability(  body: NotificationReportRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters
@@ -79,10 +77,8 @@ try {
 # Stop Device Reachability
 
 ```ts
-async stopDeviceReachability(
-  body?: StopMonitorRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async stopDeviceReachability(  body?: StopMonitorRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters

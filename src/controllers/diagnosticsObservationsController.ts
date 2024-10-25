@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  DeviceDiagnosticsResultError,
-} from '../errors/deviceDiagnosticsResultError';
-import {
   DiagnosticsObservationResult,
   diagnosticsObservationResultSchema,
 } from '../models/diagnosticsObservationResult';
@@ -18,6 +15,7 @@ import {
 } from '../models/observationRequest';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceDiagnosticsResultError } from '../errors/deviceDiagnosticsResultError';
 
 export class DiagnosticsObservationsController extends BaseController {
   /**

@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  HyperPreciseLocationResultError,
-} from '../errors/hyperPreciseLocationResultError';
-import {
   CallbackCreated,
   callbackCreatedSchema,
 } from '../models/callbackCreated';
@@ -22,6 +19,7 @@ import {
 } from '../models/hyperPreciseLocationCallback';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { HyperPreciseLocationResultError } from '../errors/hyperPreciseLocationResultError';
 
 export class HyperPreciseLocationCallbacksController extends BaseController {
   /**
@@ -41,10 +39,22 @@ export class HyperPreciseLocationCallbacksController extends BaseController {
     });
     req.query('accountNumber', mapped.accountNumber);
     req.throwOn(400, HyperPreciseLocationResultError, 'Bad request.');
-    req.throwOn(401, HyperPreciseLocationResultError, 'Unauthorized request. Access token is missing or invalid.');
+    req.throwOn(
+      401,
+      HyperPreciseLocationResultError,
+      'Unauthorized request. Access token is missing or invalid.'
+    );
     req.throwOn(403, HyperPreciseLocationResultError, 'Forbidden request.');
-    req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
-    req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
+    req.throwOn(
+      404,
+      HyperPreciseLocationResultError,
+      'Bad request. Not found.'
+    );
+    req.throwOn(
+      409,
+      HyperPreciseLocationResultError,
+      'Bad request. Conflict state.'
+    );
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(callbackCreatedSchema), requestOptions);
@@ -75,10 +85,22 @@ export class HyperPreciseLocationCallbacksController extends BaseController {
     req.query('accountNumber', mapped.accountNumber);
     req.json(mapped.body);
     req.throwOn(400, HyperPreciseLocationResultError, 'Bad request.');
-    req.throwOn(401, HyperPreciseLocationResultError, 'Unauthorized request. Access token is missing or invalid.');
+    req.throwOn(
+      401,
+      HyperPreciseLocationResultError,
+      'Unauthorized request. Access token is missing or invalid.'
+    );
     req.throwOn(403, HyperPreciseLocationResultError, 'Forbidden request.');
-    req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
-    req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
+    req.throwOn(
+      404,
+      HyperPreciseLocationResultError,
+      'Bad request. Not found.'
+    );
+    req.throwOn(
+      409,
+      HyperPreciseLocationResultError,
+      'Bad request. Conflict state.'
+    );
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(callbackRegisteredSchema, requestOptions);
@@ -105,10 +127,22 @@ export class HyperPreciseLocationCallbacksController extends BaseController {
     req.query('accountNumber', mapped.accountNumber);
     req.query('service', mapped.service);
     req.throwOn(400, HyperPreciseLocationResultError, 'Bad request.');
-    req.throwOn(401, HyperPreciseLocationResultError, 'Unauthorized request. Access token is missing or invalid.');
+    req.throwOn(
+      401,
+      HyperPreciseLocationResultError,
+      'Unauthorized request. Access token is missing or invalid.'
+    );
     req.throwOn(403, HyperPreciseLocationResultError, 'Forbidden request.');
-    req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
-    req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
+    req.throwOn(
+      404,
+      HyperPreciseLocationResultError,
+      'Bad request. Not found.'
+    );
+    req.throwOn(
+      409,
+      HyperPreciseLocationResultError,
+      'Bad request. Conflict state.'
+    );
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.call(requestOptions);

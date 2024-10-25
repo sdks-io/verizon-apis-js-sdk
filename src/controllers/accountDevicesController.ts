@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 import { DeviceIMEI, deviceIMEISchema } from '../models/deviceIMEI';
 import {
   DeviceListResult,
@@ -21,6 +20,7 @@ import {
 } from '../models/v3AccountDeviceList';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 
 export class AccountDevicesController extends BaseController {
   /**

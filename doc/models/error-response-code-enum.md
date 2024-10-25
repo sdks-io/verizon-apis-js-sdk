@@ -11,10 +11,10 @@ Error Code.
 
 | Name |
 |  --- |
-| `iNVALIDACCESS` |
-| `iNVALIDPARAMETER` |
-| `iNTERNALERROR` |
-| `sUCCESS` |
+| `INVALIDACCESS` |
+| `INVALIDPARAMETER` |
+| `INTERNALERROR` |
+| `SUCCESS` |
 
 ## Example
 

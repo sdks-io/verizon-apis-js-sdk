@@ -14,10 +14,8 @@ const softwareManagementSubscriptionsV2Controller = new SoftwareManagementSubscr
 This endpoint retrieves a FOTA subscription by account.
 
 ```ts
-async getAccountSubscriptionStatus(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2Subscription>>
+async getAccountSubscriptionStatus(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV2Subscription>>
 ```
 
 ## Parameters

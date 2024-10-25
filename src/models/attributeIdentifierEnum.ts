@@ -20,4 +20,6 @@ export enum AttributeIdentifierEnum {
 /**
  * Schema for AttributeIdentifierEnum
  */
-export const  attributeIdentifierEnumSchema: Schema<AttributeIdentifierEnum> = stringEnum(AttributeIdentifierEnum);
+export const attributeIdentifierEnumSchema: Schema<AttributeIdentifierEnum> = stringEnum(
+  AttributeIdentifierEnum
+);

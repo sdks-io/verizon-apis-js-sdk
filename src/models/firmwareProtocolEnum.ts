@@ -18,4 +18,6 @@ export enum FirmwareProtocolEnum {
 /**
  * Schema for FirmwareProtocolEnum
  */
-export const  firmwareProtocolEnumSchema: Schema<FirmwareProtocolEnum> = stringEnum(FirmwareProtocolEnum);
+export const firmwareProtocolEnumSchema: Schema<FirmwareProtocolEnum> = stringEnum(
+  FirmwareProtocolEnum
+);

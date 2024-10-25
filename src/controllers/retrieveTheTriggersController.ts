@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ReadySimRestErrorResponseError,
-} from '../errors/readySimRestErrorResponseError';
-import {
   TriggerValueResponse,
   triggerValueResponseSchema,
 } from '../models/triggerValueResponse';
@@ -18,6 +15,7 @@ import {
 } from '../models/triggerValueResponse2';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { ReadySimRestErrorResponseError } from '../errors/readySimRestErrorResponseError';
 
 export class RetrieveTheTriggersController extends BaseController {
   /**

@@ -5,7 +5,10 @@
  */
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
-import { LicenseDeviceList, licenseDeviceListSchema } from './licenseDeviceList';
+import {
+  LicenseDeviceList,
+  licenseDeviceListSchema,
+} from './licenseDeviceList';
 
 /** Request to assign license. */
 export interface AssignLicenseRequest {

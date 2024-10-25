@@ -20,11 +20,9 @@ const softwareManagementLicensesV3Controller = new SoftwareManagementLicensesV3C
 The endpoint allows user to list license usage.
 
 ```ts
-async getAccountLicensesStatus(
-  acc: string,
+async getAccountLicensesStatus(  acc: string,
   lastSeenDeviceId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3LicenseSummary>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V3LicenseSummary>>
 ```
 
 ## Parameters
@@ -95,11 +93,9 @@ try {
 This endpoint allows user to assign licenses to a list of devices.
 
 ```ts
-async assignLicensesToDevices(
-  acc: string,
+async assignLicensesToDevices(  acc: string,
   body: V3LicenseIMEI,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3LicenseAssignedRemovedResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V3LicenseAssignedRemovedResult>>
 ```
 
 ## Parameters
@@ -173,11 +169,9 @@ try {
 This endpoint allows user to remove licenses from a list of devices.
 
 ```ts
-async removeLicensesFromDevices(
-  acc: string,
+async removeLicensesFromDevices(  acc: string,
   body: V3LicenseIMEI,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3LicenseAssignedRemovedResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V3LicenseAssignedRemovedResult>>
 ```
 
 ## Parameters

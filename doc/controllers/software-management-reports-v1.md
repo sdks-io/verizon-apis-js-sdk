@@ -20,11 +20,9 @@ const softwareManagementReportsV1Controller = new SoftwareManagementReportsV1Con
 Returns an array of all devices in the specified account. Each device object includes information needed for managing firmware, including the device make and model, MDN and IMEI, and current firmware version.
 
 ```ts
-async listAccountDevices(
-  account: string,
+async listAccountDevices(  account: string,
   startIndex: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceListQueryResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceListQueryResult>>
 ```
 
 ## Parameters
@@ -115,12 +113,10 @@ try {
 Returns a list of all upgrades with a specified status.
 
 ```ts
-async listUpgradesForSpecifiedStatus(
-  account: string,
+async listUpgradesForSpecifiedStatus(  account: string,
   upgradeStatus: UpgradeStatusEnum,
   startIndex: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UpgradeListQueryResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<UpgradeListQueryResult>>
 ```
 
 ## Parameters
@@ -173,11 +169,9 @@ try {
 Returns the upgrade history of the specified device from the previous six months.
 
 ```ts
-async getDeviceFirmwareUpgradeHistory(
-  account: string,
+async getDeviceFirmwareUpgradeHistory(  account: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceUpgradeHistory[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceUpgradeHistory[]>>
 ```
 
 ## Parameters

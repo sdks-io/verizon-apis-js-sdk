@@ -24,11 +24,9 @@ const softwareManagementLicensesV1Controller = new SoftwareManagementLicensesV1C
 Assigns licenses to a specified list of devices so that firmware upgrades can be scheduled for those devices.
 
 ```ts
-async assignLicensesToDevices(
-  account: string,
+async assignLicensesToDevices(  account: string,
   body: V1LicensesAssignedRemovedRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V1LicensesAssignedRemovedResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V1LicensesAssignedRemovedResult>>
 ```
 
 ## Parameters
@@ -106,11 +104,9 @@ try {
 Remove unused licenses from device.
 
 ```ts
-async removeLicensesFromDevices(
-  account: string,
+async removeLicensesFromDevices(  account: string,
   body: V1LicensesAssignedRemovedRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V1LicensesAssignedRemovedResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V1LicensesAssignedRemovedResult>>
 ```
 
 ## Parameters
@@ -194,11 +190,9 @@ try {
 Creates a list of devices from which licenses will be removed if the number of MRC licenses becomes less than the number of assigned licenses.
 
 ```ts
-async createListOfLicensesToRemove(
-  account: string,
+async createListOfLicensesToRemove(  account: string,
   body: V1ListOfLicensesToRemoveRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V1ListOfLicensesToRemoveResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V1ListOfLicensesToRemoveResult>>
 ```
 
 ## Parameters
@@ -267,10 +261,8 @@ try {
 Deletes the entire list of cancellation candidate devices.
 
 ```ts
-async deleteListOfLicensesToRemove(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV1SuccessResult>>
+async deleteListOfLicensesToRemove(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV1SuccessResult>>
 ```
 
 ## Parameters
@@ -323,11 +315,9 @@ try {
 Returns a list of devices from which licenses will be removed if the number of MRC licenses becomes less than the number of assigned licenses.
 
 ```ts
-async listLicensesToRemove(
-  account: string,
+async listLicensesToRemove(  account: string,
   startIndex: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V1ListOfLicensesToRemove>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V1ListOfLicensesToRemove>>
 ```
 
 ## Parameters

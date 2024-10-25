@@ -22,10 +22,8 @@ const wirelessNetworkPerformanceController = new WirelessNetworkPerformanceContr
 WNP Query for current network condition.
 
 ```ts
-async nearRealTimeNetworkConditions(
-  body: GetNetworkConditionsRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<WNPRequestResponse>>
+async nearRealTimeNetworkConditions(  body: GetNetworkConditionsRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<WNPRequestResponse>>
 ```
 
 ## Parameters
@@ -80,13 +78,11 @@ try {
 
 # Domestic 4 G and 5G Nationwide Network Coverage
 
-Run a report to determine network types available and available coverage. Network types covered include: CAT-M, NB-IOT, LTE, LTE-AWS and 5GNW.
+Run a report to determine network types available and available coverage. Network types covered include: CAT-M, NB-IOT, LTE, LTE-AWS, 5GNW and C-BAND.
 
 ```ts
-async domestic4GAnd5gNationwideNetworkCoverage(
-  body: GetWirelessCoverageRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<WNPRequestResponse>>
+async domestic4GAnd5gNationwideNetworkCoverage(  body: GetWirelessCoverageRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<WNPRequestResponse>>
 ```
 
 ## Parameters
@@ -154,10 +150,8 @@ try {
 Identify the direction and general distance of nearby cell sites and the technology supported by the equipment.
 
 ```ts
-async siteProximity(
-  body: GetNetworkConditionsRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<WNPRequestResponse>>
+async siteProximity(  body: GetNetworkConditionsRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<WNPRequestResponse>>
 ```
 
 ## Parameters
@@ -215,10 +209,8 @@ try {
 A report of a specific device's service scores over a 30 day period.
 
 ```ts
-async deviceExperience30daysHistory(
-  body: GetDeviceExperienceScoreHistoryRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<WNPRequestResponse>>
+async deviceExperience30daysHistory(  body: GetDeviceExperienceScoreHistoryRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<WNPRequestResponse>>
 ```
 
 ## Parameters
@@ -276,10 +268,8 @@ try {
 Run a report to view the latest device experience score for specific devices.
 
 ```ts
-async deviceExperienceBulkLatest(
-  body: GetDeviceExperienceScoreBulkRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<WNPRequestResponse>>
+async deviceExperienceBulkLatest(  body: GetDeviceExperienceScoreBulkRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<WNPRequestResponse>>
 ```
 
 ## Parameters

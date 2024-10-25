@@ -46,10 +46,8 @@ const deviceManagementController = new DeviceManagementController(client);
 If the devices do not already exist in the account, this API resource adds them before activation.
 
 ```ts
-async activateServiceForDevices(
-  body: CarrierActivateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async activateServiceForDevices(  body: CarrierActivateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -79,7 +77,7 @@ const body: CarrierActivateRequest = {
           kind: 'iccid',
         }
       ],
-      ipAddress: '1.2.3.456',
+      ipaddress: '1.2.3.456',
     },
     {
       deviceIds: [
@@ -92,7 +90,7 @@ const body: CarrierActivateRequest = {
           kind: 'iccid',
         }
       ],
-      ipAddress: '1.2.3.456',
+      ipaddress: '1.2.3.456',
     }
   ],
   servicePlan: 'the service plan name',
@@ -153,10 +151,8 @@ try {
 Use this API if you want to manage some device settings before you are ready to activate service for the devices.
 
 ```ts
-async addDevices(
-  body: AddDevicesRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AddDevicesResult[]>>
+async addDevices(  body: AddDevicesRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<AddDevicesResult[]>>
 ```
 
 ## Parameters
@@ -251,10 +247,8 @@ try {
 Sends a CarrierService callback message for each device in the request when the contact information has been changed, or if there was a problem and the change could not be completed.
 
 ```ts
-async updateDevicesContactInformation(
-  body: ContactInfoUpdateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async updateDevicesContactInformation(  body: ContactInfoUpdateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -293,7 +287,7 @@ const body: ContactInfoUpdateRequest = {
       suffix: 'I',
     },
   },
-  accountName: '0212345678-00001',
+  accountName: '0000123456-00001',
   devices: [
     {
       deviceIds: [
@@ -342,10 +336,8 @@ try {
 Sends a CarrierService callback message for each device in the request when the custom fields have been changed, or if there was a problem and the change could not be completed.
 
 ```ts
-async updateDevicesCustomFields(
-  body: CustomFieldsUpdateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async updateDevicesCustomFields(  body: CustomFieldsUpdateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -417,10 +409,8 @@ try {
 Deactivating service for a device may result in an early termination fee (ETF) being charged to the account, depending on the terms of the contract with Verizon. If your contract allows ETF waivers and if you want to use one for a particular deactivation, set the etfWaiver value to True.
 
 ```ts
-async deactivateServiceForDevices(
-  body: CarrierDeactivateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async deactivateServiceForDevices(  body: CarrierDeactivateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -486,10 +476,8 @@ try {
 Use this API to remove unneeded devices from an account.
 
 ```ts
-async deleteDeactivatedDevices(
-  body: DeleteDevicesRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeleteDevicesResult[]>>
+async deleteDeactivatedDevices(  body: DeleteDevicesRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeleteDevicesResult[]>>
 ```
 
 ## Parameters
@@ -594,10 +582,8 @@ try {
 Returns information about a single device or information about all devices that match the given parameters. Returned information includes device provisioning state, service plan, MDN, MIN, and IP address.
 
 ```ts
-async listDevicesInformation(
-  body: AccountDeviceListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AccountDeviceListResult>>
+async listDevicesInformation(  body: AccountDeviceListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<AccountDeviceListResult>>
 ```
 
 ## Parameters
@@ -685,10 +671,8 @@ try {
 Returns a list of all 4G devices with an ICCID (SIM) that was not activated with the expected IMEI (hardware) during a specified time frame.
 
 ```ts
-async listDevicesWithImeiIccidMismatch(
-  body: DeviceMismatchListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceMismatchListResult>>
+async listDevicesWithImeiIccidMismatch(  body: DeviceMismatchListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceMismatchListResult>>
 ```
 
 ## Parameters
@@ -769,10 +753,8 @@ try {
 Move active devices from one billing account to another within a customer profile.
 
 ```ts
-async moveDevicesWithinAccountsOfProfile(
-  body: MoveDeviceRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async moveDevicesWithinAccountsOfProfile(  body: MoveDeviceRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -836,10 +818,8 @@ try {
 Changes the provisioning state of one or more devices to a specified customer-defined service and state.
 
 ```ts
-async updateDevicesState(
-  body: GoToStateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async updateDevicesState(  body: GoToStateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -937,10 +917,8 @@ try {
 Changes the service plan for one or more devices.
 
 ```ts
-async changeDevicesServicePlan(
-  body: ServicePlanUpdateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async changeDevicesServicePlan(  body: ServicePlanUpdateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1004,10 +982,8 @@ try {
 Suspends service for one or more devices.
 
 ```ts
-async suspendServiceForDevices(
-  body: CarrierActionsRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async suspendServiceForDevices(  body: CarrierActionsRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1069,10 +1045,8 @@ try {
 Restores service to one or more suspended devices.
 
 ```ts
-async restoreServiceForSuspendedDevices(
-  body: CarrierActionsRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async restoreServiceForSuspendedDevices(  body: CarrierActionsRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1134,10 +1108,8 @@ try {
 Checks whether specified devices are registered by the manufacturer with the Verizon network and are available to be activated.
 
 ```ts
-async checkDevicesAvailabilityForActivation(
-  body: DeviceActivationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async checkDevicesAvailabilityForActivation(  body: DeviceActivationRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1200,10 +1172,8 @@ try {
 Each response includes a maximum of 500 records. To obtain more records, you can call the API multiple times, adjusting the earliest value each time to start where the previous request finished.
 
 ```ts
-async retrieveDeviceConnectionHistory(
-  body: DeviceConnectionListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ConnectionHistoryResult>>
+async retrieveDeviceConnectionHistory(  body: DeviceConnectionListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<ConnectionHistoryResult>>
 ```
 
 ## Parameters
@@ -1295,10 +1265,8 @@ try {
 Changes or removes the CostCenterCode value or customer name and address (Primary Place of Use) for one or more devices.
 
 ```ts
-async updateDevicesCostCenterCode(
-  body: DeviceCostCenterRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async updateDevicesCostCenterCode(  body: DeviceCostCenterRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1361,10 +1329,8 @@ try {
 Returns extended diagnostic information about a specified device, including connectivity, provisioning, billing and location status.
 
 ```ts
-async getDeviceExtendedDiagnosticInformation(
-  body: DeviceExtendedDiagnosticsRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceExtendedDiagnosticsResult>>
+async getDeviceExtendedDiagnosticInformation(  body: DeviceExtendedDiagnosticsRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceExtendedDiagnosticsResult>>
 ```
 
 ## Parameters
@@ -1433,10 +1399,8 @@ try {
 Returns the provisioning history of a specified device during a specified time period.
 
 ```ts
-async listDevicesProvisioningHistory(
-  body: DeviceProvisioningHistoryListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceProvisioningHistoryListResult[]>>
+async listDevicesProvisioningHistory(  body: DeviceProvisioningHistoryListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceProvisioningHistoryListResult[]>>
 ```
 
 ## Parameters
@@ -1508,10 +1472,8 @@ try {
 4G and GSM devices do not have a PRL.
 
 ```ts
-async listCurrentDevicesPRLVersion(
-  body: DevicePrlListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async listCurrentDevicesPRLVersion(  body: DevicePrlListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1573,10 +1535,8 @@ try {
 Returns DeviceSuspensionStatus callback messages containing the current device state and information on how many days a device has been suspended and can continue to be suspended.
 
 ```ts
-async getDeviceServiceSuspensionStatus(
-  body: DeviceSuspensionStatusRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async getDeviceServiceSuspensionStatus(  body: DeviceSuspensionStatusRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1638,10 +1598,8 @@ try {
 Returns the network data usage history of a device during a specified time period.
 
 ```ts
-async listDevicesUsageHistory(
-  body: DeviceUsageListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceUsageListResult>>
+async listDevicesUsageHistory(  body: DeviceUsageListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceUsageListResult>>
 ```
 
 ## Parameters
@@ -1713,10 +1671,8 @@ try {
 The information is returned in a callback response, so you must register a URL for DeviceUsage callback messages using the POST /callbacks API.
 
 ```ts
-async retrieveAggregateDeviceUsageHistory(
-  body: DeviceAggregateUsageListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async retrieveAggregateDeviceUsageHistory(  body: DeviceAggregateUsageListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1777,11 +1733,9 @@ try {
 Changes the identifier of a 3G or 4G device to match hardware changes made for a line of service. Use this request to transfer the line of service and the MDN to new hardware, or to change the MDN.
 
 ```ts
-async updateDeviceId(
-  serviceType: string,
+async updateDeviceId(  serviceType: string,
   body: ChangeDeviceIdRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1854,10 +1808,8 @@ try {
 This corresponds to the M2M-MC SOAP interface, `DeviceUploadService`.
 
 ```ts
-async deviceUpload(
-  body: DeviceUploadRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async deviceUpload(  body: DeviceUploadRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters
@@ -1931,10 +1883,8 @@ try {
 Gets billed usage for for either multiple devices or an entire billing account.
 
 ```ts
-async billedUsageInfo(
-  body: BilledusageListRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async billedUsageInfo(  body: BilledusageListRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -1987,10 +1937,8 @@ try {
 Allows you to associate your own usage segmentation label with a device.
 
 ```ts
-async usageSegmentationLabelAssociation(
-  body: AssociateLabelRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async usageSegmentationLabelAssociation(  body: AssociateLabelRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -2048,11 +1996,9 @@ try {
 Allow customers to remove the associated label from a device.
 
 ```ts
-async usageSegmentationLabelDeletion(
-  accountName: string,
+async usageSegmentationLabelDeletion(  accountName: string,
   labelList: LabelsList,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -2109,10 +2055,8 @@ try {
 Uploads and activates device identifiers and SKUs for new devices from OEMs to Verizon.
 
 ```ts
-async activationOrderStatus(
-  body: UploadsActivatesDeviceRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async activationOrderStatus(  body: UploadsActivatesDeviceRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -2185,10 +2129,8 @@ try {
 Checks the status of an activation order and lists where the order is in the provisioning process.
 
 ```ts
-async uploadDeviceIdentifier(
-  body: CheckOrderStatusRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async uploadDeviceIdentifier(  body: CheckOrderStatusRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters

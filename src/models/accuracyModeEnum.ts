@@ -16,4 +16,6 @@ export enum AccuracyModeEnum {
 /**
  * Schema for AccuracyModeEnum
  */
-export const  accuracyModeEnumSchema: Schema<AccuracyModeEnum> = stringEnum(AccuracyModeEnum);
+export const accuracyModeEnumSchema: Schema<AccuracyModeEnum> = stringEnum(
+  AccuracyModeEnum
+);

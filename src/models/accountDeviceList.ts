@@ -11,10 +11,10 @@ import { DeviceId, deviceIdSchema } from './deviceId';
 export interface AccountDeviceList {
   /** All identifiers for the device. */
   deviceIds: DeviceId[];
-  ipAddress?: string;
+  ipaddress?: string;
 }
 
 export const accountDeviceListSchema: Schema<AccountDeviceList> = object({
   deviceIds: ['deviceIds', array(lazy(() => deviceIdSchema))],
-  ipAddress: ['ipAddress', optional(string())],
+  ipaddress: ['ipAddress', optional(string())],
 });

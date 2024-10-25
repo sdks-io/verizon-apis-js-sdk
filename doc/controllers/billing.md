@@ -21,10 +21,8 @@ const billingController = new BillingController(client);
 This endpoint allows user to add managed accounts to a primary account.
 
 ```ts
-async addAccount(
-  body: ManagedAccountsAddRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ManagedAccountsAddResponse>>
+async addAccount(  body: ManagedAccountsAddRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<ManagedAccountsAddResponse>>
 ```
 
 ## Parameters
@@ -68,7 +66,7 @@ try {
 
 ```json
 {
-  "txid": "2c90bd28-ece4-42ef-9f02-7e3bd4fbff33",
+  "txid": "2c90bd28-eeee-ffff-gggg-7e3bd4fbff33",
   "statusList": [
     {
       "id": "1223334444-00001",
@@ -101,10 +99,8 @@ try {
 Activates a managed billing service relationship between a managed account and the primary account.
 
 ```ts
-async managedAccountAction(
-  body: ManagedAccountsProvisionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ManagedAccountsProvisionResponse>>
+async managedAccountAction(  body: ManagedAccountsProvisionRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<ManagedAccountsProvisionResponse>>
 ```
 
 ## Parameters
@@ -126,7 +122,7 @@ const body: ManagedAccountsProvisionRequest = {
   paccountName: '1234567890-00001',
   serviceName: ServiceNameEnum.Location,
   type: 'TS-LOC-COARSE-CellID-5K',
-  txid: 'd4fbff33-ece4-9f02-42ef-2c90bd287e3b',
+  txid: 'd4fbff33-eeee-ffff-gggg-2c90bd287e3b',
 };
 
 try {
@@ -145,7 +141,7 @@ try {
 
 ```json
 {
-  "txid": "4fbff332-ece4-42ef-9f02-7e3bdc90bd28",
+  "txid": "4fbff332-eeee-ffff-gggg-7e3bdc90bd28",
   "accountName": "1223334444-00001",
   "paccountName": "1234567890-00001",
   "serviceName": "Location",
@@ -166,10 +162,8 @@ try {
 Deactivates a managed billing service relationship between a managed account and the primary account.
 
 ```ts
-async cancelManagedAccountAction(
-  body: ManagedAccountCancelRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ManagedAccountCancelResponse>>
+async cancelManagedAccountAction(  body: ManagedAccountCancelRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<ManagedAccountCancelResponse>>
 ```
 
 ## Parameters
@@ -191,7 +185,7 @@ const body: ManagedAccountCancelRequest = {
   paccountName: '1234567890-00001',
   serviceName: ServiceNameEnum.Location,
   type: 'TS-LOC-COARSE-CellID-5K',
-  txid: 'd4fbff33-ece4-9f02-42ef-2c90bd287e3b',
+  txid: 'd4fbff33-eeee-ffff-gggg-2c90bd287e3b',
 };
 
 try {
@@ -210,7 +204,7 @@ try {
 
 ```json
 {
-  "txid": "4fbff332-ece4-42ef-9f02-7e3bdc90bd28",
+  "txid": "4fbff332-eeee-ffff-gggg-7e3bdc90bd28",
   "accountName": "1223334444-00001",
   "paccountName": "1234567890-00001",
   "serviceName": "Location",
@@ -231,11 +225,9 @@ try {
 This endpoint allows user to retrieve the list of all accounts managed by a primary account.
 
 ```ts
-async listManagedAccount(
-  accountName: string,
+async listManagedAccount(  accountName: string,
   serviceName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ManagedAccountsGetAllResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<ManagedAccountsGetAllResponse>>
 ```
 
 ## Parameters
@@ -280,11 +272,11 @@ try {
   "ManagedAccAddedList": [
     {
       "id": "1223334444-00001",
-      "txid": "2c90bd28-ece4-42ef-9f02-7e3bd4fbff33"
+      "txid": "2c90bd28-eeee-ffff-gggg-7e3bd4fbff33"
     },
     {
       "id": "2334445555-00001",
-      "txid": "d4fbff33-ece4-9f02-42ef-2c90bd287e3b"
+      "txid": "d4fbff33-eeee-ffff-gggg-2c90bd287e3b"
     }
   ]
 }

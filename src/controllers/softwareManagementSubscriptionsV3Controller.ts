@@ -5,13 +5,13 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 import {
   FotaV3Subscription,
   fotaV3SubscriptionSchema,
 } from '../models/fotaV3Subscription';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 
 export class SoftwareManagementSubscriptionsV3Controller extends BaseController {
   /**

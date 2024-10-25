@@ -19,12 +19,10 @@ const accountDevicesController = new AccountDevicesController(client);
 Retrieve account device information such as reported firmware on the devices.
 
 ```ts
-async getAccountDeviceInformation(
-  acc: string,
+async getAccountDeviceInformation(  acc: string,
   lastSeenDeviceId?: string,
   protocol?: DevicesProtocolEnum,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3AccountDeviceList>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V3AccountDeviceList>>
 ```
 
 ## Parameters
@@ -33,7 +31,7 @@ async getAccountDeviceInformation(
 |  --- | --- | --- | --- |
 | `acc` | `string` | Template, Required | Account identifier. |
 | `lastSeenDeviceId` | `string \| undefined` | Query, Optional | Last seen device identifier. |
-| `protocol` | [`DevicesProtocolEnum \| undefined`](../../doc/models/devices-protocol-enum.md) | Query, Optional | Filter to retrieve a specific protocol type used. |
+| `protocol` | [`DevicesProtocolEnum \| undefined`](../../doc/models/devices-protocol-enum.md) | Query, Optional | Filter to retrieve a specific protocol type used.<br>**Default**: `DevicesProtocolEnum.LWM2m` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -77,11 +75,9 @@ try {
 Retrieve device information for a list of devices on an account.
 
 ```ts
-async listAccountDevicesInformation(
-  acc: string,
+async listAccountDevicesInformation(  acc: string,
   body: DeviceIMEI,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceListResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceListResult>>
 ```
 
 ## Parameters

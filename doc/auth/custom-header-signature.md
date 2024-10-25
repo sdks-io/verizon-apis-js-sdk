@@ -23,7 +23,9 @@ You must provide credentials in the client as shown in the following code snippe
 
 ```ts
 const client = new Client({
-  vZM2mTokenCredentials: {  },
+  vZM2mTokenCredentials: {
+    'VZ-M2M-Token': 'VZ-M2M-Token'
+  },
 });
 ```
 

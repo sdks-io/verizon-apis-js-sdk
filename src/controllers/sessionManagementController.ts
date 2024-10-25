@@ -5,9 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
 import { LogInRequest, logInRequestSchema } from '../models/logInRequest';
 import { LogInResult, logInResultSchema } from '../models/logInResult';
 import { LogOutRequest, logOutRequestSchema } from '../models/logOutRequest';
@@ -21,6 +18,7 @@ import {
 } from '../models/sessionResetPasswordResult';
 import { optional } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class SessionManagementController extends BaseController {
   /**

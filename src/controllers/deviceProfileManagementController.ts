@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { RestErrorResponseError } from '../errors/restErrorResponseError';
 import {
   ActivateDeviceProfileRequest,
   activateDeviceProfileRequestSchema,
@@ -24,6 +23,7 @@ import {
   setFallbackAttributeRequestSchema,
 } from '../models/setFallbackAttributeRequest';
 import { BaseController } from './baseController';
+import { RestErrorResponseError } from '../errors/restErrorResponseError';
 
 export class DeviceProfileManagementController extends BaseController {
   /**

@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 import { Campaign, campaignSchema } from '../models/campaign';
 import {
   CampaignFirmwareUpgrade,
@@ -33,29 +32,30 @@ import {
 } from '../models/v3ChangeCampaignDatesRequest';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 
 export class CampaignsV3Controller extends BaseController {
   /**
    * This endpoint allows a user to schedule a firmware upgrade for a list of devices.
    *
-   * @param acc          Account identifier.
+   * @param accountName  Account identifier.
    * @param body         Firmware upgrade information.
    * @return Response from the API call
    */
   async scheduleCampaignFirmwareUpgrade(
-    acc: string,
+    accountName: string,
     body: CampaignFirmwareUpgrade,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<FirmwareCampaign>> {
     const req = this.createRequest('POST');
     req.baseUrl('Software Management V3');
     const mapped = req.prepareArgs({
-      acc: [acc, string()],
+      accountName: [accountName, string()],
       body: [body, campaignFirmwareUpgradeSchema],
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.appendTemplatePath`/campaigns/firmware/${mapped.acc}`;
+    req.appendTemplatePath`/campaigns/firmware/${mapped.accountName}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareCampaignSchema, requestOptions);
@@ -123,22 +123,22 @@ export class CampaignsV3Controller extends BaseController {
   /**
    * This endpoint allows the user to retrieve campaign level information for a specified campaign.
    *
-   * @param acc        Account identifier.
-   * @param campaignId Firmware upgrade identifier.
+   * @param accountName Account identifier.
+   * @param campaignId  Firmware upgrade identifier.
    * @return Response from the API call
    */
   async getCampaignInformation(
-    acc: string,
+    accountName: string,
     campaignId: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<Campaign>> {
     const req = this.createRequest('GET');
     req.baseUrl('Software Management V3');
     const mapped = req.prepareArgs({
-      acc: [acc, string()],
+      accountName: [accountName, string()],
       campaignId: [campaignId, string()],
     });
-    req.appendTemplatePath`/campaigns/${mapped.acc}/${mapped.campaignId}`;
+    req.appendTemplatePath`/campaigns/${mapped.accountName}/${mapped.campaignId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(campaignSchema, requestOptions);
@@ -148,22 +148,22 @@ export class CampaignsV3Controller extends BaseController {
    * This endpoint allows user to cancel a firmware campaign. A firmware campaign already started can not
    * be cancelled.
    *
-   * @param acc        Account identifier.
-   * @param campaignId Firmware upgrade information.
+   * @param accountName Account identifier.
+   * @param campaignId  Firmware upgrade information.
    * @return Response from the API call
    */
   async cancelCampaign(
-    acc: string,
+    accountName: string,
     campaignId: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<FotaV3SuccessResult>> {
     const req = this.createRequest('DELETE');
     req.baseUrl('Software Management V3');
     const mapped = req.prepareArgs({
-      acc: [acc, string()],
+      accountName: [accountName, string()],
       campaignId: [campaignId, string()],
     });
-    req.appendTemplatePath`/campaigns/${mapped.acc}/${mapped.campaignId}`;
+    req.appendTemplatePath`/campaigns/${mapped.accountName}/${mapped.campaignId}`;
     req.throwOn(400, FotaV3ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV3SuccessResultSchema, requestOptions);

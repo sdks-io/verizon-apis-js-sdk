@@ -19,17 +19,15 @@ const promotionPeriodInformationController = new PromotionPeriodInformationContr
 Retrieves the usage history of a device during the promotion period.
 
 ```ts
-async getPromoDeviceUsageHistory(
-  body: RequestBodyForUsage1,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ResponseToUsageQuery>>
+async getPromoDeviceUsageHistory(  body: ARequestBodyForUsage,
+requestOptions?: RequestOptions): Promise<ApiResponse<ResponseToUsageQuery>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`RequestBodyForUsage1`](../../doc/models/request-body-for-usage-1.md) | Body, Required | Retrieve Aggregate Usage |
+| `body` | [`ARequestBodyForUsage`](../../doc/models/a-request-body-for-usage.md) | Body, Required | Retrieve Aggregate Usage |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -39,7 +37,7 @@ async getPromoDeviceUsageHistory(
 ## Example Usage
 
 ```ts
-const body: RequestBodyForUsage1 = {
+const body: ARequestBodyForUsage = {
   startTime: '08/15/2021 00:00:00',
   endTime: '08/16/2021 00:00:00',
 };
@@ -91,10 +89,8 @@ try {
 Retrieves the aggregate usage for an account using pseudo-MDN during the promotional period using a callback.
 
 ```ts
-async getPromoDeviceAggregateUsageHistory(
-  body: RequestBodyForUsage,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UsageRequestResponse>>
+async getPromoDeviceAggregateUsageHistory(  body: RequestBodyForUsage,
+requestOptions?: RequestOptions): Promise<ApiResponse<UsageRequestResponse>>
 ```
 
 ## Parameters

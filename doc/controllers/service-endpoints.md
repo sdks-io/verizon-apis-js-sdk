@@ -23,14 +23,12 @@ const serviceEndpointsController = new ServiceEndpointsController(client);
 Returns a list of optimal Service Endpoints that client devices can connect to. **Note:** If a query is sent with all of the parameters, it will fail with a "400" error. You can search based on the following parameter combinations - Region plus Service Endpoints IDs and Subscriber density (density is optional but recommended), Region plus Service Endpoints IDs and UEIdentity(Including UEIdentity Type) and Service Endpoints IDs plus UEIdentity(Including UEIdentity Type).
 
 ```ts
-async listOptimalServiceEndpoints(
-  region?: string,
+async listOptimalServiceEndpoints(  region?: string,
   subscriberDensity?: number,
   uEIdentityType?: UserEquipmentIdentityTypeEnum,
   uEIdentity?: string,
   serviceEndpointsIds?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ListOptimalServiceEndpointsResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<ListOptimalServiceEndpointsResult>>
 ```
 
 ## Parameters
@@ -38,7 +36,7 @@ async listOptimalServiceEndpoints(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `region` | `string \| undefined` | Query, Optional | MEC region name. Current valid values are US_WEST_2 and US_EAST_1. |
-| `subscriberDensity` | `number \| undefined` | Query, Optional | Minimum number of 4G/5G subscribers per square kilometer. |
+| `subscriberDensity` | `number \| undefined` | Query, Optional | Minimum number of 4G/5G subscribers per square kilometer.<br>**Constraints**: `>= 1`, `<= 100` |
 | `uEIdentityType` | [`UserEquipmentIdentityTypeEnum \| undefined`](../../doc/models/user-equipment-identity-type-enum.md) | Query, Optional | Type of User Equipment identifier used in `UEIdentity`. |
 | `uEIdentity` | `string \| undefined` | Query, Optional | The identifier value for User Equipment. The type of identifier is defined by the 'UEIdentityType' parameter. The`IPAddress`format can be IPv4 or IPv6. |
 | `serviceEndpointsIds` | `string \| undefined` | Query, Optional | A system-defined string identifier representing one or more registered Service Endpoints. |
@@ -59,7 +57,7 @@ async listOptimalServiceEndpoints(
 ```ts
 const region = 'US_WEST_2';
 
-const uEIdentityType = UserEquipmentIdentityTypeEnum.IPAddress;
+const uEIdentityType = UserEquipmentIdentityTypeEnum.Ipaddress;
 
 const uEIdentity = '2600:1010:b1d0:0000:0000:0000:0000:0012';
 
@@ -119,17 +117,15 @@ try {
 Register Service Endpoints of a deployed application to specified MEC Platforms.
 
 ```ts
-async registerServiceEndpoints(
-  body: ResourcesEdgeHostedServiceWithProfileId[],
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RegisterServiceEndpointResult>>
+async registerServiceEndpoints(  body: ResourcesEdgeHostedServiceWithProfileId[],
+requestOptions?: RequestOptions): Promise<ApiResponse<RegisterServiceEndpointResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `body` | [`ResourcesEdgeHostedServiceWithProfileId[]`](../../doc/models/resources-edge-hosted-service-with-profile-id.md) | Body, Required | An array of Service Endpoint data for a deployed application. The request body passes all of the needed parameters to create a service endpoint. Parameters will be edited here rather than the **Parameters** section above. The `ern`,`applicationServerProviderId`, `applicationId` and `serviceProfileID` parameters are required. **Note:** Currently, the only valid value for `applicationServerProviderId`is **AWS**. Also, if you do not know one of the optional values (i.e. URI), you can erase the line from the query by back-spacing over it. |
+| `body` | [`ResourcesEdgeHostedServiceWithProfileId[]`](../../doc/models/resources-edge-hosted-service-with-profile-id.md) | Body, Required | An array of Service Endpoint data for a deployed application. The request body passes all of the needed parameters to create a service endpoint. Parameters will be edited here rather than the **Parameters** section above. The `ern`,`applicationServerProviderId`, `applicationId` and `serviceProfileID` parameters are required. **Note:** Currently, the only valid value for `applicationServerProviderId`is **AWS**. Also, if you do not know one of the optional values (i.e. URI), you can erase the line from the query by back-spacing over it.<br>**Constraints**: *Maximum Items*: `100` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Requires scope
@@ -188,9 +184,7 @@ try {
 Returns a list of all registered service endpoints.
 
 ```ts
-async listAllServiceEndpoints(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ListAllServiceEndpointsResult>>
+async listAllServiceEndpoints(requestOptions?: RequestOptions): Promise<ApiResponse<ListAllServiceEndpointsResult>>
 ```
 
 ## Parameters
@@ -249,10 +243,8 @@ try {
 Returns endpoint information for all Service Endpoints registered to a specified serviceEndpointId.
 
 ```ts
-async getServiceEndpoint(
-  serviceEndpointsId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ResourcesEdgeHostedServiceWithProfileId[]>>
+async getServiceEndpoint(  serviceEndpointsId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<ResourcesEdgeHostedServiceWithProfileId[]>>
 ```
 
 ## Parameters
@@ -324,11 +316,9 @@ try {
 Update registered Service Endpoint information.
 
 ```ts
-async updateServiceEndpoint(
-  serviceEndpointsId: string,
+async updateServiceEndpoint(  serviceEndpointsId: string,
   body: ResourcesEdgeHostedServiceWithProfileId[],
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UpdateServiceEndpointResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<UpdateServiceEndpointResult>>
 ```
 
 ## Parameters
@@ -336,7 +326,7 @@ async updateServiceEndpoint(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `serviceEndpointsId` | `string` | Template, Required | A system-defined string identifier representing one or more registered Service Endpoints. |
-| `body` | [`ResourcesEdgeHostedServiceWithProfileId[]`](../../doc/models/resources-edge-hosted-service-with-profile-id.md) | Body, Required | Data needed for Service Endpoint information. The request body passes the rest of the needed parameters to create a service endpoint. Parameters other than `serviceEndpointsId` will be edited here rather than the **Parameters** section above. The `ern`,`applicationServerProviderId` and `applicationId` parameters are required. **Note:** Currently, the only valid value for `applicationServerProviderId`is **AWS**. |
+| `body` | [`ResourcesEdgeHostedServiceWithProfileId[]`](../../doc/models/resources-edge-hosted-service-with-profile-id.md) | Body, Required | Data needed for Service Endpoint information. The request body passes the rest of the needed parameters to create a service endpoint. Parameters other than `serviceEndpointsId` will be edited here rather than the **Parameters** section above. The `ern`,`applicationServerProviderId` and `applicationId` parameters are required. **Note:** Currently, the only valid value for `applicationServerProviderId`is **AWS**.<br>**Constraints**: *Maximum Items*: `100` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Requires scope
@@ -409,10 +399,8 @@ try {
 Deregister an application's Service Endpoint from the MEC Platform(s).
 
 ```ts
-async deregisterServiceEndpoint(
-  serviceEndpointsId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeregisterServiceEndpointResult>>
+async deregisterServiceEndpoint(  serviceEndpointsId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeregisterServiceEndpointResult>>
 ```
 
 ## Parameters

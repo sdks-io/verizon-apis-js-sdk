@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 import { DeviceLog, deviceLogSchema } from '../models/deviceLog';
 import {
   DeviceLoggingRequest,
@@ -17,6 +16,7 @@ import {
 } from '../models/deviceLoggingStatus';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 
 export class ClientLoggingController extends BaseController {
   /**

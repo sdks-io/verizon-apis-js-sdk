@@ -19,10 +19,8 @@ const diagnosticsObservationsController = new DiagnosticsObservationsController(
 This endpoint allows the user to start or change observe diagnostics.
 
 ```ts
-async startDiagnosticsObservation(
-  body: ObservationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DiagnosticsObservationResult>>
+async startDiagnosticsObservation(  body: ObservationRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DiagnosticsObservationResult>>
 ```
 
 ## Parameters
@@ -105,11 +103,9 @@ try {
 This endpoint allows the user to stop or reset observe diagnostics.
 
 ```ts
-async stopDiagnosticsObservation(
-  transactionId: string,
+async stopDiagnosticsObservation(  transactionId: string,
   accountName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DiagnosticsObservationResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DiagnosticsObservationResult>>
 ```
 
 ## Parameters

@@ -19,11 +19,9 @@ const deviceServiceManagementController = new DeviceServiceManagementController(
 Gets the list of a status for hyper-precise location devices.
 
 ```ts
-async getDeviceHyperPreciseStatus(
-  imei: string,
+async getDeviceHyperPreciseStatus(  imei: string,
   accountNumber: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<BullseyeServiceResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<BullseyeServiceResult>>
 ```
 
 ## Parameters
@@ -91,10 +89,8 @@ try {
 Enable/disable hyper-precise service for a device.
 
 ```ts
-async updateDeviceHyperPreciseStatus(
-  body: BullseyeServiceRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<BullseyeServiceResult>>
+async updateDeviceHyperPreciseStatus(  body: BullseyeServiceRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<BullseyeServiceResult>>
 ```
 
 ## Parameters

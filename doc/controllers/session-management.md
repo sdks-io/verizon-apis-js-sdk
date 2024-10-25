@@ -20,10 +20,8 @@ const sessionManagementController = new SessionManagementController(client);
 Initiates a Connectivity Management session and returns a VZ-M2M session token that is required in subsequent API requests.
 
 ```ts
-async startConnectivityManagementSession(
-  body?: LogInRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<LogInResult>>
+async startConnectivityManagementSession(  body?: LogInRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<LogInResult>>
 ```
 
 ## Parameters
@@ -77,9 +75,7 @@ try {
 Ends a Connectivity Management session.
 
 ```ts
-async endConnectivityManagementSession(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<LogOutRequest>>
+async endConnectivityManagementSession(requestOptions?: RequestOptions): Promise<ApiResponse<LogOutRequest>>
 ```
 
 ## Parameters
@@ -127,10 +123,8 @@ try {
 The new password is effective immediately. Passwords do not expire, but Verizon recommends changing your password every 90 days.
 
 ```ts
-async resetConnectivityManagementPassword(
-  body: SessionResetPasswordRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SessionResetPasswordResult>>
+async resetConnectivityManagementPassword(  body: SessionResetPasswordRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<SessionResetPasswordResult>>
 ```
 
 ## Parameters

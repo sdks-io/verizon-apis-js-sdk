@@ -16,4 +16,6 @@ interface DeviceDiagnosticsResult {
   errorMessage: string;
 }
 
-export class DeviceDiagnosticsResultError extends ApiError<DeviceDiagnosticsResult> {}
+export class DeviceDiagnosticsResultError extends ApiError<
+  DeviceDiagnosticsResult
+> {}

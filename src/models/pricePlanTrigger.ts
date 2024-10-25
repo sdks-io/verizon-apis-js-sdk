@@ -5,7 +5,10 @@
  */
 
 import { lazy, object, optional, Schema } from '../schema';
-import { AccountGroupShare, accountGroupShareSchema } from './accountGroupShare';
+import {
+  AccountGroupShare,
+  accountGroupShareSchema,
+} from './accountGroupShare';
 
 export interface PricePlanTrigger {
   accountGroupShare?: AccountGroupShare;

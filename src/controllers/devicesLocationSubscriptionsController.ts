@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 import {
   BillUsageRequest,
   billUsageRequestSchema,
@@ -16,22 +15,23 @@ import {
 } from '../models/deviceLocationSubscription';
 import { optional, string, unknown } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 
 export class DevicesLocationSubscriptionsController extends BaseController {
   /**
    * This subscriptions endpoint retrieves an account's current location subscription status.
    *
-   * @param account Account identifier in "##########-#####".
+   * @param accountName Account identifier in "##########-#####".
    * @return Response from the API call
    */
   async getLocationServiceSubscriptionStatus(
-    account: string,
+    accountName: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<DeviceLocationSubscription>> {
     const req = this.createRequest('GET');
     req.baseUrl('Device Location');
-    const mapped = req.prepareArgs({ account: [account, string()] });
-    req.appendTemplatePath`/subscriptions/${mapped.account}`;
+    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
+    req.appendTemplatePath`/subscriptions/${mapped.accountName}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceLocationSubscriptionSchema, requestOptions);
@@ -46,7 +46,7 @@ export class DevicesLocationSubscriptionsController extends BaseController {
   async getLocationServiceUsage(
     body: BillUsageRequest,
     requestOptions?: RequestOptions
-  ): Promise<ApiResponse<unknown>> {
+  ): Promise<ApiResponse<unknown | undefined>> {
     const req = this.createRequest('POST', '/usage');
     req.baseUrl('Device Location');
     const mapped = req.prepareArgs({ body: [body, billUsageRequestSchema] });

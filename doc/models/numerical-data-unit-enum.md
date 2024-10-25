@@ -11,10 +11,10 @@ Unit of time.
 
 | Name |
 |  --- |
-| `sECOND` |
-| `mINUTE` |
-| `hOUR` |
-| `dAY` |
+| `SECOND` |
+| `MINUTE` |
+| `HOUR` |
+| `DAY` |
 
 ## Example
 

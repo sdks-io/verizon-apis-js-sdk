@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { EdgeDiscoveryResultError } from '../errors/edgeDiscoveryResultError';
 import {
   ListMECPlatformsResult,
   listMECPlatformsResultSchema,
@@ -20,6 +19,7 @@ import {
 } from '../models/userEquipmentIdentityTypeEnum';
 import { number, optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { EdgeDiscoveryResultError } from '../errors/edgeDiscoveryResultError';
 
 export class M5gEdgePlatformsController extends BaseController {
   /**
@@ -66,7 +66,10 @@ export class M5gEdgePlatformsController extends BaseController {
     req.query('UEIdentity', mapped.uEIdentity);
     req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
     req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.defaultToError(
+      EdgeDiscoveryResultError,
+      'HTTP 500 Internal Server Error.'
+    );
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(listMECPlatformsResultSchema, requestOptions);
   }
@@ -83,7 +86,10 @@ export class M5gEdgePlatformsController extends BaseController {
     const req = this.createRequest('GET', '/regions');
     req.throwOn(400, EdgeDiscoveryResultError, 'HTTP 400 Bad Request.');
     req.throwOn(401, EdgeDiscoveryResultError, 'HTTP 401 Unauthorized.');
-    req.defaultToError(EdgeDiscoveryResultError, 'HTTP 500 Internal Server Error.');
+    req.defaultToError(
+      EdgeDiscoveryResultError,
+      'HTTP 500 Internal Server Error.'
+    );
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(listRegionsResultSchema, requestOptions);
   }

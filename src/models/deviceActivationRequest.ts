@@ -5,7 +5,10 @@
  */
 
 import { array, lazy, object, Schema, string } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 
 /** Request for device status to check availability of activation. */
 export interface DeviceActivationRequest {

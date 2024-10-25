@@ -14,11 +14,9 @@ const diagnosticsSettingsController = new DiagnosticsSettingsController(client);
 This endpoint retrieves diagnostics settings synchronously.
 
 ```ts
-async listDiagnosticsSettings(
-  accountName: string,
+async listDiagnosticsSettings(  accountName: string,
   devices: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DiagnosticObservationSetting[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DiagnosticObservationSetting[]>>
 ```
 
 ## Parameters

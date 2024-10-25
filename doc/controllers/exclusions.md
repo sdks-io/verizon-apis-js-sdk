@@ -12,9 +12,156 @@ const exclusionsController = new ExclusionsController(client);
 
 ## Methods
 
+* [Devices Location Get Consent Async](../../doc/controllers/exclusions.md#devices-location-get-consent-async)
+* [Devices Location Give Consent Async](../../doc/controllers/exclusions.md#devices-location-give-consent-async)
+* [Devices Location Update Consent](../../doc/controllers/exclusions.md#devices-location-update-consent)
 * [Exclude Devices](../../doc/controllers/exclusions.md#exclude-devices)
 * [Remove Devices From Exclusion List](../../doc/controllers/exclusions.md#remove-devices-from-exclusion-list)
 * [List Excluded Devices](../../doc/controllers/exclusions.md#list-excluded-devices)
+
+
+# Devices Location Get Consent Async
+
+Get the consent settings for the entire account or device list in an account.
+
+```ts
+async devicesLocationGetConsentAsync(  accountName: string,
+  deviceId?: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<GetAccountDeviceConsent>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Query, Required | The numeric name of the account. |
+| `deviceId` | `string \| undefined` | Query, Optional | The IMEI of the device being queried |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`GetAccountDeviceConsent`](../../doc/models/get-account-device-consent.md)
+
+## Example Usage
+
+```ts
+const accountName = '0000123456-00001';
+
+const deviceId = '900000000000009';
+
+try {
+  const { result, ...httpResponse } = await exclusionsController.devicesLocationGetConsentAsync(
+  accountName,
+  deviceId
+);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Unexpected error. | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
+
+
+# Devices Location Give Consent Async
+
+Create a consent record to use location services as an asynchronous request.
+
+```ts
+async devicesLocationGiveConsentAsync(  body?: AccountConsentCreate,
+requestOptions?: RequestOptions): Promise<ApiResponse<ConsentTransactionID>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`AccountConsentCreate \| undefined`](../../doc/models/account-consent-create.md) | Body, Optional | Account details to create a consent record. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`ConsentTransactionID`](../../doc/models/consent-transaction-id.md)
+
+## Example Usage
+
+```ts
+const body: AccountConsentCreate = {
+  accountName: '0000123456-00001',
+};
+
+try {
+  const { result, ...httpResponse } = await exclusionsController.devicesLocationGiveConsentAsync(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Unexpected error. | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
+
+
+# Devices Location Update Consent
+
+Update the location services consent record for an entire account.
+
+```ts
+async devicesLocationUpdateConsent(  body?: AccountConsentUpdate,
+requestOptions?: RequestOptions): Promise<ApiResponse<ConsentTransactionID>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`AccountConsentUpdate \| undefined`](../../doc/models/account-consent-update.md) | Body, Optional | Account details to update a consent record. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`ConsentTransactionID`](../../doc/models/consent-transaction-id.md)
+
+## Example Usage
+
+```ts
+const body: AccountConsentUpdate = {
+  accountName: '0000123456-00001',
+  allDeviceConsent: 0,
+};
+
+try {
+  const { result, ...httpResponse } = await exclusionsController.devicesLocationUpdateConsent(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Unexpected error. | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
 
 
 # Exclude Devices
@@ -22,10 +169,8 @@ const exclusionsController = new ExclusionsController(client);
 This consents endpoint sets a new exclusion list.
 
 ```ts
-async excludeDevices(
-  body: ConsentRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLocationSuccessResult>>
+async excludeDevices(  body: ConsentRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLocationSuccessResult>>
 ```
 
 ## Parameters
@@ -77,11 +222,9 @@ try {
 Removes devices from the exclusion list so that they can be located with Device Location Services requests.
 
 ```ts
-async removeDevicesFromExclusionList(
-  accountName: string,
+async removeDevicesFromExclusionList(  accountName: string,
   deviceList: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLocationSuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLocationSuccessResult>>
 ```
 
 ## Parameters
@@ -138,18 +281,16 @@ try {
 This consents endpoint retrieves a list of excluded devices in an account.
 
 ```ts
-async listExcludedDevices(
-  account: string,
+async listExcludedDevices(  accountName: string,
   startIndex: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DevicesConsentResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DevicesConsentResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier in "##########-#####". |
+| `accountName` | `string` | Template, Required | Account identifier in "##########-#####". |
 | `startIndex` | `string` | Template, Required | Zero-based number of the first record to return. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -160,13 +301,13 @@ async listExcludedDevices(
 ## Example Usage
 
 ```ts
-const account = '0252012345-00001';
+const accountName = '0252012345-00001';
 
 const startIndex = '0';
 
 try {
   const { result, ...httpResponse } = await exclusionsController.listExcludedDevices(
-  account,
+  accountName,
   startIndex
 );
   // Get more response info...

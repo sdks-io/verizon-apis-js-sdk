@@ -22,10 +22,8 @@ const sMSController = new SMSController(client);
 The messages are queued on the ThingSpace Platform and sent as soon as possible, but they may be delayed due to traffic and routing considerations.
 
 ```ts
-async sendSMSToDevice(
-  body: SMSSendRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async sendSMSToDevice(  body: SMSSendRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -85,11 +83,9 @@ try {
 When HTTP status is 202, a URL will be returned in the Location header of the form /sms/{aname}/history?next={token}. This URL can be used to request the next set of messages.
 
 ```ts
-async listDevicesSMSMessages(
-  aname: string,
+async listDevicesSMSMessages(  aname: string,
   next?: bigint,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SMSMessagesQueryResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<SMSMessagesQueryResult>>
 ```
 
 ## Parameters
@@ -163,10 +159,8 @@ try {
 Tells the ThingSpace Platform to start sending mobile-originated SMS messages through the EnhancedConnectivityService callback service. SMS messages from devices are queued until they are retrieved by your application, either by callback or synchronously with GET /sms/{accountName}/history.
 
 ```ts
-async startQueuedSMSDelivery(
-  aname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
+async startQueuedSMSDelivery(  aname: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
 ```
 
 ## Parameters

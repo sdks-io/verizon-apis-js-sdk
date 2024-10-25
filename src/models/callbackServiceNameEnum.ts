@@ -17,4 +17,6 @@ export enum CallbackServiceNameEnum {
 /**
  * Schema for CallbackServiceNameEnum
  */
-export const  callbackServiceNameEnumSchema: Schema<CallbackServiceNameEnum> = stringEnum(CallbackServiceNameEnum);
+export const callbackServiceNameEnumSchema: Schema<CallbackServiceNameEnum> = stringEnum(
+  CallbackServiceNameEnum
+);

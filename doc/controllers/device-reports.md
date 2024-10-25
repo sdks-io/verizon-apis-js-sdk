@@ -20,10 +20,8 @@ const deviceReportsController = new DeviceReportsController(client);
 Calculate aggregated report per day with number of sessions and usage information. User will receive synchronous response for specified list of devices (Max 10) and date range (Max 180 days).
 
 ```ts
-async calculateAggregatedReportSynchronous(
-  body: AggregateSessionReportRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AggregateSessionReport>>
+async calculateAggregatedReportSynchronous(  body: AggregateSessionReportRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<AggregateSessionReport>>
 ```
 
 ## Parameters
@@ -94,10 +92,8 @@ try {
 Calculate aggregated report per day with number of sessions and usage information. User will receive an asynchronous callback for the specified list of devices (Max 10000) and date range (Max 180 days).
 
 ```ts
-async calculateAggregatedReportAsynchronous(
-  body: AggregateSessionReportRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AggregatedReportCallbackResult>>
+async calculateAggregatedReportAsynchronous(  body: AggregateSessionReportRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<AggregatedReportCallbackResult>>
 ```
 
 ## Parameters
@@ -162,10 +158,8 @@ try {
 Detailed report of session duration and number of bytes transferred per day.
 
 ```ts
-async getSessionsReport(
-  body: SessionReportRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SessionReport>>
+async getSessionsReport(  body: SessionReportRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<SessionReport>>
 ```
 
 ## Parameters

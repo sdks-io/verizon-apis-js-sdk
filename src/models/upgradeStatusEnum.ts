@@ -21,4 +21,6 @@ export enum UpgradeStatusEnum {
 /**
  * Schema for UpgradeStatusEnum
  */
-export const  upgradeStatusEnumSchema: Schema<UpgradeStatusEnum> = stringEnum(UpgradeStatusEnum);
+export const upgradeStatusEnumSchema: Schema<UpgradeStatusEnum> = stringEnum(
+  UpgradeStatusEnum
+);

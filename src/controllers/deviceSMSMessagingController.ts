@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { GIORestErrorResponseError } from '../errors/gIORestErrorResponseError';
 import {
   GIORequestResponse,
   gIORequestResponseSchema,
@@ -28,6 +27,7 @@ import {
 } from '../models/successResponse';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { GIORestErrorResponseError } from '../errors/gIORestErrorResponseError';
 
 export class DeviceSMSMessagingController extends BaseController {
   /**

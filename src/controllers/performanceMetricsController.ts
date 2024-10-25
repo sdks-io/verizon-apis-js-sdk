@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  EdgePerformanceResultError,
-} from '../errors/edgePerformanceResultError';
-import {
   MECPerformanceMetrics,
   mECPerformanceMetricsSchema,
 } from '../models/mECPerformanceMetrics';
@@ -18,6 +15,7 @@ import {
 } from '../models/queryMECPerformanceMetricsRequest';
 import { optional } from '../schema';
 import { BaseController } from './baseController';
+import { EdgePerformanceResultError } from '../errors/edgePerformanceResultError';
 
 export class PerformanceMetricsController extends BaseController {
   /**

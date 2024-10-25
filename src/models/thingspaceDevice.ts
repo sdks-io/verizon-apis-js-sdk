@@ -42,7 +42,7 @@ export interface ThingspaceDevice {
   /** The device groups that the device belongs to. */
   groupNames?: (string | null)[];
   /** The IP address of the device. */
-  ipAddress?: string;
+  ipaddress?: string;
   /** The user who last activated the device. */
   lastActivationBy?: string;
   /** The date and time that the device was last activated. */
@@ -70,7 +70,7 @@ export const thingspaceDeviceSchema: Schema<ThingspaceDevice> = object({
     optional(array(lazy(() => customFieldsSchema))),
   ],
   groupNames: ['groupNames', optional(array(nullable(string())))],
-  ipAddress: ['ipAddress', optional(string())],
+  ipaddress: ['ipAddress', optional(string())],
   lastActivationBy: ['lastActivationBy', optional(string())],
   lastActivationDate: ['lastActivationDate', optional(string())],
   lastConnectionDate: ['lastConnectionDate', optional(string())],

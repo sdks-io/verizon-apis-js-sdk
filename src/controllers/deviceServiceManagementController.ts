@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  HyperPreciseLocationResultError,
-} from '../errors/hyperPreciseLocationResultError';
-import {
   BullseyeServiceRequest,
   bullseyeServiceRequestSchema,
 } from '../models/bullseyeServiceRequest';
@@ -18,6 +15,7 @@ import {
 } from '../models/bullseyeServiceResult';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { HyperPreciseLocationResultError } from '../errors/hyperPreciseLocationResultError';
 
 export class DeviceServiceManagementController extends BaseController {
   /**
@@ -41,10 +39,22 @@ export class DeviceServiceManagementController extends BaseController {
     req.query('imei', mapped.imei);
     req.query('accountNumber', mapped.accountNumber);
     req.throwOn(400, HyperPreciseLocationResultError, 'Bad request.');
-    req.throwOn(401, HyperPreciseLocationResultError, 'Unauthorized request. Access token is missing or invalid.');
+    req.throwOn(
+      401,
+      HyperPreciseLocationResultError,
+      'Unauthorized request. Access token is missing or invalid.'
+    );
     req.throwOn(403, HyperPreciseLocationResultError, 'Forbidden request.');
-    req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
-    req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
+    req.throwOn(
+      404,
+      HyperPreciseLocationResultError,
+      'Bad request. Not found.'
+    );
+    req.throwOn(
+      409,
+      HyperPreciseLocationResultError,
+      'Bad request. Conflict state.'
+    );
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(bullseyeServiceResultSchema, requestOptions);
@@ -68,10 +78,22 @@ export class DeviceServiceManagementController extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.throwOn(400, HyperPreciseLocationResultError, 'Bad request.');
-    req.throwOn(401, HyperPreciseLocationResultError, 'Unauthorized request. Access token is missing or invalid.');
+    req.throwOn(
+      401,
+      HyperPreciseLocationResultError,
+      'Unauthorized request. Access token is missing or invalid.'
+    );
     req.throwOn(403, HyperPreciseLocationResultError, 'Forbidden request.');
-    req.throwOn(404, HyperPreciseLocationResultError, 'Bad request. Not found.');
-    req.throwOn(409, HyperPreciseLocationResultError, 'Bad request. Conflict state.');
+    req.throwOn(
+      404,
+      HyperPreciseLocationResultError,
+      'Bad request. Not found.'
+    );
+    req.throwOn(
+      409,
+      HyperPreciseLocationResultError,
+      'Bad request. Conflict state.'
+    );
     req.throwOn(500, HyperPreciseLocationResultError, 'Internal Server Error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(bullseyeServiceResultSchema, requestOptions);

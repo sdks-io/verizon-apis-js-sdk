@@ -15,4 +15,6 @@ interface RulesEngineRestErrorResponse {
   errorUrl?: string;
 }
 
-export class RulesEngineRestErrorResponseError extends ApiError<RulesEngineRestErrorResponse> {}
+export class RulesEngineRestErrorResponseError extends ApiError<
+  RulesEngineRestErrorResponse
+> {}

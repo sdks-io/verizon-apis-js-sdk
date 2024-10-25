@@ -14,10 +14,8 @@ const fixedWirelessQualificationController = new FixedWirelessQualificationContr
 Use this query for Fixed Wireless Qualification of an address. Network types include: LTE, C-BAND and MMWAVE.
 
 ```ts
-async domestic4GAnd5gFixedWirelessQualification(
-  body: GetWirelessCoverageRequestFWA,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<WNPRequestResponse>>
+async domestic4GAnd5gFixedWirelessQualification(  body: GetWirelessCoverageRequestFWA,
+requestOptions?: RequestOptions): Promise<ApiResponse<WNPRequestResponse>>
 ```
 
 ## Parameters

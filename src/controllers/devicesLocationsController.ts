@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 import {
   AsynchronousLocationRequestResult,
   asynchronousLocationRequestResultSchema,
@@ -27,6 +26,7 @@ import {
 import { TransactionID, transactionIDSchema } from '../models/transactionID';
 import { array, number, string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 
 export class DevicesLocationsController extends BaseController {
   /**
@@ -75,32 +75,6 @@ export class DevicesLocationsController extends BaseController {
   }
 
   /**
-   * Cancel a queued or unfinished device location request.
-   *
-   * @param accountName Account identifier in "##########-#####".
-   * @param txid        Transaction ID of the request to cancel, from the synchronous response to the
-   *                              original request.
-   * @return Response from the API call
-   */
-  async cancelDeviceLocationRequest(
-    accountName: string,
-    txid: string,
-    requestOptions?: RequestOptions
-  ): Promise<ApiResponse<TransactionID>> {
-    const req = this.createRequest('DELETE');
-    req.baseUrl('Device Location');
-    const mapped = req.prepareArgs({
-      accountName: [accountName, string()],
-      txid: [txid, string()],
-    });
-    req.query('accountName', mapped.accountName);
-    req.appendTemplatePath`/devicelocations/${mapped.txid}`;
-    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
-    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
-    return req.callAsJson(transactionIDSchema, requestOptions);
-  }
-
-  /**
    * Request an asynchronous device location report.
    *
    * @param body         Request for device location report.
@@ -126,13 +100,13 @@ export class DevicesLocationsController extends BaseController {
   /**
    * Download a completed asynchronous device location report.
    *
-   * @param account    Account identifier in "##########-#####".
-   * @param txid       Transaction ID from POST /locationreports response.
-   * @param startindex Zero-based number of the first record to return.
+   * @param accountName Account identifier in "##########-#####".
+   * @param txid        Transaction ID from POST /locationreports response.
+   * @param startindex  Zero-based number of the first record to return.
    * @return Response from the API call
    */
   async retrieveLocationReport(
-    account: string,
+    accountName: string,
     txid: string,
     startindex: number,
     requestOptions?: RequestOptions
@@ -140,11 +114,11 @@ export class DevicesLocationsController extends BaseController {
     const req = this.createRequest('GET');
     req.baseUrl('Device Location');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       txid: [txid, string()],
       startindex: [startindex, number()],
     });
-    req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}/index/${mapped.startindex}`;
+    req.appendTemplatePath`/locationreports/${mapped.accountName}/report/${mapped.txid}/index/${mapped.startindex}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(locationReportSchema, requestOptions);
@@ -153,22 +127,22 @@ export class DevicesLocationsController extends BaseController {
   /**
    * Returns the current status of a requested device location report.
    *
-   * @param account Account identifier in "##########-#####".
-   * @param txid    Transaction ID of the report.
+   * @param accountName Account identifier in "##########-#####".
+   * @param txid        Transaction ID of the report.
    * @return Response from the API call
    */
   async getLocationReportStatus(
-    account: string,
+    accountName: string,
     txid: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<LocationReportStatus>> {
     const req = this.createRequest('GET');
     req.baseUrl('Device Location');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       txid: [txid, string()],
     });
-    req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}/status`;
+    req.appendTemplatePath`/locationreports/${mapped.accountName}/report/${mapped.txid}/status`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(locationReportStatusSchema, requestOptions);
@@ -177,22 +151,22 @@ export class DevicesLocationsController extends BaseController {
   /**
    * Cancel a queued device location report.
    *
-   * @param account Account identifier in "##########-#####".
-   * @param txid    Transaction ID of the report to cancel.
+   * @param accountName Account identifier in "##########-#####".
+   * @param txid        Transaction ID of the report to cancel.
    * @return Response from the API call
    */
   async cancelQueuedLocationReportGeneration(
-    account: string,
+    accountName: string,
     txid: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<TransactionID>> {
     const req = this.createRequest('DELETE');
     req.baseUrl('Device Location');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       txid: [txid, string()],
     });
-    req.appendTemplatePath`/locationreports/${mapped.account}/report/${mapped.txid}`;
+    req.appendTemplatePath`/locationreports/${mapped.accountName}/report/${mapped.txid}`;
     req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(transactionIDSchema, requestOptions);

@@ -22,10 +22,8 @@ const eUICCDeviceProfileManagementController = new EUICCDeviceProfileManagementC
 Downloads an eUICC local profile to devices and enables the profile.
 
 ```ts
-async downloadLocalProfileToEnable(
-  body: ProfileChangeStateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async downloadLocalProfileToEnable(  body: ProfileChangeStateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -93,10 +91,8 @@ try {
 Downloads an eUICC local profile to devices and leaves the profile disabled.
 
 ```ts
-async downloadLocalProfileToDisable(
-  body: ProfileChangeStateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async downloadLocalProfileToDisable(  body: ProfileChangeStateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -164,10 +160,8 @@ try {
 Enable a local profile that has been downloaded to eUICC devices.
 
 ```ts
-async enableLocalProfile(
-  body: ProfileChangeStateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async enableLocalProfile(  body: ProfileChangeStateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters
@@ -227,10 +221,8 @@ try {
 Disable a local profile on eUICC devices. The default or boot profile will become the enabled profile.
 
 ```ts
-async disableLocalProfile(
-  body: ProfileChangeStateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async disableLocalProfile(  body: ProfileChangeStateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters
@@ -290,10 +282,8 @@ try {
 Delete a local profile from eUICC devices. If the local profile is enabled, it will first be disabled and the boot or default profile will be enabled.
 
 ```ts
-async deleteLocalProfile(
-  body: ProfileChangeStateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RequestResponse>>
+async deleteLocalProfile(  body: ProfileChangeStateRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<RequestResponse>>
 ```
 
 ## Parameters

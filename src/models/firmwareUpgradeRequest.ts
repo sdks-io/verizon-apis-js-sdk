@@ -14,8 +14,10 @@ export interface FirmwareUpgradeRequest {
   firmwareName: string;
   /** The name of the firmware version that will be on the devices after a successful upgrade. */
   firmwareTo: string;
-  /** The date that the upgrade should begin. */
+  /** The date that the upgrade begins. */
   startDate: string;
+  /** The date that the upgrade ends. */
+  endDate: string;
   /** The IMEIs of the devices. */
   deviceList: string[];
 }
@@ -26,6 +28,7 @@ export const firmwareUpgradeRequestSchema: Schema<FirmwareUpgradeRequest> = obje
     firmwareName: ['firmwareName', string()],
     firmwareTo: ['firmwareTo', string()],
     startDate: ['startDate', string()],
+    endDate: ['endDate', string()],
     deviceList: ['deviceList', array(string())],
   }
 );

@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { IntelligenceResultError } from '../errors/intelligenceResultError';
 import {
   AnomalyDetectionRequest,
   anomalyDetectionRequestSchema,
@@ -20,6 +19,7 @@ import {
 } from '../models/intelligenceSuccessResult';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { IntelligenceResultError } from '../errors/intelligenceResultError';
 
 export class AnomalySettingsController extends BaseController {
   /**

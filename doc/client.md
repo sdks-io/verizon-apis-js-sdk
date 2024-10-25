@@ -9,8 +9,8 @@ The following parameters are configurable for the API Client:
 | `timeout` | `number` | Timeout for API calls.<br>*Default*: `0` |
 | `httpClientOptions` | `Partial<HttpClientOptions>` | Stable configurable http client options. |
 | `unstableHttpClientOptions` | `any` | Unstable configurable http client options. |
-| `thingspaceOauthCredentials` | [`ThingspaceOauthCredentials`]($a/oauth-2-client-credentials-grant.md) | The credential object for thingspaceOauth |
-| `vZM2mTokenCredentials` | [`VZM2MTokenCredentials`]($a/custom-header-signature.md) | The credential object for vZM2mToken |
+| `thingspaceOauthCredentials` | [`ThingspaceOauthCredentials`](auth/oauth-2-client-credentials-grant.md) | The credential object for thingspaceOauth |
+| `vZM2mTokenCredentials` | [`VZM2MTokenCredentials`](auth/custom-header-signature.md) | The credential object for vZM2mToken |
 
 ## HttpClientOptions
 
@@ -45,7 +45,9 @@ const client = new Client({
       OauthScopeThingspaceOauthEnum.Serviceprofileread
     ]
   },
-  vZM2mTokenCredentials: {  },
+  vZM2mTokenCredentials: {
+    'VZ-M2M-Token': 'VZ-M2M-Token'
+  },
   timeout: 0,
   environment: Environment.Production,
 });
@@ -124,12 +126,13 @@ The gateway for the SDK. This class acts as a factory for the Controllers and al
 | deviceSMSMessaging | Gets DeviceSMSMessagingController |
 | deviceActions | Gets DeviceActionsController |
 | thingSpaceQualityOfServiceAPIActions | Gets ThingSpaceQualityOfServiceAPIActionsController |
-| mEC | Gets MECController |
+| pWN | Gets PWNController |
 | promotionPeriodInformation | Gets PromotionPeriodInformationController |
 | retrieveTheTriggers | Gets RetrieveTheTriggersController |
 | updateTriggers | Gets UpdateTriggersController |
 | sIMActions | Gets SIMActionsController |
 | globalReporting | Gets GlobalReportingController |
 | mV2Triggers | Gets MV2TriggersController |
+| m5gBIDeviceActions | Gets M5gBIDeviceActionsController |
 | oauthAuthorization | Gets OauthAuthorizationController |
 

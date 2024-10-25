@@ -20,10 +20,8 @@ const anomalySettingsController = new AnomalySettingsController(client);
 Uses the subscribed account ID to activate anomaly detection and set threshold values.
 
 ```ts
-async activateAnomalyDetection(
-  body: AnomalyDetectionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<IntelligenceSuccessResult>>
+async activateAnomalyDetection(  body: AnomalyDetectionRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<IntelligenceSuccessResult>>
 ```
 
 ## Parameters
@@ -83,10 +81,8 @@ try {
 Retrieves the current anomaly detection settings for an account.
 
 ```ts
-async listAnomalyDetectionSettings(
-  accountName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AnomalyDetectionSettings>>
+async listAnomalyDetectionSettings(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<AnomalyDetectionSettings>>
 ```
 
 ## Parameters
@@ -144,10 +140,8 @@ try {
 Resets the thresholds to zero.
 
 ```ts
-async resetAnomalyDetectionParameters(
-  accountName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<IntelligenceSuccessResult>>
+async resetAnomalyDetectionParameters(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<IntelligenceSuccessResult>>
 ```
 
 ## Parameters

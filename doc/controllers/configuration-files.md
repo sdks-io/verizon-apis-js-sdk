@@ -19,11 +19,9 @@ const configurationFilesController = new ConfigurationFilesController(client);
 You can retrieve a list of configuration or supplementary of files for an account.
 
 ```ts
-async getListOfFiles(
-  acc: string,
+async getListOfFiles(  acc: string,
   distributionType: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RetrievesAvailableFilesResponseList>>
+requestOptions?: RequestOptions): Promise<ApiResponse<RetrievesAvailableFilesResponseList>>
 ```
 
 ## Parameters
@@ -72,15 +70,13 @@ try {
 Uploads a configuration/supplementary file for an account. ThingSpace generates a fileName after the upload and is returned in the response.
 
 ```ts
-async uploadConfigFile(
-  acc: string,
+async uploadConfigFile(  acc: string,
   fileupload?: FileWrapper,
   fileVersion?: string,
   make?: string,
   model?: string,
   localTargetPath?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UploadConfigurationFilesResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<UploadConfigurationFilesResponse>>
 ```
 
 ## Parameters

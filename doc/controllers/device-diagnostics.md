@@ -19,10 +19,8 @@ const deviceDiagnosticsController = new DeviceDiagnosticsController(client);
 If the devices do not already exist in the account, this API resource adds them before activation.
 
 ```ts
-async deviceReachabilityStatusUsingPOST(
-  body: NotificationReportStatusRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async deviceReachabilityStatusUsingPOST(  body: NotificationReportStatusRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters
@@ -80,10 +78,8 @@ try {
 Retrieve all the active monitors.
 
 ```ts
-async retrieveActiveMonitorsUsingPOST(
-  body: RetrieveMonitorsRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceManagementResult>>
+async retrieveActiveMonitorsUsingPOST(  body: RetrieveMonitorsRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceManagementResult>>
 ```
 
 ## Parameters

@@ -17,7 +17,10 @@ import {
   SessionTriggerRequest,
   sessionTriggerRequestSchema,
 } from './sessionTriggerRequest';
-import { SMSTriggerRequest, sMSTriggerRequestSchema } from './sMSTriggerRequest';
+import {
+  SMSTriggerRequest,
+  sMSTriggerRequestSchema,
+} from './sMSTriggerRequest';
 
 export interface CreateTriggerRequest {
   accountName?: string;

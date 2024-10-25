@@ -14,11 +14,9 @@ const accountRequestsController = new AccountRequestsController(client);
 Returns the current status of an asynchronous request that was made for a single device.
 
 ```ts
-async getCurrentAsynchronousRequestStatus(
-  aname: string,
+async getCurrentAsynchronousRequestStatus(  aname: string,
   requestId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AsynchronousRequestResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<AsynchronousRequestResult>>
 ```
 
 ## Parameters

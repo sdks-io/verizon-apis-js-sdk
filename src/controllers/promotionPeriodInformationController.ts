@@ -6,16 +6,13 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ReadySimRestErrorResponseError,
-} from '../errors/readySimRestErrorResponseError';
+  ARequestBodyForUsage,
+  aRequestBodyForUsageSchema,
+} from '../models/aRequestBodyForUsage';
 import {
   RequestBodyForUsage,
   requestBodyForUsageSchema,
 } from '../models/requestBodyForUsage';
-import {
-  RequestBodyForUsage1,
-  requestBodyForUsage1Schema,
-} from '../models/requestBodyForUsage1';
 import {
   ResponseToUsageQuery,
   responseToUsageQuerySchema,
@@ -25,6 +22,7 @@ import {
   usageRequestResponseSchema,
 } from '../models/usageRequestResponse';
 import { BaseController } from './baseController';
+import { ReadySimRestErrorResponseError } from '../errors/readySimRestErrorResponseError';
 
 export class PromotionPeriodInformationController extends BaseController {
   /**
@@ -34,7 +32,7 @@ export class PromotionPeriodInformationController extends BaseController {
    * @return Response from the API call
    */
   async getPromoDeviceUsageHistory(
-    body: RequestBodyForUsage1,
+    body: ARequestBodyForUsage,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<ResponseToUsageQuery>> {
     const req = this.createRequest(
@@ -43,11 +41,14 @@ export class PromotionPeriodInformationController extends BaseController {
     );
     req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({
-      body: [body, requestBodyForUsage1Schema],
+      body: [body, aRequestBodyForUsageSchema],
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.defaultToError(ReadySimRestErrorResponseError, 'All error responses will be in this format');
+    req.defaultToError(
+      ReadySimRestErrorResponseError,
+      'All error responses will be in this format'
+    );
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(responseToUsageQuerySchema, requestOptions);
   }

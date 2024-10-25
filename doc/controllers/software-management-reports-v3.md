@@ -20,12 +20,10 @@ const softwareManagementReportsV3Controller = new SoftwareManagementReportsV3Con
 Retrieve a list of campaigns for an account that have a specified campaign status.
 
 ```ts
-async getCampaignHistoryByStatus(
-  acc: string,
+async getCampaignHistoryByStatus(  acc: string,
   campaignStatus: CampaignStatusEnum,
   lastSeenCampaignId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3CampaignHistory>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V3CampaignHistory>>
 ```
 
 ## Parameters
@@ -108,11 +106,9 @@ try {
 Retrieve campaign history for a specific device.
 
 ```ts
-async getDeviceFirmwareUpgradeHistory(
-  acc: string,
+async getDeviceFirmwareUpgradeHistory(  acc: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceFirmwareUpgrade[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceFirmwareUpgrade[]>>
 ```
 
 ## Parameters
@@ -192,12 +188,10 @@ try {
 Retrieve a list of all devices in a campaign and the status of each device.
 
 ```ts
-async getCampaignDeviceStatus(
-  acc: string,
+async getCampaignDeviceStatus(  acc: string,
   campaignId: string,
   lastSeenDeviceId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3CampaignDevice>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V3CampaignDevice>>
 ```
 
 ## Parameters

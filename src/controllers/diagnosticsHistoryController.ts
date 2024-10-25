@@ -5,9 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import {
-  DeviceDiagnosticsResultError,
-} from '../errors/deviceDiagnosticsResultError';
 import { History, historySchema } from '../models/history';
 import {
   HistorySearchRequest,
@@ -15,6 +12,7 @@ import {
 } from '../models/historySearchRequest';
 import { array } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceDiagnosticsResultError } from '../errors/deviceDiagnosticsResultError';
 
 export class DiagnosticsHistoryController extends BaseController {
   /**

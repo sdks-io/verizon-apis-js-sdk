@@ -20,10 +20,8 @@ const softwareManagementCallbacksV1Controller = new SoftwareManagementCallbacksV
 Returns the name and endpoint URL of the callback listening services registered for a given account.
 
 ```ts
-async listRegisteredCallbacks(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<RegisteredCallbacks[]>>
+async listRegisteredCallbacks(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<RegisteredCallbacks[]>>
 ```
 
 ## Parameters
@@ -78,11 +76,9 @@ try {
 Registers a URL to receive RESTful messages from a callback service when new firmware versions are available and when upgrades start and finish.
 
 ```ts
-async registerCallback(
-  account: string,
+async registerCallback(  account: string,
   body: FotaV1CallbackRegistrationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV1CallbackRegistrationResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV1CallbackRegistrationResult>>
 ```
 
 ## Parameters
@@ -143,11 +139,9 @@ try {
 Deregisters the callback endpoint and stops ThingSpace from sending FOTA callback messages for the specified account.
 
 ```ts
-async deregisterCallback(
-  account: string,
+async deregisterCallback(  account: string,
   service: CallbackServiceEnum,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV1SuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV1SuccessResult>>
 ```
 
 ## Parameters

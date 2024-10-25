@@ -22,10 +22,8 @@ const deviceGroupsController = new DeviceGroupsController(client);
 Create a new device group and optionally add devices to the group. Device groups can make it easier to manage similar devices and to get reports on their usage.
 
 ```ts
-async createDeviceGroup(
-  body: CreateDeviceGroupRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
+async createDeviceGroup(  body: CreateDeviceGroupRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
 ```
 
 ## Parameters
@@ -86,10 +84,8 @@ try {
 Returns a list of all device groups in a specified account.
 
 ```ts
-async listDeviceGroups(
-  aname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceGroup[]>>
+async listDeviceGroups(  aname: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceGroup[]>>
 ```
 
 ## Parameters
@@ -151,12 +147,10 @@ try {
 When HTTP status is 202, a URL will be returned in the Location header of the form /groups/{aname}/name/{gname}/?next={token}. This URL can be used to request the next set of groups.
 
 ```ts
-async getDeviceGroupInformation(
-  aname: string,
+async getDeviceGroupInformation(  aname: string,
   gname: string,
   next?: bigint,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceGroupDevicesData>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceGroupDevicesData>>
 ```
 
 ## Parameters
@@ -230,12 +224,10 @@ try {
 Make changes to a device group, including changing the name and description, and adding or removing devices.
 
 ```ts
-async updateDeviceGroup(
-  aname: string,
+async updateDeviceGroup(  aname: string,
   gname: string,
   body: DeviceGroupUpdateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
 ```
 
 ## Parameters
@@ -305,11 +297,9 @@ try {
 Deletes a device group from the account. Devices in the group are moved to the default device group and are not deleted from the account.
 
 ```ts
-async deleteDeviceGroup(
-  aname: string,
+async deleteDeviceGroup(  aname: string,
   gname: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<ConnectivityManagementSuccessResult>>
 ```
 
 ## Parameters

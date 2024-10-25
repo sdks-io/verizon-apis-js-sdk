@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
-import {
   ConnectivityManagementSuccessResult,
   connectivityManagementSuccessResultSchema,
 } from '../models/connectivityManagementSuccessResult';
@@ -23,6 +20,7 @@ import {
 import { SMSSendRequest, sMSSendRequestSchema } from '../models/sMSSendRequest';
 import { bigint, optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class SMSController extends BaseController {
   /**

@@ -14,10 +14,8 @@ const diagnosticsSubscriptionsController = new DiagnosticsSubscriptionsControlle
 This endpoint retrieves a diagnostics subscription by account.
 
 ```ts
-async getDiagnosticsSubscription(
-  accountName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DiagnosticsSubscription>>
+async getDiagnosticsSubscription(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DiagnosticsSubscription>>
 ```
 
 ## Parameters

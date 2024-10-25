@@ -5,13 +5,13 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 import {
   CheckInHistoryItem,
   checkInHistoryItemSchema,
 } from '../models/checkInHistoryItem';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 
 export class ServerLoggingController extends BaseController {
   /**

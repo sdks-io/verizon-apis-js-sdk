@@ -1,5 +1,5 @@
 {
-  "version": "1.5.0",
+  "version": "1.5.1",
   "license": "MIT",
   "sideEffects": false,
   "main": "dist/cjs/index.js",
@@ -14,16 +14,17 @@
   },
   "scripts": {
     "build": "rm -rf dist & tsc -p tsconfig.esm.json & tsc -p tsconfig.cjs.json",
-    "test": "jest --coverage --passWithNoTests",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "prepare": "rm -rf dist & tsc -p tsconfig.esm.json & tsc -p tsconfig.cjs.json"
+    "prepare": "rm -rf dist & tsc -p tsconfig.esm.json & tsc -p tsconfig.cjs.json",
+    "lint": "eslint **/*.ts --ignore-path .eslintignore",
+    "lint:fix": "eslint **/*.ts --ignore-path .eslintignore --fix"
   },
   "peerDependencies": {},
   "prettier": {
     "printWidth": 80,
     "semi": true,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "quoteProps": "preserve"
   },
   "name": "sdksio-verizon-apis-sdk",
   "description": "Use the Verizon API for connectivity management, device diagnostics, device location, edge discovery service, edge performance, software management and much more.",
@@ -42,26 +43,25 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@apimatic/authentication-adapters": "^0.5.0",
-    "@apimatic/axios-client-adapter": "^0.3.0",
-    "@apimatic/core": "^0.10.0",
-    "@apimatic/oauth-adapters": "^0.4.1",
-    "@apimatic/schema": "^0.7.0"
+    "@apimatic/authentication-adapters": "^0.5.4",
+    "@apimatic/axios-client-adapter": "^0.3.4",
+    "@apimatic/core": "^0.10.14",
+    "@apimatic/oauth-adapters": "^0.4.6",
+    "@apimatic/schema": "^0.7.12"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/sdks-io/verizon-apis-js-sdk.git"
   },
   "bugs": {
-    "url": "https://github.com/sdks-io/verizon-apis-js-sdk/issues",
-    "email": "developer+sdksio@apimatic.io"
+    "email": "support@apimatic.io"
   },
-  "homepage": "https://app.apimatic.io/",
+  "homepage": "https://www.verizon.com/business/5g-edge-portal",
   "keywords": [
+    "API",
+    "SDK",
     "Verizon",
-    "SDKS",
-    "APIS",
-    "ThingSpace"
+    "Thingspace"
   ],
   "contributors": []
 }

@@ -22,11 +22,9 @@ const softwareManagementReportsV2Controller = new SoftwareManagementReportsV2Con
 This endpoint allows user to list a certain type of software of an account.
 
 ```ts
-async listAvailableSoftware(
-  account: string,
+async listAvailableSoftware(  account: string,
   distributionType?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SoftwarePackage[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<SoftwarePackage[]>>
 ```
 
 ## Parameters
@@ -91,12 +89,10 @@ try {
 The device endpoint gets devices information of an account.
 
 ```ts
-async listAccountDevices(
-  account: string,
+async listAccountDevices(  account: string,
   lastSeenDeviceId?: string,
   distributionType?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2AccountDeviceList>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2AccountDeviceList>>
 ```
 
 ## Parameters
@@ -225,11 +221,9 @@ try {
 The endpoint allows user to get software upgrade history of a device based on device IMEI.
 
 ```ts
-async getDeviceFirmwareUpgradeHistory(
-  account: string,
+async getDeviceFirmwareUpgradeHistory(  account: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceSoftwareUpgrade[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceSoftwareUpgrade[]>>
 ```
 
 ## Parameters
@@ -303,12 +297,10 @@ try {
 The report endpoint allows user to get campaign history of an account for specified status.
 
 ```ts
-async getCampaignHistoryByStatus(
-  account: string,
+async getCampaignHistoryByStatus(  account: string,
   campaignStatus: string,
   lastSeenCampaignId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2CampaignHistory>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2CampaignHistory>>
 ```
 
 ## Parameters
@@ -400,12 +392,10 @@ try {
 The report endpoint allows user to get the full list of device of a campaign.
 
 ```ts
-async getCampaignDeviceStatus(
-  account: string,
+async getCampaignDeviceStatus(  account: string,
   campaignId: string,
   lastSeenDeviceId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2CampaignDevice>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2CampaignDevice>>
 ```
 
 ## Parameters

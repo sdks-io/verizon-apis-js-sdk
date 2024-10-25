@@ -17,4 +17,6 @@ export enum CycleTypeEnum {
 /**
  * Schema for CycleTypeEnum
  */
-export const  cycleTypeEnumSchema: Schema<CycleTypeEnum> = stringEnum(CycleTypeEnum);
+export const cycleTypeEnumSchema: Schema<CycleTypeEnum> = stringEnum(
+  CycleTypeEnum
+);

@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 import {
   AccountLicenseInfo,
   accountLicenseInfoSchema,
@@ -16,6 +15,7 @@ import {
 } from '../models/v1AccountSubscription';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 
 export class SoftwareManagementSubscriptionsV1Controller extends BaseController {
   /**

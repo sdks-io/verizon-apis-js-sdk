@@ -5,11 +5,11 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { GIORestErrorResponseError } from '../errors/gIORestErrorResponseError';
 import {
   DeviceProfileRequest,
   deviceProfileRequestSchema,
 } from '../models/deviceProfileRequest';
+import { FallBack, fallBackSchema } from '../models/fallBack';
 import {
   GIODeactivateDeviceProfileRequest,
   gIODeactivateDeviceProfileRequestSchema,
@@ -23,8 +23,101 @@ import {
   gIORequestResponseSchema,
 } from '../models/gIORequestResponse';
 import { BaseController } from './baseController';
+import { GIORestErrorResponseError } from '../errors/gIORestErrorResponseError';
 
 export class ManagingESIMProfilesController extends BaseController {
+  /**
+   * Resume service to a device with either a lead or local profile.
+   *
+   * @param body         Device Profile Query
+   * @return Response from the API call
+   */
+  async resumeProfile(
+    body: GIOProfileRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<GIORequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/m2m/v1/devices/profile/actions/profile_resume'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, gIOProfileRequestSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(gIORequestResponseSchema, requestOptions);
+  }
+
+  /**
+   * Suspend a device's Global profile.
+   *
+   * @param body         Device Profile Query
+   * @return Response from the API call
+   */
+  async profileSuspend(
+    body: GIOProfileRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<GIORequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/m2m/v1/devices/profile/actions/profile_suspend'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, gIOProfileRequestSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(gIORequestResponseSchema, requestOptions);
+  }
+
+  /**
+   * Suspend all service to an eUICC device, including the lead and local profile.
+   *
+   * @param body         Device Profile Query
+   * @return Response from the API call
+   */
+  async deviceSuspend(
+    body: GIOProfileRequest,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<GIORequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/m2m/v1/devices/profile/actions/device_suspend'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, gIOProfileRequestSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(gIORequestResponseSchema, requestOptions);
+  }
+
+  /**
+   * Enable a fallback profile to be set.
+   *
+   * @param body         Set the fallback attributes to allow a fallback profile to be activated.
+   * @return Response from the API call
+   */
+  async setFallback(
+    body: FallBack,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<GIORequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/v1/devices/profile/actions/setfallbackattribute'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, fallBackSchema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(GIORestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(gIORequestResponseSchema, requestOptions);
+  }
+
   /**
    * Activate a device with either a lead or local profile.
    *

@@ -12,7 +12,7 @@ A list of deviceId objects to use when requesting information from multiple devi
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `deviceIds` | [`DeviceId[]`](../../doc/models/device-id.md) | Required | All identifiers for the device. |
-| `ipAddress` | `string \| undefined` | Optional | **Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[0-9].[0-9].[0-9].[0-9]{3,32}$` |
+| `ipaddress` | `string \| undefined` | Optional | **Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[0-9].[0-9].[0-9].[0-9]{3,32}$` |
 
 ## Example (as JSON)
 

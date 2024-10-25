@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 import {
   FotaV1SuccessResult,
   fotaV1SuccessResultSchema,
@@ -32,6 +31,7 @@ import {
 } from '../models/v1ListOfLicensesToRemoveResult';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 
 export class SoftwareManagementLicensesV1Controller extends BaseController {
   /**
@@ -57,7 +57,9 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.appendTemplatePath`/licenses/${mapped.account}/assign`;
-    req.deprecated('SoftwareManagementLicensesV1Controller.assignLicensesToDevices');
+    req.deprecated(
+      'SoftwareManagementLicensesV1Controller.assignLicensesToDevices'
+    );
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
@@ -88,7 +90,9 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.appendTemplatePath`/licenses/${mapped.account}/remove`;
-    req.deprecated('SoftwareManagementLicensesV1Controller.removeLicensesFromDevices');
+    req.deprecated(
+      'SoftwareManagementLicensesV1Controller.removeLicensesFromDevices'
+    );
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(
@@ -120,7 +124,9 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
     req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
-    req.deprecated('SoftwareManagementLicensesV1Controller.createListOfLicensesToRemove');
+    req.deprecated(
+      'SoftwareManagementLicensesV1Controller.createListOfLicensesToRemove'
+    );
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v1ListOfLicensesToRemoveResultSchema, requestOptions);
@@ -141,7 +147,9 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
     req.baseUrl('Software Management V1');
     const mapped = req.prepareArgs({ account: [account, string()] });
     req.appendTemplatePath`/licenses/${mapped.account}/cancel`;
-    req.deprecated('SoftwareManagementLicensesV1Controller.deleteListOfLicensesToRemove');
+    req.deprecated(
+      'SoftwareManagementLicensesV1Controller.deleteListOfLicensesToRemove'
+    );
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV1SuccessResultSchema, requestOptions);
@@ -170,7 +178,9 @@ export class SoftwareManagementLicensesV1Controller extends BaseController {
       startIndex: [startIndex, string()],
     });
     req.appendTemplatePath`/licenses/${mapped.account}/cancel/index/${mapped.startIndex}`;
-    req.deprecated('SoftwareManagementLicensesV1Controller.listLicensesToRemove');
+    req.deprecated(
+      'SoftwareManagementLicensesV1Controller.listLicensesToRemove'
+    );
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(v1ListOfLicensesToRemoveSchema, requestOptions);

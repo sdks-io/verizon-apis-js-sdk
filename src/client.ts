@@ -26,7 +26,7 @@ import {
   HttpClientInterface,
   RetryConfiguration,
 } from './core';
- import { HttpClient } from './clientAdapter';
+import { HttpClient } from './clientAdapter';
 
 const USER_AGENT = 'APIMATIC 3.0';
 
@@ -51,7 +51,7 @@ export class Client implements ClientInterface {
         ? this._config.httpClientOptions.timeout
         : this._config.timeout;
     this._requestBuilderFactory = createRequestHandlerFactory(
-      server => getBaseUri(server, this._config),
+      (server) => getBaseUri(server, this._config),
       createAuthProviderFromConfig(
         this._config,
         () => this.thingspaceOauthManager
@@ -62,11 +62,7 @@ export class Client implements ClientInterface {
         httpAgent: this._config.httpClientOptions?.httpAgent,
         httpsAgent: this._config.httpClientOptions?.httpsAgent,
       }),
-      [
-        withErrorHandlers,
-        withUserAgent,
-        withAuthenticationByDefault,
-      ],
+      [withErrorHandlers, withUserAgent, withAuthenticationByDefault],
       this._retryConfig
     );
     if (this._config.thingspaceOauthCredentials) {
@@ -95,7 +91,10 @@ function createHttpClientAdapter(client: HttpClient): HttpClientInterface {
   };
 }
 
-function getBaseUri(server: Server = 'Edge Discovery', config: Configuration): string {
+function getBaseUri(
+  server: Server = 'Edge Discovery',
+  config: Configuration
+): string {
   if (config.environment === Environment.Production) {
     if (server === 'Edge Discovery') {
       return 'https://5gedge.verizon.com/api/mec/eds';
@@ -217,7 +216,7 @@ function tap(
 ): SdkRequestBuilderFactory {
   return (...args) => {
     const requestBuilder = requestBuilderFactory(...args);
-    callback.forEach(c => c(requestBuilder));
+    callback.forEach((c) => c(requestBuilder));
     return requestBuilder;
   };
 }
@@ -231,5 +230,5 @@ function withUserAgent(rb: SdkRequestBuilder) {
 }
 
 function withAuthenticationByDefault(rb: SdkRequestBuilder) {
-  rb.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]); 
+  rb.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
 }

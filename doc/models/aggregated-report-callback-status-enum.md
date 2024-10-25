@@ -11,8 +11,8 @@ QUEUED or COMPLETED. Requests for IoT devices with cacheMode=0 (cached) have sta
 
 | Name |
 |  --- |
-| `qUEUED` |
-| `cOMPLETED` |
+| `QUEUED` |
+| `COMPLETED` |
 
 ## Example
 

@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
-import {
   ConnectivityManagementSuccessResult,
   connectivityManagementSuccessResultSchema,
 } from '../models/connectivityManagementSuccessResult';
@@ -27,6 +24,7 @@ import {
 } from '../models/deviceGroupUpdateRequest';
 import { array, bigint, optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class DeviceGroupsController extends BaseController {
   /**

@@ -14,10 +14,8 @@ const diagnosticsFactoryResetController = new DiagnosticsFactoryResetController(
 Performs a device reboot or a factory reset on the modem portion of the device.
 
 ```ts
-async decivesRestart(
-  body: DeviceResetRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DiagnosticsObservationResult>>
+async decivesRestart(  body: DeviceResetRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<DiagnosticsObservationResult>>
 ```
 
 ## Parameters

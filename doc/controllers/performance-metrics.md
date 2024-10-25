@@ -14,10 +14,8 @@ const performanceMetricsController = new PerformanceMetricsController(client);
 Query the most recent data for Key Performance Indicators (KPIs) like network availability, MEC hostnames and more.
 
 ```ts
-async queryMECPerformanceMetrics(
-  body?: QueryMECPerformanceMetricsRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<MECPerformanceMetrics>>
+async queryMECPerformanceMetrics(  body?: QueryMECPerformanceMetricsRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<MECPerformanceMetrics>>
 ```
 
 ## Parameters

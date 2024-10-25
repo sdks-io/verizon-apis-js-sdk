@@ -14,11 +14,9 @@ const accountSubscriptionsController = new AccountSubscriptionsController(client
 Retrieves the total number of SIM-Secure for IoT subscription licenses purchased for your account by license type, and lists the number of licenses assigned and available for each license type.
 
 ```ts
-async listAccountSubscriptions(
-  body: SecuritySubscriptionRequest,
+async listAccountSubscriptions(  body: SecuritySubscriptionRequest,
   xRequestID?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<SecuritySubscriptionResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<SecuritySubscriptionResult>>
 ```
 
 ## Parameters
@@ -26,7 +24,7 @@ async listAccountSubscriptions(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `body` | [`SecuritySubscriptionRequest`](../../doc/models/security-subscription-request.md) | Body, Required | Request for account subscription. |
-| `xRequestID` | `string \| undefined` | Header, Optional | Transaction Id. |
+| `xRequestID` | `string \| undefined` | Header, Optional | Transaction Id.<br>**Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[0-9]-[0-9]{3,32}$` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type

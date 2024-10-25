@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
-import {
   CallbackActionResult,
   callbackActionResultSchema,
 } from '../models/callbackActionResult';
@@ -22,6 +19,7 @@ import {
 } from '../models/registerCallbackRequest';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class ConnectivityCallbacksController extends BaseController {
   /**

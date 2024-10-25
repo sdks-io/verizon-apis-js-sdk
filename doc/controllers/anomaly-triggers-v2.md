@@ -20,10 +20,8 @@ const anomalyTriggersV2Controller = new AnomalyTriggersV2Controller(client);
 Creates the trigger to identify an anomaly.
 
 ```ts
-async createAnomalyDetectionTriggerV2(
-  body: CreateTriggerRequestOptions[],
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AnomalyDetectionTrigger>>
+async createAnomalyDetectionTriggerV2(  body: CreateTriggerRequestOptions[],
+requestOptions?: RequestOptions): Promise<ApiResponse<AnomalyDetectionTrigger>>
 ```
 
 ## Parameters
@@ -105,10 +103,8 @@ try {
 Updates an existing trigger using the account name.
 
 ```ts
-async updateAnomalyDetectionTriggerV2(
-  body: UpdateTriggerRequestOptions[],
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<IntelligenceSuccessResult>>
+async updateAnomalyDetectionTriggerV2(  body: UpdateTriggerRequestOptions[],
+requestOptions?: RequestOptions): Promise<ApiResponse<IntelligenceSuccessResult>>
 ```
 
 ## Parameters
@@ -191,10 +187,8 @@ try {
 Retrieves the values for a specific trigger ID.
 
 ```ts
-async listAnomalyDetectionTriggerSettingsV2(
-  triggerId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<AnomalyTriggerResult>>
+async listAnomalyDetectionTriggerSettingsV2(  triggerId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<AnomalyTriggerResult>>
 ```
 
 ## Parameters

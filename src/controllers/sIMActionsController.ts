@@ -6,12 +6,13 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ESIMRestErrorResponseError,
-} from '../errors/eSIMRestErrorResponseError';
-import {
   ESIMProfileRequest,
   eSIMProfileRequestSchema,
 } from '../models/eSIMProfileRequest';
+import {
+  ESIMProfileRequest2,
+  eSIMProfileRequest2Schema,
+} from '../models/eSIMProfileRequest2';
 import {
   ESIMRequestResponse,
   eSIMRequestResponseSchema,
@@ -21,8 +22,43 @@ import {
   profileRequest2Schema,
 } from '../models/profileRequest2';
 import { BaseController } from './baseController';
+import { ESIMRestErrorResponseError } from '../errors/eSIMRestErrorResponseError';
 
 export class SIMActionsController extends BaseController {
+  /**
+   * System assign a new activation code to reactivate a deactivated device. **Note:** the previously
+   * assigned ICCID must be used to request a new activation code.
+   *
+   * @param body         Device Profile Query
+   * @return Response from the API call
+   */
+  async newactivatecode(
+    body: ESIMProfileRequest2,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ESIMRequestResponse>> {
+    const req = this.createRequest(
+      'POST',
+      '/m2m/v1/devices/profile/actions/renew_activation_code'
+    );
+    req.baseUrl('Thingspace');
+    const mapped = req.prepareArgs({ body: [body, eSIMProfileRequest2Schema] });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.throwOn(400, ESIMRestErrorResponseError, 'Bad request');
+    req.throwOn(401, ESIMRestErrorResponseError, 'Unauthorized');
+    req.throwOn(403, ESIMRestErrorResponseError, 'Forbidden');
+    req.throwOn(404, ESIMRestErrorResponseError, 'Not Found / Does not exist');
+    req.throwOn(
+      406,
+      ESIMRestErrorResponseError,
+      'Format / Request Unacceptable'
+    );
+    req.throwOn(429, ESIMRestErrorResponseError, 'Too many requests');
+    req.defaultToError(ESIMRestErrorResponseError, 'Error response');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(eSIMRequestResponseSchema, requestOptions);
+  }
+
   /**
    * Uses the profile to activate the SIM.
    *
@@ -45,7 +81,11 @@ export class SIMActionsController extends BaseController {
     req.throwOn(401, ESIMRestErrorResponseError, 'Unauthorized');
     req.throwOn(403, ESIMRestErrorResponseError, 'Forbidden');
     req.throwOn(404, ESIMRestErrorResponseError, 'Not Found / Does not exist');
-    req.throwOn(406, ESIMRestErrorResponseError, 'Format / Request Unacceptable');
+    req.throwOn(
+      406,
+      ESIMRestErrorResponseError,
+      'Format / Request Unacceptable'
+    );
     req.throwOn(429, ESIMRestErrorResponseError, 'Too many requests');
     req.defaultToError(ESIMRestErrorResponseError, 'Error response');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
@@ -74,7 +114,11 @@ export class SIMActionsController extends BaseController {
     req.throwOn(401, ESIMRestErrorResponseError, 'Unauthorized');
     req.throwOn(403, ESIMRestErrorResponseError, 'Forbidden');
     req.throwOn(404, ESIMRestErrorResponseError, 'Not Found / Does not exist');
-    req.throwOn(406, ESIMRestErrorResponseError, 'Format / Request Unacceptable');
+    req.throwOn(
+      406,
+      ESIMRestErrorResponseError,
+      'Format / Request Unacceptable'
+    );
     req.throwOn(429, ESIMRestErrorResponseError, 'Too many requests');
     req.defaultToError(ESIMRestErrorResponseError, 'Error response');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);

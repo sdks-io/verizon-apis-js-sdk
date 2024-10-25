@@ -11,9 +11,9 @@ Location cache mode.
 
 | Name |
 |  --- |
-| `enum0` |
-| `enum1` |
-| `enum2` |
+| `Enum0` |
+| `Enum1` |
+| `Enum2` |
 
 ## Example
 

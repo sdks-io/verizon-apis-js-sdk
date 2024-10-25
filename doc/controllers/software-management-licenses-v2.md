@@ -23,11 +23,9 @@ const softwareManagementLicensesV2Controller = new SoftwareManagementLicensesV2C
 The endpoint allows user to list license usage.
 
 ```ts
-async getAccountLicenseStatus(
-  account: string,
+async getAccountLicenseStatus(  account: string,
   lastSeenDeviceId?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2LicenseSummary>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2LicenseSummary>>
 ```
 
 ## Parameters
@@ -109,11 +107,9 @@ try {
 This endpoint allows user to assign licenses to a list of devices.
 
 ```ts
-async assignLicensesToDevices(
-  account: string,
+async assignLicensesToDevices(  account: string,
   body: V2LicenseIMEI,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2LicensesAssignedRemovedResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2LicensesAssignedRemovedResult>>
 ```
 
 ## Parameters
@@ -191,11 +187,9 @@ try {
 This endpoint allows user to remove licenses from a list of devices.
 
 ```ts
-async removeLicensesFromDevices(
-  account: string,
+async removeLicensesFromDevices(  account: string,
   body: V2LicenseIMEI,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2LicensesAssignedRemovedResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2LicensesAssignedRemovedResult>>
 ```
 
 ## Parameters
@@ -279,11 +273,9 @@ try {
 The license cancel endpoint allows user to list registered license cancellation candidate devices.
 
 ```ts
-async listLicensesToRemove(
-  account: string,
+async listLicensesToRemove(  account: string,
   startIndex?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2ListOfLicensesToRemove>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2ListOfLicensesToRemove>>
 ```
 
 ## Parameters
@@ -347,11 +339,9 @@ try {
 The license cancel endpoint allows user to create a list of license cancellation candidate devices.
 
 ```ts
-async createListOfLicensesToRemove(
-  account: string,
+async createListOfLicensesToRemove(  account: string,
   body: V2ListOfLicensesToRemoveRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V2ListOfLicensesToRemoveResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V2ListOfLicensesToRemoveResult>>
 ```
 
 ## Parameters
@@ -421,10 +411,8 @@ try {
 This endpoint allows user to delete a created cancel candidate device list.
 
 ```ts
-async deleteListOfLicensesToRemove(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2SuccessResult>>
+async deleteListOfLicensesToRemove(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV2SuccessResult>>
 ```
 
 ## Parameters

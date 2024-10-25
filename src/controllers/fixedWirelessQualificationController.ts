@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { WNPRestErrorResponseError } from '../errors/wNPRestErrorResponseError';
 import {
   GetWirelessCoverageRequestFWA,
   getWirelessCoverageRequestFWASchema,
@@ -15,6 +14,7 @@ import {
   wNPRequestResponseSchema,
 } from '../models/wNPRequestResponse';
 import { BaseController } from './baseController';
+import { WNPRestErrorResponseError } from '../errors/wNPRestErrorResponseError';
 
 export class FixedWirelessQualificationController extends BaseController {
   /**

@@ -22,18 +22,16 @@ const campaignsV3Controller = new CampaignsV3Controller(client);
 This endpoint allows a user to schedule a firmware upgrade for a list of devices.
 
 ```ts
-async scheduleCampaignFirmwareUpgrade(
-  acc: string,
+async scheduleCampaignFirmwareUpgrade(  accountName: string,
   body: CampaignFirmwareUpgrade,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FirmwareCampaign>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FirmwareCampaign>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `acc` | `string` | Template, Required | Account identifier. |
+| `accountName` | `string` | Template, Required | Account identifier. |
 | `body` | [`CampaignFirmwareUpgrade`](../../doc/models/campaign-firmware-upgrade.md) | Body, Required | Firmware upgrade information. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -44,7 +42,7 @@ async scheduleCampaignFirmwareUpgrade(
 ## Example Usage
 
 ```ts
-const acc = '0000123456-00001';
+const accountName = '0000123456-00001';
 
 const body: CampaignFirmwareUpgrade = {
   firmwareName: 'SEQUANSCommunications_GM01Q_SR1.2.0.0-10512_SR1.2.0.0-10657',
@@ -56,6 +54,8 @@ const body: CampaignFirmwareUpgrade = {
   deviceList: [
     '15-digit IMEI'
   ],
+  autoAssignLicenseFlag: false,
+  autoAddDevicesFlag: false,
   campaignName: 'Smart FOTA - test 4',
   campaignTimeWindowList: [
     {
@@ -67,7 +67,7 @@ const body: CampaignFirmwareUpgrade = {
 
 try {
   const { result, ...httpResponse } = await campaignsV3Controller.scheduleCampaignFirmwareUpgrade(
-  acc,
+  accountName,
   body
 );
   // Get more response info...
@@ -117,12 +117,10 @@ try {
 This endpoint allows user to Add or Remove devices to an existing campaign.
 
 ```ts
-async updateCampaignFirmwareDevices(
-  acc: string,
+async updateCampaignFirmwareDevices(  acc: string,
   campaignId: string,
   body: V3AddOrRemoveDeviceRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<V3AddOrRemoveDeviceResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<V3AddOrRemoveDeviceResult>>
 ```
 
 ## Parameters
@@ -196,12 +194,10 @@ try {
 This endpoint allows user to change campaign dates and time windows. Fields which need to remain unchanged should be also provided.
 
 ```ts
-async updateCampaignDates(
-  acc: string,
+async updateCampaignDates(  acc: string,
   campaignId: string,
   body: V3ChangeCampaignDatesRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FirmwareCampaign>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FirmwareCampaign>>
 ```
 
 ## Parameters
@@ -288,18 +284,16 @@ try {
 This endpoint allows the user to retrieve campaign level information for a specified campaign.
 
 ```ts
-async getCampaignInformation(
-  acc: string,
+async getCampaignInformation(  accountName: string,
   campaignId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Campaign>>
+requestOptions?: RequestOptions): Promise<ApiResponse<Campaign>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `acc` | `string` | Template, Required | Account identifier. |
+| `accountName` | `string` | Template, Required | Account identifier. |
 | `campaignId` | `string` | Template, Required | Firmware upgrade identifier. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -310,13 +304,13 @@ async getCampaignInformation(
 ## Example Usage
 
 ```ts
-const acc = '0000123456-00001';
+const accountName = '0000123456-00001';
 
 const campaignId = 'f858b8c4-2153-11ec-8c44-aeb16d1aa652';
 
 try {
   const { result, ...httpResponse } = await campaignsV3Controller.getCampaignInformation(
-  acc,
+  accountName,
   campaignId
 );
   // Get more response info...
@@ -350,7 +344,9 @@ try {
       "startTime": 18,
       "endTime": 22
     }
-  ]
+  ],
+  "autoAssignLicenseFlag": false,
+  "autoAddDevicesFlag": false
 }
 ```
 
@@ -366,18 +362,16 @@ try {
 This endpoint allows user to cancel a firmware campaign. A firmware campaign already started can not be cancelled.
 
 ```ts
-async cancelCampaign(
-  acc: string,
+async cancelCampaign(  accountName: string,
   campaignId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV3SuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV3SuccessResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `acc` | `string` | Template, Required | Account identifier. |
+| `accountName` | `string` | Template, Required | Account identifier. |
 | `campaignId` | `string` | Template, Required | Firmware upgrade information. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -388,13 +382,13 @@ async cancelCampaign(
 ## Example Usage
 
 ```ts
-const acc = '0000123456-00001';
+const accountName = '0000123456-00001';
 
 const campaignId = 'f858b8c4-2153-11ec-8c44-aeb16d1aa652';
 
 try {
   const { result, ...httpResponse } = await campaignsV3Controller.cancelCampaign(
-  acc,
+  accountName,
   campaignId
 );
   // Get more response info...

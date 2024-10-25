@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 import {
   CampaignSoftware,
   campaignSoftwareSchema,
@@ -44,6 +43,7 @@ import {
 } from '../models/v2ChangeCampaignDatesRequest';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 
 export class CampaignsV2Controller extends BaseController {
   /**

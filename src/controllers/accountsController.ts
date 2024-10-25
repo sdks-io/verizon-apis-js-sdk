@@ -5,9 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
 import { Account, accountSchema } from '../models/account';
 import {
   AccountLeadsResult,
@@ -19,6 +16,7 @@ import {
 } from '../models/accountStatesAndServices';
 import { bigint, optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
 
 export class AccountsController extends BaseController {
   /**

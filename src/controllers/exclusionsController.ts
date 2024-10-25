@@ -5,8 +5,19 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
+import {
+  AccountConsentCreate,
+  accountConsentCreateSchema,
+} from '../models/accountConsentCreate';
+import {
+  AccountConsentUpdate,
+  accountConsentUpdateSchema,
+} from '../models/accountConsentUpdate';
 import { ConsentRequest, consentRequestSchema } from '../models/consentRequest';
+import {
+  ConsentTransactionID,
+  consentTransactionIDSchema,
+} from '../models/consentTransactionID';
 import {
   DeviceLocationSuccessResult,
   deviceLocationSuccessResultSchema,
@@ -15,10 +26,84 @@ import {
   DevicesConsentResult,
   devicesConsentResultSchema,
 } from '../models/devicesConsentResult';
-import { string } from '../schema';
+import {
+  GetAccountDeviceConsent,
+  getAccountDeviceConsentSchema,
+} from '../models/getAccountDeviceConsent';
+import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 
 export class ExclusionsController extends BaseController {
+  /**
+   * Get the consent settings for the entire account or device list in an account.
+   *
+   * @param accountName The numeric name of the account.
+   * @param deviceId    The IMEI of the device being queried
+   * @return Response from the API call
+   */
+  async devicesLocationGetConsentAsync(
+    accountName: string,
+    deviceId?: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<GetAccountDeviceConsent>> {
+    const req = this.createRequest('GET', '/devicelocations/action/consents');
+    req.baseUrl('Device Location');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      deviceId: [deviceId, optional(string())],
+    });
+    req.query('accountName', mapped.accountName);
+    req.query('deviceId', mapped.deviceId);
+    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(getAccountDeviceConsentSchema, requestOptions);
+  }
+
+  /**
+   * Create a consent record to use location services as an asynchronous request.
+   *
+   * @param body         Account details to create a consent record.
+   * @return Response from the API call
+   */
+  async devicesLocationGiveConsentAsync(
+    body?: AccountConsentCreate,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ConsentTransactionID>> {
+    const req = this.createRequest('POST', '/devicelocations/action/consents');
+    req.baseUrl('Device Location');
+    const mapped = req.prepareArgs({
+      body: [body, optional(accountConsentCreateSchema)],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(consentTransactionIDSchema, requestOptions);
+  }
+
+  /**
+   * Update the location services consent record for an entire account.
+   *
+   * @param body         Account details to update a consent record.
+   * @return Response from the API call
+   */
+  async devicesLocationUpdateConsent(
+    body?: AccountConsentUpdate,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<ConsentTransactionID>> {
+    const req = this.createRequest('PUT', '/devicelocations/action/consents');
+    req.baseUrl('Device Location');
+    const mapped = req.prepareArgs({
+      body: [body, optional(accountConsentUpdateSchema)],
+    });
+    req.header('Content-Type', 'application/json');
+    req.json(mapped.body);
+    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(consentTransactionIDSchema, requestOptions);
+  }
+
   /**
    * This consents endpoint sets a new exclusion list.
    *
@@ -68,22 +153,22 @@ export class ExclusionsController extends BaseController {
   /**
    * This consents endpoint retrieves a list of excluded devices in an account.
    *
-   * @param account    Account identifier in "##########-#####".
-   * @param startIndex Zero-based number of the first record to return.
+   * @param accountName Account identifier in "##########-#####".
+   * @param startIndex  Zero-based number of the first record to return.
    * @return Response from the API call
    */
   async listExcludedDevices(
-    account: string,
+    accountName: string,
     startIndex: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<DevicesConsentResult>> {
     const req = this.createRequest('GET');
     req.baseUrl('Device Location');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       startIndex: [startIndex, string()],
     });
-    req.appendTemplatePath`/consents/${mapped.account}/index/${mapped.startIndex}`;
+    req.appendTemplatePath`/consents/${mapped.accountName}/index/${mapped.startIndex}`;
     req.throwOn(400, DeviceLocationResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(devicesConsentResultSchema, requestOptions);

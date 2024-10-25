@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 import {
   CampaignStatusEnum,
   campaignStatusEnumSchema,
@@ -24,6 +23,7 @@ import {
 } from '../models/v3CampaignHistory';
 import { array, optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 
 export class SoftwareManagementReportsV3Controller extends BaseController {
   /**

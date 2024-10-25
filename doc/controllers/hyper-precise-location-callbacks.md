@@ -20,10 +20,8 @@ const hyperPreciseLocationCallbacksController = new HyperPreciseLocationCallback
 Find registered callback listener for account by account number.
 
 ```ts
-async listRegisteredCallbacks(
-  accountNumber: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CallbackCreated[]>>
+async listRegisteredCallbacks(  accountNumber: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<CallbackCreated[]>>
 ```
 
 ## Parameters
@@ -83,11 +81,9 @@ try {
 Registers a URL at which an account receives asynchronous responses and other messages from a ThingSpace Platform callback service. The messages are REST messages. You are responsible for creating and running a listening process on your server at that URL to receive and parse the messages.
 
 ```ts
-async registerCallback(
-  accountNumber: string,
+async registerCallback(  accountNumber: string,
   body: HyperPreciseLocationCallback,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CallbackRegistered>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CallbackRegistered>>
 ```
 
 ## Parameters
@@ -153,11 +149,9 @@ try {
 Stops ThingSpace from sending callback messages for the specified account and listener name.
 
 ```ts
-async deregisterCallback(
-  accountNumber: string,
+async deregisterCallback(  accountNumber: string,
   service: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
+requestOptions?: RequestOptions): Promise<ApiResponse<void>>
 ```
 
 ## Parameters

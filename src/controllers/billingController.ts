@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 import {
   ManagedAccountCancelRequest,
   managedAccountCancelRequestSchema,
@@ -36,6 +35,7 @@ import {
 } from '../models/managedAccountsProvisionResponse';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 
 export class BillingController extends BaseController {
   /**

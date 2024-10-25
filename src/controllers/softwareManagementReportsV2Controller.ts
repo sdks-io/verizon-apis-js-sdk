@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 import {
   DeviceSoftwareUpgrade,
   deviceSoftwareUpgradeSchema,
@@ -28,6 +27,7 @@ import {
 } from '../models/v2CampaignHistory';
 import { array, optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV2ResultError } from '../errors/fotaV2ResultError';
 
 export class SoftwareManagementReportsV2Controller extends BaseController {
   /**

@@ -22,10 +22,8 @@ const firmwareV1Controller = new FirmwareV1Controller(client);
 Lists all device firmware images available for an account, based on the devices registered to that account.
 
 ```ts
-async listAvailableFirmware(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Firmware[]>>
+async listAvailableFirmware(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<Firmware[]>>
 ```
 
 ## Parameters
@@ -85,10 +83,8 @@ try {
 Schedules a firmware upgrade for devices.
 
 ```ts
-async scheduleFirmwareUpgrade(
-  body: FirmwareUpgradeRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FirmwareUpgrade>>
+async scheduleFirmwareUpgrade(  body: FirmwareUpgradeRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<FirmwareUpgrade>>
 ```
 
 ## Parameters
@@ -109,7 +105,8 @@ const body: FirmwareUpgradeRequest = {
   accountName: '0402196254-00001',
   firmwareName: 'FOTA_Verizon_Model-A_01To02_HF',
   firmwareTo: 'VerizonFirmwareVersion-02',
-  startDate: '2018-04-01T16:03:00.000Z',
+  startDate: '2018-04-01',
+  endDate: '2018-04-05',
   deviceList: [
     '990003425730535',
     '990000473475989'
@@ -163,18 +160,16 @@ try {
 Returns information about a specified upgrade, include the target date of the upgrade, the list of devices in the upgrade, and the status of the upgrade for each device.
 
 ```ts
-async listFirmwareUpgradeDetails(
-  account: string,
+async listFirmwareUpgradeDetails(  accountName: string,
   upgradeId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FirmwareUpgrade>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FirmwareUpgrade>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier in "##########-#####". |
+| `accountName` | `string` | Template, Required | Account identifier in "##########-#####". |
 | `upgradeId` | `string` | Template, Required | The UUID of the upgrade, returned by POST /upgrades when the upgrade was scheduled. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -185,13 +180,13 @@ async listFirmwareUpgradeDetails(
 ## Example Usage
 
 ```ts
-const account = '0242078689-00001';
+const accountName = '0242078689-00001';
 
 const upgradeId = 'e3a8d88a-04c6-4ef3-b039-89b62f91e962';
 
 try {
   const { result, ...httpResponse } = await firmwareV1Controller.listFirmwareUpgradeDetails(
-  account,
+  accountName,
   upgradeId
 );
   // Get more response info...
@@ -225,7 +220,8 @@ try {
       "status": "Device Accepted",
       "resultReason": "success"
     }
-  ]
+  ],
+  "endDate": "2018-04-05"
 }
 ```
 
@@ -241,19 +237,17 @@ try {
 Add or remove devices from a scheduled upgrade.
 
 ```ts
-async updateFirmwareUpgradeDevices(
-  account: string,
+async updateFirmwareUpgradeDevices(  accountName: string,
   upgradeId: string,
   body: FirmwareUpgradeChangeRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FirmwareUpgradeChangeResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FirmwareUpgradeChangeResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier in "##########-#####". |
+| `accountName` | `string` | Template, Required | Account identifier in "##########-#####". |
 | `upgradeId` | `string` | Template, Required | The UUID of the upgrade, returned by POST /upgrades when the upgrade was scheduled. |
 | `body` | [`FirmwareUpgradeChangeRequest`](../../doc/models/firmware-upgrade-change-request.md) | Body, Required | List of devices to add or remove. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
@@ -265,7 +259,7 @@ async updateFirmwareUpgradeDevices(
 ## Example Usage
 
 ```ts
-const account = '0242078689-00001';
+const accountName = '0242078689-00001';
 
 const upgradeId = 'e3a8d88a-04c6-4ef3-b039-89b62f91e962';
 
@@ -279,7 +273,7 @@ const body: FirmwareUpgradeChangeRequest = {
 
 try {
   const { result, ...httpResponse } = await firmwareV1Controller.updateFirmwareUpgradeDevices(
-  account,
+  accountName,
   upgradeId,
   body
 );
@@ -326,18 +320,16 @@ try {
 Cancel a scheduled firmware upgrade.
 
 ```ts
-async cancelScheduledFirmwareUpgrade(
-  account: string,
+async cancelScheduledFirmwareUpgrade(  accountName: string,
   upgradeId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV1SuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV1SuccessResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier in "##########-#####". |
+| `accountName` | `string` | Template, Required | Account identifier in "##########-#####". |
 | `upgradeId` | `string` | Template, Required | The UUID of the scheduled upgrade that you want to cancel. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -348,13 +340,13 @@ async cancelScheduledFirmwareUpgrade(
 ## Example Usage
 
 ```ts
-const account = '0242078689-00001';
+const accountName = '0242078689-00001';
 
 const upgradeId = 'e3a8d88a-04c6-4ef3-b039-89b62f91e962';
 
 try {
   const { result, ...httpResponse } = await firmwareV1Controller.cancelScheduledFirmwareUpgrade(
-  account,
+  accountName,
   upgradeId
 );
   // Get more response info...

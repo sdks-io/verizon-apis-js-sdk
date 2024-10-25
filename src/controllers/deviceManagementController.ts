@@ -6,10 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  ConnectivityManagementResultError,
-} from '../errors/connectivityManagementResultError';
-import { RestErrorResponseError } from '../errors/restErrorResponseError';
-import {
   AccountDeviceListRequest,
   accountDeviceListRequestSchema,
 } from '../models/accountDeviceListRequest';
@@ -160,6 +156,8 @@ import {
 } from '../models/uploadsActivatesDeviceRequest';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { ConnectivityManagementResultError } from '../errors/connectivityManagementResultError';
+import { RestErrorResponseError } from '../errors/restErrorResponseError';
 
 export class DeviceManagementController extends BaseController {
   /**
@@ -218,7 +216,7 @@ export class DeviceManagementController extends BaseController {
   ): Promise<ApiResponse<DeviceManagementResult>> {
     const req = this.createRequest(
       'PUT',
-      '/m2m/v1/devices/actions/contactinfo'
+      '/m2m/v1/devices/actions/contactInfo'
     );
     req.baseUrl('Thingspace');
     const mapped = req.prepareArgs({

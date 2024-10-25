@@ -21,10 +21,8 @@ const softwareManagementCallbacksV2Controller = new SoftwareManagementCallbacksV
 This endpoint allows user to get the registered callback information.
 
 ```ts
-async listRegisteredCallbacks(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CallbackSummary>>
+async listRegisteredCallbacks(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<CallbackSummary>>
 ```
 
 ## Parameters
@@ -75,11 +73,9 @@ try {
 This endpoint allows user to update the HTTPS callback address.
 
 ```ts
-async updateCallback(
-  account: string,
+async updateCallback(  account: string,
   body: FotaV2CallbackRegistrationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2CallbackRegistrationResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV2CallbackRegistrationResult>>
 ```
 
 ## Parameters
@@ -138,11 +134,9 @@ try {
 This endpoint allows user to create the HTTPS callback address.
 
 ```ts
-async registerCallback(
-  account: string,
+async registerCallback(  account: string,
   body: FotaV2CallbackRegistrationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2CallbackRegistrationResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV2CallbackRegistrationResult>>
 ```
 
 ## Parameters
@@ -201,10 +195,8 @@ try {
 This endpoint allows user to delete a previously registered callback URL.
 
 ```ts
-async deregisterCallback(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<FotaV2SuccessResult>>
+async deregisterCallback(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<FotaV2SuccessResult>>
 ```
 
 ## Parameters

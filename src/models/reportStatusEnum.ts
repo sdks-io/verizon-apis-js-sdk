@@ -18,4 +18,6 @@ export enum ReportStatusEnum {
 /**
  * Schema for ReportStatusEnum
  */
-export const  reportStatusEnumSchema: Schema<ReportStatusEnum> = stringEnum(ReportStatusEnum);
+export const reportStatusEnumSchema: Schema<ReportStatusEnum> = stringEnum(
+  ReportStatusEnum
+);

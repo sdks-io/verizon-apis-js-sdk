@@ -11,18 +11,16 @@ const globalReportingController = new GlobalReportingController(client);
 ## Methods
 
 * [Deviceprovhistory Using POST](../../doc/controllers/global-reporting.md#deviceprovhistory-using-post)
-* [Requeststatususing GET](../../doc/controllers/global-reporting.md#requeststatususing-get)
+* [Retrieve Global List](../../doc/controllers/global-reporting.md#retrieve-global-list)
 
 
 # Deviceprovhistory Using POST
 
-Retreive the provisioning history of a specific device or devices.
+Retrieve the provisioning history of a specific device or devices.
 
 ```ts
-async deviceprovhistoryUsingPOST(
-  body: ESIMProvhistoryRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ESIMRequestResponse>>
+async deviceprovhistoryUsingPOST(  body: ESIMProvhistoryRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<ESIMRequestResponse>>
 ```
 
 ## Parameters
@@ -78,42 +76,36 @@ try {
 | Default | Error response | [`ESIMRestErrorResponseError`](../../doc/models/esim-rest-error-response-error.md) |
 
 
-# Requeststatususing GET
+# Retrieve Global List
 
-Get the status of a request made with the Device Actions.
+Retrieve a list of all devices associated with an account.
 
 ```ts
-async requeststatususingGET(
-  accountname: string,
-  requestID: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<ESIMStatusResponse>>
+async retrieveGlobalList(  body: ESIMGlobalDeviceList,
+requestOptions?: RequestOptions): Promise<ApiResponse<ESIMRequestResponse>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `accountname` | `string` | Template, Required | - |
-| `requestID` | `string` | Template, Required | - |
+| `body` | [`ESIMGlobalDeviceList`](../../doc/models/esim-global-device-list.md) | Body, Required | Device List |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
 
-[`ESIMStatusResponse`](../../doc/models/esim-status-response.md)
+[`ESIMRequestResponse`](../../doc/models/esim-request-response.md)
 
 ## Example Usage
 
 ```ts
-const accountname = '0000123456-00001';
-
-const requestID = '86c83330-4bf5-4235-9c4e-a83f93aeae4c';
+const body: ESIMGlobalDeviceList = {
+  accountName: '0000123456-00001',
+  carrierNameFilter: 'VerizonWireless',
+};
 
 try {
-  const { result, ...httpResponse } = await globalReportingController.requeststatususingGET(
-  accountname,
-  requestID
-);
+  const { result, ...httpResponse } = await globalReportingController.retrieveGlobalList(body);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -121,24 +113,6 @@ try {
     const errors = error.result;
     // const { statusCode, headers } = error;
   }
-}
-```
-
-## Example Response *(as JSON)*
-
-```json
-{
-  "requestId": "d1f08526-5443-4054-9a29-4456490ea9f8",
-  "status": "Success",
-  "subrequests": [
-    {
-      "id": "32-digit EID",
-      "kind": "eid"
-    },
-    {
-      "status": "success"
-    }
-  ]
 }
 ```
 

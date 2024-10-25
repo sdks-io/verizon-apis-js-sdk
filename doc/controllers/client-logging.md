@@ -23,10 +23,8 @@ const clientLoggingController = new ClientLoggingController(client);
 Returns an array of all devices in the specified account for which logging is enabled.
 
 ```ts
-async listDevicesWithLoggingEnabled(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLoggingStatus[]>>
+async listDevicesWithLoggingEnabled(  account: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLoggingStatus[]>>
 ```
 
 ## Parameters
@@ -96,11 +94,9 @@ try {
 Each customer may have a maximum of 20 devices enabled for logging.
 
 ```ts
-async enableLoggingForDevices(
-  account: string,
+async enableLoggingForDevices(  account: string,
   body: DeviceLoggingRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLoggingStatus[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLoggingStatus[]>>
 ```
 
 ## Parameters
@@ -184,11 +180,9 @@ try {
 Turn logging off for a list of devices.
 
 ```ts
-async disableLoggingForDevices(
-  account: string,
+async disableLoggingForDevices(  account: string,
   deviceIds: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
+requestOptions?: RequestOptions): Promise<ApiResponse<void>>
 ```
 
 ## Parameters
@@ -237,11 +231,9 @@ try {
 Enables logging for a specific device.
 
 ```ts
-async enableDeviceLogging(
-  account: string,
+async enableDeviceLogging(  account: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLoggingStatus>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLoggingStatus>>
 ```
 
 ## Parameters
@@ -299,11 +291,9 @@ try {
 Disables logging for a specific device.
 
 ```ts
-async disableDeviceLogging(
-  account: string,
+async disableDeviceLogging(  account: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
+requestOptions?: RequestOptions): Promise<ApiResponse<void>>
 ```
 
 ## Parameters
@@ -352,11 +342,9 @@ try {
 Gets logs for a specific device.
 
 ```ts
-async listDeviceLogs(
-  account: string,
+async listDeviceLogs(  account: string,
   deviceId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLog[]>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLog[]>>
 ```
 
 ## Parameters

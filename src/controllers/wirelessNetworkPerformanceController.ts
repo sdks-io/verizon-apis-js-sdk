@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { WNPRestErrorResponseError } from '../errors/wNPRestErrorResponseError';
 import {
   GetDeviceExperienceScoreBulkRequest,
   getDeviceExperienceScoreBulkRequestSchema,
@@ -27,6 +26,7 @@ import {
   wNPRequestResponseSchema,
 } from '../models/wNPRequestResponse';
 import { BaseController } from './baseController';
+import { WNPRestErrorResponseError } from '../errors/wNPRestErrorResponseError';
 
 export class WirelessNetworkPerformanceController extends BaseController {
   /**
@@ -56,7 +56,7 @@ export class WirelessNetworkPerformanceController extends BaseController {
 
   /**
    * Run a report to determine network types available and available coverage. Network types covered
-   * include: CAT-M, NB-IOT, LTE, LTE-AWS and 5GNW.
+   * include: CAT-M, NB-IOT, LTE, LTE-AWS, 5GNW and C-BAND.
    *
    * @param body         Request for network coverage details.
    * @return Response from the API call

@@ -5,12 +5,12 @@
  */
 
 import { array, lazy, object, optional, Schema } from '../schema';
-import { ESIMDeviceId, eSIMDeviceIdSchema } from './eSIMDeviceId';
+import { DeviceId2, deviceId2Schema } from './deviceId2';
 
 export interface ESIMDeviceList {
-  deviceIds?: ESIMDeviceId[];
+  deviceIds?: DeviceId2[];
 }
 
 export const eSIMDeviceListSchema: Schema<ESIMDeviceList> = object({
-  deviceIds: ['deviceIds', optional(array(lazy(() => eSIMDeviceIdSchema)))],
+  deviceIds: ['deviceIds', optional(array(lazy(() => deviceId2Schema)))],
 });

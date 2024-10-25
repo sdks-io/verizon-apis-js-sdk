@@ -5,9 +5,7 @@
  */
 
 import { HttpClientOptions } from './clientAdapter';
-import {
-  OauthScopeThingspaceOauthEnum,
-} from './models/oauthScopeThingspaceOauthEnum';
+import { OauthScopeThingspaceOauthEnum } from './models/oauthScopeThingspaceOauthEnum';
 import { OauthToken } from './models/oauthToken';
 import { ThingspaceOauthManager } from './thingspaceOauthManager';
 
@@ -20,9 +18,12 @@ export interface Configuration {
     oauthClientSecret: string;
     oauthToken?: OauthToken;
     oauthScopes?: OauthScopeThingspaceOauthEnum[];
-    oauthTokenProvider?: (lastOAuthToken: OauthToken | undefined,
-      authManager: ThingspaceOauthManager) => Promise<OauthToken>;
+    oauthTokenProvider?: (
+      lastOAuthToken: OauthToken | undefined,
+      authManager: ThingspaceOauthManager
+    ) => Promise<OauthToken>;
     oauthOnTokenUpdate?: (token: OauthToken) => void;
+    oauthClockSkew?: number;
   };
   vZM2mTokenCredentials?: {
     'VZ-M2M-Token': string;

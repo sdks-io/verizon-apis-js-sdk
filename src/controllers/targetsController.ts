@@ -114,7 +114,7 @@ export class TargetsController extends BaseController {
     });
     req.header('Content-Type', 'application/json');
     req.json(mapped.body);
-    req.authenticate(false);
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(generateExternalIDResultSchema, requestOptions);
   }
 

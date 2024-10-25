@@ -22,10 +22,8 @@ const targetsController = new TargetsController(client);
 Search for targets by property values. Returns an array of all matching target resources.
 
 ```ts
-async queryTarget(
-  body: QueryTargetRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Target[]>>
+async queryTarget(  body: QueryTargetRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<Target[]>>
 ```
 
 ## Parameters
@@ -100,10 +98,8 @@ try {
 Remove a target from a ThingSpace account.
 
 ```ts
-async deleteTarget(
-  body: DeleteTargetRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
+async deleteTarget(  body: DeleteTargetRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<void>>
 ```
 
 ## Parameters
@@ -147,10 +143,8 @@ try {
 Define a target to receive data streams, alerts, or callbacks. After creating the target resource, use its ID in a subscription to set up a data stream.
 
 ```ts
-async createTarget(
-  body: CreateTargetRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Target>>
+async createTarget(  body: CreateTargetRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<Target>>
 ```
 
 ## Parameters
@@ -224,13 +218,9 @@ try {
 
 Create a unique string that ThingSpace will pass to AWS for increased security.
 
-:information_source: **Note** This endpoint does not require authentication.
-
 ```ts
-async generateTargetExternalID(
-  body: GenerateExternalIDRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<GenerateExternalIDResult>>
+async generateTargetExternalID(  body: GenerateExternalIDRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<GenerateExternalIDResult>>
 ```
 
 ## Parameters
@@ -279,11 +269,9 @@ try {
 Deploy a new Azure IoT Central application based on the Verizon ARM template within the specified Azure Active Directory account.
 
 ```ts
-async createAzureCentralIoTApplication(
-  billingaccountID: string,
+async createAzureCentralIoTApplication(  billingaccountID: string,
   body: CreateIoTApplicationRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CreateIoTApplicationResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CreateIoTApplicationResponse>>
 ```
 
 ## Parameters

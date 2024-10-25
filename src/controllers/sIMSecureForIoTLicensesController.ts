@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { SecurityResultError } from '../errors/securityResultError';
 import {
   AssignLicenseRequest,
   assignLicenseRequestSchema,
@@ -16,6 +15,7 @@ import {
 } from '../models/securitySuccessResult';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { SecurityResultError } from '../errors/securityResultError';
 
 export class SIMSecureForIoTLicensesController extends BaseController {
   /**

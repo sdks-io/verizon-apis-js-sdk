@@ -11,7 +11,7 @@ Callback type. Must be 'Fota' for Software Management Services API.
 
 | Name |
 |  --- |
-| `fota` |
+| `Fota` |
 
 ## Example
 

@@ -11,6 +11,6 @@ Service name
 
 | Name |
 |  --- |
-| `location` |
-| `fota` |
+| `Location` |
+| `Fota` |
 

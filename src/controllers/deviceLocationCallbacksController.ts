@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 import {
   CallbackRegistrationResult,
   callbackRegistrationResultSchema,
@@ -22,24 +21,51 @@ import {
   DeviceLocationSuccessResult,
   deviceLocationSuccessResultSchema,
 } from '../models/deviceLocationSuccessResult';
+import { TransactionID, transactionIDSchema } from '../models/transactionID';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 
 export class DeviceLocationCallbacksController extends BaseController {
   /**
+   * Cancel an asynchronous report request.
+   *
+   * @param accountName Account identifier in "##########-#####".
+   * @param txid        The `transactionId` value.
+   * @return Response from the API call
+   */
+  async cancelAsyncReport(
+    accountName: string,
+    txid: string,
+    requestOptions?: RequestOptions
+  ): Promise<ApiResponse<TransactionID>> {
+    const req = this.createRequest('DELETE');
+    req.baseUrl('Device Location');
+    const mapped = req.prepareArgs({
+      accountName: [accountName, string()],
+      txid: [txid, string()],
+    });
+    req.query('accountName', mapped.accountName);
+    req.appendTemplatePath`/devicelocations/${mapped.txid}`;
+    req.defaultToError(DeviceLocationResultError, 'Unexpected error.');
+    req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
+    return req.callAsJson(transactionIDSchema, requestOptions);
+  }
+
+  /**
    * Returns a list of all registered callback URLs for the account.
    *
-   * @param account Account number.
+   * @param accountName Account number.
    * @return Response from the API call
    */
   async listRegisteredCallbacks(
-    account: string,
+    accountName: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<DeviceLocationCallback[]>> {
     const req = this.createRequest('GET');
     req.baseUrl('Device Location');
-    const mapped = req.prepareArgs({ account: [account, string()] });
-    req.appendTemplatePath`/callbacks/${mapped.account}`;
+    const mapped = req.prepareArgs({ accountName: [accountName, string()] });
+    req.appendTemplatePath`/callbacks/${mapped.accountName}`;
     req.throwOn(400, DeviceLocationResultError, 'Error response.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(array(deviceLocationCallbackSchema), requestOptions);
@@ -48,24 +74,24 @@ export class DeviceLocationCallbacksController extends BaseController {
   /**
    * Provide a URL to receive messages from a ThingSpace callback service.
    *
-   * @param account      Account number.
+   * @param accountName  Account number.
    * @param body         Request to register a callback.
    * @return Response from the API call
    */
   async registerCallback(
-    account: string,
+    accountName: string,
     body: DeviceLocationCallback,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<CallbackRegistrationResult>> {
     const req = this.createRequest('POST');
     req.baseUrl('Device Location');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       body: [body, deviceLocationCallbackSchema],
     });
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
-    req.appendTemplatePath`/callbacks/${mapped.account}`;
+    req.appendTemplatePath`/callbacks/${mapped.accountName}`;
     req.throwOn(400, DeviceLocationResultError, 'Error response.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(callbackRegistrationResultSchema, requestOptions);
@@ -74,22 +100,22 @@ export class DeviceLocationCallbacksController extends BaseController {
   /**
    * Deregister a URL to stop receiving callback messages.
    *
-   * @param account Account number.
-   * @param service Callback service name.
+   * @param accountName Account number.
+   * @param service     Callback service name.
    * @return Response from the API call
    */
   async deregisterCallback(
-    account: string,
+    accountName: string,
     service: CallbackServiceNameEnum,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<DeviceLocationSuccessResult>> {
     const req = this.createRequest('DELETE');
     req.baseUrl('Device Location');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       service: [service, callbackServiceNameEnumSchema],
     });
-    req.appendTemplatePath`/callbacks/${mapped.account}/name/${mapped.service}`;
+    req.appendTemplatePath`/callbacks/${mapped.accountName}/name/${mapped.service}`;
     req.throwOn(400, DeviceLocationResultError, 'Error response.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(deviceLocationSuccessResultSchema, requestOptions);

@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 import {
   V3LicenseAssignedRemovedResult,
   v3LicenseAssignedRemovedResultSchema,
@@ -17,6 +16,7 @@ import {
 } from '../models/v3LicenseSummary';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV3ResultError } from '../errors/fotaV3ResultError';
 
 export class SoftwareManagementLicensesV3Controller extends BaseController {
   /**

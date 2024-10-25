@@ -5,7 +5,10 @@
  */
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
-import { FieldsHttpHeaders, fieldsHttpHeadersSchema } from './fieldsHttpHeaders';
+import {
+  FieldsHttpHeaders,
+  fieldsHttpHeadersSchema,
+} from './fieldsHttpHeaders';
 
 export interface CreateTargetRequestFields {
   httpheaders?: FieldsHttpHeaders;

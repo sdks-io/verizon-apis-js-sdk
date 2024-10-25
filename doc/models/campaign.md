@@ -24,6 +24,8 @@ Firmware upgrade information.
 | `endDate` | `string` | Required | Campaign end date. |
 | `campaignTimeWindowList` | [`V3TimeWindow[] \| undefined`](../../doc/models/v3-time-window.md) | Optional | List of allowed campaign time windows. |
 | `status` | `string` | Required | Firmware upgrade status. |
+| `autoAssignLicenseFlag` | `boolean` | Required | Any device included in the device list which does not have a license will automatically be assigned a FOTA license, assuming there are enough FOTA licenses available, when set to true. |
+| `autoAddDevicesFlag` | `boolean` | Required | Beyond the devices included on the device list, any other device(s) which matches the eligibility criteria (same make, model, current firmware, protocol, billing account) will automatically be added to the campaign list during the life of the campaign when set to true. |
 
 ## Example (as JSON)
 
@@ -46,7 +48,9 @@ Firmware upgrade information.
       "startTime": 18,
       "endTime": 22
     }
-  ]
+  ],
+  "autoAssignLicenseFlag": false,
+  "autoAddDevicesFlag": false
 }
 ```
 

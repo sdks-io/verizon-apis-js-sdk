@@ -11,13 +11,13 @@ The category of application client.
 
 | Name |
 |  --- |
-| `v2X` |
-| `computerVision` |
-| `machineLearning` |
-| `ioT` |
-| `gaming` |
-| `aR` |
-| `vR` |
-| `analytics` |
-| `robotics` |
+| `V2X` |
+| `ComputerVision` |
+| `MachineLearning` |
+| `IoT` |
+| `Gaming` |
+| `AR` |
+| `VR` |
+| `Analytics` |
+| `Robotics` |
 

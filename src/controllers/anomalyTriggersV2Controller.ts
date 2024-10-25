@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { IntelligenceResultError } from '../errors/intelligenceResultError';
 import {
   AnomalyDetectionTrigger,
   anomalyDetectionTriggerSchema,
@@ -28,6 +27,7 @@ import {
 } from '../models/updateTriggerRequestOptions';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { IntelligenceResultError } from '../errors/intelligenceResultError';
 
 export class AnomalyTriggersV2Controller extends BaseController {
   /**

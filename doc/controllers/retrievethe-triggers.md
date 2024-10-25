@@ -21,9 +21,7 @@ const retrievetheTriggersController = new RetrievetheTriggersController(client);
 Retrieves all of the available triggers for pseudo-MDN.
 
 ```ts
-async getAllAvailableTriggers(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<TriggerValueResponse>>
+async getAllAvailableTriggers(requestOptions?: RequestOptions): Promise<ApiResponse<TriggerValueResponse>>
 ```
 
 ## Parameters
@@ -63,10 +61,8 @@ try {
 Retrieve the triggers associated with an account name.
 
 ```ts
-async getAllTriggersByAccountName(
-  accountName: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<TriggerValueResponse>>
+async getAllTriggersByAccountName(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<TriggerValueResponse>>
 ```
 
 ## Parameters
@@ -109,9 +105,7 @@ try {
 Retrieves all of the triggers for the specified account associated with the PromoAlert category
 
 ```ts
-async getAllTriggersByTriggerCategory(
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<TriggerValueResponse2>>
+async getAllTriggersByTriggerCategory(requestOptions?: RequestOptions): Promise<ApiResponse<TriggerValueResponse2>>
 ```
 
 ## Parameters
@@ -151,10 +145,8 @@ try {
 Retrives a specific trigger by its ID.
 
 ```ts
-async getTriggersById(
-  triggerId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<TriggerValueResponse2>>
+async getTriggersById(  triggerId: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<TriggerValueResponse2>>
 ```
 
 ## Parameters

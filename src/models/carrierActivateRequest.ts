@@ -5,7 +5,10 @@
  */
 
 import { array, lazy, object, optional, Schema, string } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 import { CustomFields, customFieldsSchema } from './customFields';
 import { PlaceOfUse, placeOfUseSchema } from './placeOfUse';
 

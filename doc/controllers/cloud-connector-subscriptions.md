@@ -20,10 +20,8 @@ const cloudConnectorSubscriptionsController = new CloudConnectorSubscriptionsCon
 Create a subscription to define a streaming channel that sends data from devices in the account to an endpoint defined in a target resource.
 
 ```ts
-async createSubscription(
-  body: CreateSubscriptionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Subscription>>
+async createSubscription(  body: CreateSubscriptionRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<Subscription>>
 ```
 
 ## Parameters
@@ -91,10 +89,8 @@ try {
 Search for subscriptions by property values. Returns an array of all matching subscription resources.
 
 ```ts
-async querySubscription(
-  body: QuerySubscriptionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Subscription[]>>
+async querySubscription(  body: QuerySubscriptionRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<Subscription[]>>
 ```
 
 ## Parameters
@@ -164,10 +160,8 @@ try {
 Remove a subscription from a ThingSpace account.
 
 ```ts
-async deleteSubscription(
-  body: DeleteSubscriptionRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<void>>
+async deleteSubscription(  body: DeleteSubscriptionRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<void>>
 ```
 
 ## Parameters

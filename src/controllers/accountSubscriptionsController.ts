@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { SecurityResultError } from '../errors/securityResultError';
 import {
   SecuritySubscriptionRequest,
   securitySubscriptionRequestSchema,
@@ -16,6 +15,7 @@ import {
 } from '../models/securitySubscriptionResult';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { SecurityResultError } from '../errors/securityResultError';
 
 export class AccountSubscriptionsController extends BaseController {
   /**

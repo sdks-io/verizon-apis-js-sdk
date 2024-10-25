@@ -6,9 +6,6 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  DeviceDiagnosticsResultError,
-} from '../errors/deviceDiagnosticsResultError';
-import {
   CallbackRegistrationRequest,
   callbackRegistrationRequestSchema,
 } from '../models/callbackRegistrationRequest';
@@ -18,6 +15,7 @@ import {
 } from '../models/deviceDiagnosticsCallback';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceDiagnosticsResultError } from '../errors/deviceDiagnosticsResultError';
 
 export class DiagnosticsCallbacksController extends BaseController {
   /**

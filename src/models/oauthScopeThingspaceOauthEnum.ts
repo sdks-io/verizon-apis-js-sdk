@@ -30,4 +30,6 @@ export enum OauthScopeThingspaceOauthEnum {
 /**
  * Schema for OauthScopeThingspaceOauthEnum
  */
-export const  oauthScopeThingspaceOauthEnumSchema: Schema<OauthScopeThingspaceOauthEnum> = stringEnum(OauthScopeThingspaceOauthEnum);
+export const oauthScopeThingspaceOauthEnumSchema: Schema<OauthScopeThingspaceOauthEnum> = stringEnum(
+  OauthScopeThingspaceOauthEnum
+);

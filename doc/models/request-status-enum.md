@@ -11,9 +11,9 @@ The current status of the callback response.
 
 | Name |
 |  --- |
-| `pending` |
-| `success` |
-| `failure` |
+| `Pending` |
+| `Success` |
+| `Failure` |
 
 ## Example
 

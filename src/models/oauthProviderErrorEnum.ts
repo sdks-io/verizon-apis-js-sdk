@@ -21,4 +21,6 @@ export enum OauthProviderErrorEnum {
 /**
  * Schema for OauthProviderErrorEnum
  */
-export const  oauthProviderErrorEnumSchema: Schema<OauthProviderErrorEnum> = stringEnum(OauthProviderErrorEnum);
+export const oauthProviderErrorEnumSchema: Schema<OauthProviderErrorEnum> = stringEnum(
+  OauthProviderErrorEnum
+);

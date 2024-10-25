@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 import {
   DeviceLocationSuccessResult,
   deviceLocationSuccessResultSchema,
@@ -24,6 +23,7 @@ import {
 } from '../models/usageTriggerUpdateRequest';
 import { optional, string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceLocationResultError } from '../errors/deviceLocationResultError';
 
 export class UsageTriggerManagementController extends BaseController {
   /**

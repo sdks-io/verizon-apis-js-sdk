@@ -7,6 +7,7 @@
 import {
   compositeAuthenticationProvider,
   customHeaderAuthenticationProvider,
+  OAuthConfiguration,
   requestAuthenticationProvider,
 } from './authentication';
 import { Configuration } from './configuration';
@@ -20,28 +21,36 @@ export function createAuthProviderFromConfig(
   const authConfig = {
     thingspaceOauth:
       config.thingspaceOauthCredentials &&
-      requestAuthenticationProvider (
+      requestAuthenticationProvider(
         config.thingspaceOauthCredentials.oauthToken,
-        thingspaceOauthTokenProvider(thingspaceOauth, config.thingspaceOauthCredentials.oauthTokenProvider),
-        config.thingspaceOauthCredentials.oauthOnTokenUpdate
-    ),
+        thingspaceOauthTokenProvider(
+          thingspaceOauth,
+          config.thingspaceOauthCredentials.oauthTokenProvider
+        ),
+        config.thingspaceOauthCredentials.oauthOnTokenUpdate,
+        {
+          clockSkew: config.thingspaceOauthCredentials.oauthClockSkew,
+        } as OAuthConfiguration
+      ),
     vZM2mToken:
       config.vZM2mTokenCredentials &&
-      customHeaderAuthenticationProvider (
-        config.vZM2mTokenCredentials
-    ),
+      customHeaderAuthenticationProvider(config.vZM2mTokenCredentials),
   };
 
-  return compositeAuthenticationProvider <
+  return compositeAuthenticationProvider<
     keyof typeof authConfig,
     typeof authConfig
-  > (authConfig);
+  >(authConfig);
 }
 
 function thingspaceOauthTokenProvider(
   thingspaceOauth: () => ThingspaceOauthManager | undefined,
-  defaultProvider: ((lastOAuthToken: OauthToken | undefined,
-    authManager: ThingspaceOauthManager) => Promise<OauthToken>) | undefined
+  defaultProvider:
+    | ((
+        lastOAuthToken: OauthToken | undefined,
+        authManager: ThingspaceOauthManager
+      ) => Promise<OauthToken>)
+    | undefined
 ): ((token: OauthToken | undefined) => Promise<OauthToken>) | undefined {
   return (token: OauthToken | undefined) => {
     const manager = thingspaceOauth();
@@ -54,4 +63,3 @@ function thingspaceOauthTokenProvider(
     return defaultProvider(token, manager);
   };
 }
-

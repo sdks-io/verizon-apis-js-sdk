@@ -19,17 +19,15 @@ const devicesLocationSubscriptionsController = new DevicesLocationSubscriptionsC
 This subscriptions endpoint retrieves an account's current location subscription status.
 
 ```ts
-async getLocationServiceSubscriptionStatus(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLocationSubscription>>
+async getLocationServiceSubscriptionStatus(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLocationSubscription>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account identifier in "##########-#####". |
+| `accountName` | `string` | Template, Required | Account identifier in "##########-#####". |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -39,10 +37,10 @@ async getLocationServiceSubscriptionStatus(
 ## Example Usage
 
 ```ts
-const account = '0000123456-00001';
+const accountName = '0000123456-00001';
 
 try {
-  const { result, ...httpResponse } = await devicesLocationSubscriptionsController.getLocationServiceSubscriptionStatus(account);
+  const { result, ...httpResponse } = await devicesLocationSubscriptionsController.getLocationServiceSubscriptionStatus(accountName);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -76,10 +74,8 @@ try {
 This endpoint allows user to search for billable usage for accounts based on the provided date range.
 
 ```ts
-async getLocationServiceUsage(
-  body: BillUsageRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<unknown>>
+async getLocationServiceUsage(  body: BillUsageRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<unknown>>
 ```
 
 ## Parameters

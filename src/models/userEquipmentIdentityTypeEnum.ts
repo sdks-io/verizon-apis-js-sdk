@@ -10,10 +10,12 @@ import { Schema, stringEnum } from '../schema';
  * Enum for UserEquipmentIdentityTypeEnum
  */
 export enum UserEquipmentIdentityTypeEnum {
-  IPAddress = 'IPAddress',
+  Ipaddress = 'IPAddress',
 }
 
 /**
  * Schema for UserEquipmentIdentityTypeEnum
  */
-export const  userEquipmentIdentityTypeEnumSchema: Schema<UserEquipmentIdentityTypeEnum> = stringEnum(UserEquipmentIdentityTypeEnum);
+export const userEquipmentIdentityTypeEnumSchema: Schema<UserEquipmentIdentityTypeEnum> = stringEnum(
+  UserEquipmentIdentityTypeEnum
+);

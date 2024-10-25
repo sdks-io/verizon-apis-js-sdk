@@ -19,10 +19,8 @@ const thingSpaceQualityofServiceAPIActionsController = new ThingSpaceQualityofSe
 Creates a QoS elevation subscription ID and activates the subscription.
 
 ```ts
-async createAThingSpaceQualityOfServiceAPISubscription(
-  body: SubscribeRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<M201success>>
+async createAThingSpaceQualityOfServiceAPISubscription(  body: SubscribeRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<M201success>>
 ```
 
 ## Parameters
@@ -85,11 +83,9 @@ try {
 Stops an active ThingSpace Quality of Service API subscription using the account name and the subscription ID.
 
 ```ts
-async stopAThingSpaceQualityOfServiceAPISubscription(
-  accountName: string,
+async stopAThingSpaceQualityOfServiceAPISubscription(  accountName: string,
   qosSubscriptionId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<M201success>>
+requestOptions?: RequestOptions): Promise<ApiResponse<M201success>>
 ```
 
 ## Parameters

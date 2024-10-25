@@ -13,7 +13,10 @@ import {
   Schema,
   string,
 } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 import { CustomFields, customFieldsSchema } from './customFields';
 
 /** Request for a carrier action. */

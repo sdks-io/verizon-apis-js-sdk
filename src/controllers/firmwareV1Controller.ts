@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 import { Firmware, firmwareSchema } from '../models/firmware';
 import {
   FirmwareUpgrade,
@@ -29,6 +28,7 @@ import {
 } from '../models/fotaV1SuccessResult';
 import { array, string } from '../schema';
 import { BaseController } from './baseController';
+import { FotaV1ResultError } from '../errors/fotaV1ResultError';
 
 export class FirmwareV1Controller extends BaseController {
   /**
@@ -77,22 +77,22 @@ export class FirmwareV1Controller extends BaseController {
    * Returns information about a specified upgrade, include the target date of the upgrade, the list of
    * devices in the upgrade, and the status of the upgrade for each device.
    *
-   * @param account   Account identifier in "##########-#####".
-   * @param upgradeId The UUID of the upgrade, returned by POST /upgrades when the upgrade was scheduled.
+   * @param accountName Account identifier in "##########-#####".
+   * @param upgradeId   The UUID of the upgrade, returned by POST /upgrades when the upgrade was scheduled.
    * @return Response from the API call
    */
   async listFirmwareUpgradeDetails(
-    account: string,
+    accountName: string,
     upgradeId: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<FirmwareUpgrade>> {
     const req = this.createRequest('GET');
     req.baseUrl('Software Management V1');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       upgradeId: [upgradeId, string()],
     });
-    req.appendTemplatePath`/upgrades/${mapped.account}/upgrade/${mapped.upgradeId}`;
+    req.appendTemplatePath`/upgrades/${mapped.accountName}/upgrade/${mapped.upgradeId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareUpgradeSchema, requestOptions);
@@ -101,14 +101,14 @@ export class FirmwareV1Controller extends BaseController {
   /**
    * Add or remove devices from a scheduled upgrade.
    *
-   * @param account      Account identifier in "##########-#####".
+   * @param accountName  Account identifier in "##########-#####".
    * @param upgradeId    The UUID of the upgrade, returned by POST /upgrades
    *                                                            when the upgrade was scheduled.
    * @param body         List of devices to add or remove.
    * @return Response from the API call
    */
   async updateFirmwareUpgradeDevices(
-    account: string,
+    accountName: string,
     upgradeId: string,
     body: FirmwareUpgradeChangeRequest,
     requestOptions?: RequestOptions
@@ -116,13 +116,13 @@ export class FirmwareV1Controller extends BaseController {
     const req = this.createRequest('PUT');
     req.baseUrl('Software Management V1');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       upgradeId: [upgradeId, string()],
       body: [body, firmwareUpgradeChangeRequestSchema],
     });
     req.header('Content-Type', '*/*');
     req.json(mapped.body);
-    req.appendTemplatePath`/upgrades/${mapped.account}/upgrade/${mapped.upgradeId}`;
+    req.appendTemplatePath`/upgrades/${mapped.accountName}/upgrade/${mapped.upgradeId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(firmwareUpgradeChangeResultSchema, requestOptions);
@@ -131,22 +131,22 @@ export class FirmwareV1Controller extends BaseController {
   /**
    * Cancel a scheduled firmware upgrade.
    *
-   * @param account   Account identifier in "##########-#####".
-   * @param upgradeId The UUID of the scheduled upgrade that you want to cancel.
+   * @param accountName Account identifier in "##########-#####".
+   * @param upgradeId   The UUID of the scheduled upgrade that you want to cancel.
    * @return Response from the API call
    */
   async cancelScheduledFirmwareUpgrade(
-    account: string,
+    accountName: string,
     upgradeId: string,
     requestOptions?: RequestOptions
   ): Promise<ApiResponse<FotaV1SuccessResult>> {
     const req = this.createRequest('DELETE');
     req.baseUrl('Software Management V1');
     const mapped = req.prepareArgs({
-      account: [account, string()],
+      accountName: [accountName, string()],
       upgradeId: [upgradeId, string()],
     });
-    req.appendTemplatePath`/upgrades/${mapped.account}/upgrade/${mapped.upgradeId}`;
+    req.appendTemplatePath`/upgrades/${mapped.accountName}/upgrade/${mapped.upgradeId}`;
     req.throwOn(400, FotaV1ResultError, 'Unexpected error.');
     req.authenticate([{ thingspaceOauth: true, vZM2mToken: true }]);
     return req.callAsJson(fotaV1SuccessResultSchema, requestOptions);

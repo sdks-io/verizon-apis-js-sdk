@@ -16,4 +16,6 @@ interface ConnectivityManagementResult {
   errorMessage?: string;
 }
 
-export class ConnectivityManagementResultError extends ApiError<ConnectivityManagementResult> {}
+export class ConnectivityManagementResultError extends ApiError<
+  ConnectivityManagementResult
+> {}

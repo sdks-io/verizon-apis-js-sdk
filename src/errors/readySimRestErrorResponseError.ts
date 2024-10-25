@@ -14,4 +14,6 @@ interface ReadySimRestErrorResponse {
   errorMessage?: string;
 }
 
-export class ReadySimRestErrorResponseError extends ApiError<ReadySimRestErrorResponse> {}
+export class ReadySimRestErrorResponseError extends ApiError<
+  ReadySimRestErrorResponse
+> {}

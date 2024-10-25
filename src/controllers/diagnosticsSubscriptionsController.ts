@@ -6,14 +6,12 @@
 
 import { ApiResponse, RequestOptions } from '../core';
 import {
-  DeviceDiagnosticsResultError,
-} from '../errors/deviceDiagnosticsResultError';
-import {
   DiagnosticsSubscription,
   diagnosticsSubscriptionSchema,
 } from '../models/diagnosticsSubscription';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { DeviceDiagnosticsResultError } from '../errors/deviceDiagnosticsResultError';
 
 export class DiagnosticsSubscriptionsController extends BaseController {
   /**

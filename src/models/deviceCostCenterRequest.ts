@@ -14,7 +14,10 @@ import {
   string,
   unknown,
 } from '../schema';
-import { AccountDeviceList, accountDeviceListSchema } from './accountDeviceList';
+import {
+  AccountDeviceList,
+  accountDeviceListSchema,
+} from './accountDeviceList';
 import { CustomFields, customFieldsSchema } from './customFields';
 
 /** Request to retrieve cost center value of a device. */

@@ -21,10 +21,8 @@ const mV2TriggersController = new MV2TriggersController(client);
 This creates an individual change plan for account group share.
 
 ```ts
-async createTrigger(
-  body: CreateTriggerV2Request,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<TriggerV2Response>>
+async createTrigger(  body: CreateTriggerV2Request,
+requestOptions?: RequestOptions): Promise<ApiResponse<TriggerV2Response>>
 ```
 
 ## Parameters
@@ -67,12 +65,10 @@ try {
 This updates an individual change plan for account group share.
 
 ```ts
-async updateTrigger(
-  vZM2mToken: string,
+async updateTrigger(  vZM2mToken: string,
   body: UpdateTriggerV2Request,
   xRequestID?: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<TriggerV2Response>>
+requestOptions?: RequestOptions): Promise<ApiResponse<TriggerV2Response>>
 ```
 
 ## Parameters

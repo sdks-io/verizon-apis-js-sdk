@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { RestErrorResponseError } from '../errors/restErrorResponseError';
 import {
   NotificationReportRequest,
   notificationReportRequestSchema,
@@ -20,6 +19,7 @@ import {
 } from '../models/stopMonitorRequest';
 import { optional } from '../schema';
 import { BaseController } from './baseController';
+import { RestErrorResponseError } from '../errors/restErrorResponseError';
 
 export class DeviceMonitoringController extends BaseController {
   /**

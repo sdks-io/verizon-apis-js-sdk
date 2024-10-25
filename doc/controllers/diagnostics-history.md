@@ -14,10 +14,8 @@ const diagnosticsHistoryController = new DiagnosticsHistoryController(client);
 This endpoint allows the user to get the history data.
 
 ```ts
-async getDiagnosticsHistory(
-  body: HistorySearchRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<History[]>>
+async getDiagnosticsHistory(  body: HistorySearchRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<History[]>>
 ```
 
 ## Parameters

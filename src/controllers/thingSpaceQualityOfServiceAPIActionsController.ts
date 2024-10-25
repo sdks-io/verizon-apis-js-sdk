@@ -5,7 +5,6 @@
  */
 
 import { ApiResponse, RequestOptions } from '../core';
-import { DefaultResponseError } from '../errors/defaultResponseError';
 import { M201success, m201successSchema } from '../models/m201success';
 import {
   SubscribeRequest,
@@ -13,6 +12,7 @@ import {
 } from '../models/subscribeRequest';
 import { string } from '../schema';
 import { BaseController } from './baseController';
+import { DefaultResponseError } from '../errors/defaultResponseError';
 
 export class ThingSpaceQualityOfServiceAPIActionsController extends BaseController {
   /**

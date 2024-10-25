@@ -18,6 +18,25 @@ export type SdkRequestBuilderFactory = RequestBuilderFactory<
 
 export type SdkRequestBuilder = ReturnType<SdkRequestBuilderFactory>;
 
-export type Server = 'Edge Discovery' | 'Thingspace' | 'OAuth Server' | 'M2M' | 'Device Location' | 'Subscription Server' | 'Software Management V1' | 'Software Management V2' | 'Software Management V3' | 'Performance' | 'Device Diagnostics' | 'Cloud Connector' | 'Hyper Precise Location' | 'Services' | 'Quality Of Service';
+export type Server =
+  | 'Edge Discovery'
+  | 'Thingspace'
+  | 'OAuth Server'
+  | 'M2M'
+  | 'Device Location'
+  | 'Subscription Server'
+  | 'Software Management V1'
+  | 'Software Management V2'
+  | 'Software Management V3'
+  | 'Performance'
+  | 'Device Diagnostics'
+  | 'Cloud Connector'
+  | 'Hyper Precise Location'
+  | 'Services'
+  | 'Quality Of Service';
 
-export type AuthParams = ReturnType<typeof createAuthProviderFromConfig> extends AuthenticatorInterface<infer X> ? X : never;
+export type AuthParams = ReturnType<
+  typeof createAuthProviderFromConfig
+> extends AuthenticatorInterface<infer X>
+  ? X
+  : never;

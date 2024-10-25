@@ -14,10 +14,8 @@ const updateTriggersController = new UpdateTriggersController(client);
 Updates the promotional triggers for pseudo-MDN.
 
 ```ts
-async updateAllAvailableTriggers(
-  body?: RequestTrigger,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<Success>>
+async updateAllAvailableTriggers(  body?: RequestTrigger,
+requestOptions?: RequestOptions): Promise<ApiResponse<Success>>
 ```
 
 ## Parameters

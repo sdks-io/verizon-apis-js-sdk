@@ -10,9 +10,69 @@ const deviceLocationCallbacksController = new DeviceLocationCallbacksController(
 
 ## Methods
 
+* [Cancel Async Report](../../doc/controllers/device-location-callbacks.md#cancel-async-report)
 * [List Registered Callbacks](../../doc/controllers/device-location-callbacks.md#list-registered-callbacks)
 * [Register Callback](../../doc/controllers/device-location-callbacks.md#register-callback)
 * [Deregister Callback](../../doc/controllers/device-location-callbacks.md#deregister-callback)
+
+
+# Cancel Async Report
+
+Cancel an asynchronous report request.
+
+```ts
+async cancelAsyncReport(  accountName: string,
+  txid: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<TransactionID>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Query, Required | Account identifier in "##########-#####". |
+| `txid` | `string` | Template, Required | The `transactionId` value. |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`TransactionID`](../../doc/models/transaction-id.md)
+
+## Example Usage
+
+```ts
+const accountName = '0000123456-00001';
+
+const txid = '2c90bd28-eeee-ffff-gggg-7e3bd4fbff33';
+
+try {
+  const { result, ...httpResponse } = await deviceLocationCallbacksController.cancelAsyncReport(
+  accountName,
+  txid
+);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "txid": "2c90bd28-eeee-ffff-gggg-7e3bd4fbff33"
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Unexpected error. | [`DeviceLocationResultError`](../../doc/models/device-location-result-error.md) |
 
 
 # List Registered Callbacks
@@ -20,17 +80,15 @@ const deviceLocationCallbacksController = new DeviceLocationCallbacksController(
 Returns a list of all registered callback URLs for the account.
 
 ```ts
-async listRegisteredCallbacks(
-  account: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLocationCallback[]>>
+async listRegisteredCallbacks(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLocationCallback[]>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account number. |
+| `accountName` | `string` | Template, Required | Account number. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
@@ -40,10 +98,10 @@ async listRegisteredCallbacks(
 ## Example Usage
 
 ```ts
-const account = '0252012345-00001';
+const accountName = '0000123456-00001';
 
 try {
-  const { result, ...httpResponse } = await deviceLocationCallbacksController.listRegisteredCallbacks(account);
+  const { result, ...httpResponse } = await deviceLocationCallbacksController.listRegisteredCallbacks(accountName);
   // Get more response info...
   // const { statusCode, headers } = httpResponse;
 } catch (error) {
@@ -81,18 +139,16 @@ try {
 Provide a URL to receive messages from a ThingSpace callback service.
 
 ```ts
-async registerCallback(
-  account: string,
+async registerCallback(  accountName: string,
   body: DeviceLocationCallback,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<CallbackRegistrationResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<CallbackRegistrationResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account number. |
+| `accountName` | `string` | Template, Required | Account number. |
 | `body` | [`DeviceLocationCallback`](../../doc/models/device-location-callback.md) | Body, Required | Request to register a callback. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -103,7 +159,7 @@ async registerCallback(
 ## Example Usage
 
 ```ts
-const account = '0252012345-00001';
+const accountName = '0000123456-00001';
 
 const body: DeviceLocationCallback = {
   name: CallbackServiceNameEnum.Location,
@@ -112,7 +168,7 @@ const body: DeviceLocationCallback = {
 
 try {
   const { result, ...httpResponse } = await deviceLocationCallbacksController.registerCallback(
-  account,
+  accountName,
   body
 );
   // Get more response info...
@@ -146,18 +202,16 @@ try {
 Deregister a URL to stop receiving callback messages.
 
 ```ts
-async deregisterCallback(
-  account: string,
+async deregisterCallback(  accountName: string,
   service: CallbackServiceNameEnum,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLocationSuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLocationSuccessResult>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `account` | `string` | Template, Required | Account number. |
+| `accountName` | `string` | Template, Required | Account number. |
 | `service` | [`CallbackServiceNameEnum`](../../doc/models/callback-service-name-enum.md) | Template, Required | Callback service name. |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
@@ -168,13 +222,13 @@ async deregisterCallback(
 ## Example Usage
 
 ```ts
-const account = '0252012345-00001';
+const accountName = '0000123456-00001';
 
 const service = CallbackServiceNameEnum.Location;
 
 try {
   const { result, ...httpResponse } = await deviceLocationCallbacksController.deregisterCallback(
-  account,
+  accountName,
   service
 );
   // Get more response info...

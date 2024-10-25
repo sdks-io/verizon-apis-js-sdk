@@ -20,10 +20,8 @@ const usageTriggerManagementController = new UsageTriggerManagementController(cl
 Create a new usage trigger, which will send an alert when the number of device location service transactions reaches a specified percentage of the monthly subscription amount.
 
 ```ts
-async createNewTrigger(
-  body?: UsageTriggerAddRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UsageTriggerResponse>>
+async createNewTrigger(  body?: UsageTriggerAddRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<UsageTriggerResponse>>
 ```
 
 ## Parameters
@@ -95,11 +93,9 @@ try {
 Update an existing usage trigger
 
 ```ts
-async updateTrigger(
-  triggerId: string,
+async updateTrigger(  triggerId: string,
   body?: UsageTriggerUpdateRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<UsageTriggerResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<UsageTriggerResponse>>
 ```
 
 ## Parameters
@@ -170,11 +166,9 @@ try {
 eletes the specified usage trigger from the given account
 
 ```ts
-async deleteTrigger(
-  accountName: string,
+async deleteTrigger(  accountName: string,
   triggerId: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<DeviceLocationSuccessResult>>
+requestOptions?: RequestOptions): Promise<ApiResponse<DeviceLocationSuccessResult>>
 ```
 
 ## Parameters

@@ -11,9 +11,9 @@ Status of the report.
 
 | Name |
 |  --- |
-| `qUEUED` |
-| `iNPROGRESS` |
-| `cOMPLETED` |
+| `QUEUED` |
+| `INPROGRESS` |
+| `COMPLETED` |
 
 ## Example
 

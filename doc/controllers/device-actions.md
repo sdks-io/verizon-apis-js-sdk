@@ -10,9 +10,189 @@ const deviceActionsController = new DeviceActionsController(client);
 
 ## Methods
 
+* [Aggregate Usage](../../doc/controllers/device-actions.md#aggregate-usage)
+* [Daily Usage](../../doc/controllers/device-actions.md#daily-usage)
+* [Service Plan List](../../doc/controllers/device-actions.md#service-plan-list)
+* [Account Information](../../doc/controllers/device-actions.md#account-information)
 * [Retrieve the Global Device List](../../doc/controllers/device-actions.md#retrieve-the-global-device-list)
 * [Retrieve Device Provisioning History](../../doc/controllers/device-actions.md#retrieve-device-provisioning-history)
 * [Get Asynchronous Request Status](../../doc/controllers/device-actions.md#get-asynchronous-request-status)
+
+
+# Aggregate Usage
+
+Retrieve the aggregate usage for a device or a number of devices.
+
+```ts
+async aggregateUsage(  body: AggregateUsage,
+requestOptions?: RequestOptions): Promise<ApiResponse<GIORequestResponse>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`AggregateUsage`](../../doc/models/aggregate-usage.md) | Body, Required | - |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`GIORequestResponse`](../../doc/models/gio-request-response.md)
+
+## Example Usage
+
+```ts
+const body: AggregateUsage = {};
+
+try {
+  const { result, ...httpResponse } = await deviceActionsController.aggregateUsage(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error response | [`GIORestErrorResponseError`](../../doc/models/gio-rest-error-response-error.md) |
+
+
+# Daily Usage
+
+Retrieve the daily usage for a device, for a specified period of time, segmented by day
+
+```ts
+async dailyUsage(  body: DailyUsage,
+requestOptions?: RequestOptions): Promise<ApiResponse<DailyUsageResponse>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`DailyUsage`](../../doc/models/daily-usage.md) | Body, Required | - |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`DailyUsageResponse`](../../doc/models/daily-usage-response.md)
+
+## Example Usage
+
+```ts
+const body: DailyUsage = {};
+
+try {
+  const { result, ...httpResponse } = await deviceActionsController.dailyUsage(body);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error response | [`GIORestErrorResponseError`](../../doc/models/gio-rest-error-response-error.md) |
+
+
+# Service Plan List
+
+Retrieve all of the service plans, features and carriers associated with the account specified.
+
+```ts
+async servicePlanList(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<AccountDetails>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Template, Required | **Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[A-Za-z0-9]{3,32}$` |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`AccountDetails`](../../doc/models/account-details.md)
+
+## Example Usage
+
+```ts
+const accountName = 'accountName4';
+
+try {
+  const { result, ...httpResponse } = await deviceActionsController.servicePlanList(accountName);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error response | [`GIORestErrorResponseError`](../../doc/models/gio-rest-error-response-error.md) |
+
+
+# Account Information
+
+Retrieve all of the service plans, features and carriers associated with the account specified.
+
+```ts
+async accountInformation(  accountName: string,
+requestOptions?: RequestOptions): Promise<ApiResponse<AccountDetails>>
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `accountName` | `string` | Template, Required | **Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[A-Za-z0-9]{3,32}$` |
+| `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
+
+## Response Type
+
+[`AccountDetails`](../../doc/models/account-details.md)
+
+## Example Usage
+
+```ts
+const accountName = 'accountName4';
+
+try {
+  const { result, ...httpResponse } = await deviceActionsController.accountInformation(accountName);
+  // Get more response info...
+  // const { statusCode, headers } = httpResponse;
+} catch (error) {
+  if (error instanceof ApiError) {
+    const errors = error.result;
+    // const { statusCode, headers } = error;
+  }
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error response | [`GIORestErrorResponseError`](../../doc/models/gio-rest-error-response-error.md) |
 
 
 # Retrieve the Global Device List
@@ -20,10 +200,8 @@ const deviceActionsController = new DeviceActionsController(client);
 Allows the profile to fetch the complete device list. This works with Verizon US and Global profiles.
 
 ```ts
-async retrieveTheGlobalDeviceList(
-  body: GetDeviceListWithProfilesRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<GIORequestResponse>>
+async retrieveTheGlobalDeviceList(  body: GetDeviceListWithProfilesRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<GIORequestResponse>>
 ```
 
 ## Parameters
@@ -67,13 +245,11 @@ try {
 
 # Retrieve Device Provisioning History
 
-Retreive the provisioning history of a specific device or devices.
+Retrieve the provisioning history of a specific device or devices.
 
 ```ts
-async retrieveDeviceProvisioningHistory(
-  body: ProvhistoryRequest,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<GIORequestResponse>>
+async retrieveDeviceProvisioningHistory(  body: ProvhistoryRequest,
+requestOptions?: RequestOptions): Promise<ApiResponse<GIORequestResponse>>
 ```
 
 ## Parameters
@@ -120,19 +296,17 @@ try {
 Get the status of an asynchronous request made with the Device Actions.
 
 ```ts
-async getAsynchronousRequestStatus(
-  accountName: string,
+async getAsynchronousRequestStatus(  accountName: string,
   requestID: string,
-  requestOptions?: RequestOptions
-): Promise<ApiResponse<StatusResponse>>
+requestOptions?: RequestOptions): Promise<ApiResponse<StatusResponse>>
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `accountName` | `string` | Template, Required | - |
-| `requestID` | `string` | Template, Required | - |
+| `accountName` | `string` | Template, Required | **Constraints**: *Minimum Length*: `3`, *Maximum Length*: `32`, *Pattern*: `^[A-Za-z0-9\-]{3,32}$` |
+| `requestID` | `string` | Template, Required | **Constraints**: *Minimum Length*: `3`, *Maximum Length*: `64`, *Pattern*: `^[A-Za-z0-9\-]{3,64}$` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
