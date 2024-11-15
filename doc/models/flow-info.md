@@ -9,11 +9,11 @@
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `flowServer` | `string \| undefined` | Optional | The IPv6 IP address and port used to connect to the server |
-| `flowDevice` | `string \| undefined` | Optional | The IPv6 IP address and port used by the device |
-| `flowDirection` | `string \| undefined` | Optional | The direction the data is flowing. UPLINK if from the device, DOWNLINK is to the device |
-| `flowProtocol` | `string \| undefined` | Optional | The data protocol used for the connection |
-| `qciOption` | `string \| undefined` | Optional | The QoS level of the connection. This will be Standard or Premium |
+| `flowServer` | `string \| undefined` | Optional | - |
+| `flowDevice` | `string \| undefined` | Optional | - |
+| `flowDirection` | `string \| undefined` | Optional | - |
+| `flowProtocol` | `string \| undefined` | Optional | - |
+| `qciOption` | `string \| undefined` | Optional | - |
 
 ## Example (as JSON)
 
