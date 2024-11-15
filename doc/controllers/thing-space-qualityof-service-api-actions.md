@@ -39,24 +39,6 @@ requestOptions?: RequestOptions): Promise<ApiResponse<M201success>>
 ```ts
 const body: SubscribeRequest = {
   accountName: '0000123456-00001',
-  deviceInfo: [
-    {
-      deviceId: {
-        id: '10-digit phone number',
-        kind: 'mdn',
-      },
-      flowInfo: [
-        {
-          flowServer: '[IPv6 address]:port',
-          flowDevice: '[IPv6 address]:port',
-          flowDirection: 'UPLINK',
-          flowProtocol: 'UDP',
-          qciOption: 'Premium',
-        }
-      ],
-      deviceIPv6Addr: 'IPv6 address',
-    }
-  ],
 };
 
 try {
@@ -75,7 +57,7 @@ try {
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| Default | Error Response | [`DefaultResponseError`](../../doc/models/default-response-error.md) |
+| Default | Error Response | [`DefaultError`](../../doc/models/default-error.md) |
 
 
 # Stop a Thing Space Quality of Service API Subscription
@@ -126,5 +108,5 @@ try {
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| Default | Error Response | [`DefaultResponseError`](../../doc/models/default-response-error.md) |
+| Default | Error Response | [`DefaultError`](../../doc/models/default-error.md) |
 
